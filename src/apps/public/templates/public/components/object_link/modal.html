@@ -1,0 +1,206 @@
+{% load static %}
+{% load i18n %}
+
+<div class="modal fade" tabindex="-1" id="modal-object-link" form-id="{{ form_id }}"
+     view-url="{% url 'public:object_link' %}">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-dismiss="modal" aria-label="{% trans 'Close' %}">
+                <em class="icon ni ni-cross"></em>
+            </a>
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    {% trans 'Object Link' %}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#tab-users" tab-type="users">
+                            {% trans 'Users' %}
+                            <em class="icon ni ni-user"></em>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tab-inventory" tab-type="inventory">
+                            {% trans 'Warehouse/Items' %}
+                            <em class="icon ni ni-book"></em>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tab-assets" tab-type="assets">
+                            {% trans 'Assets' %}
+                            <em class="icon ni ni-invest"></em>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tab-general" tab-type="general">
+                            {% trans 'General Objects' %}
+                            <em class="icon ni ni-setting-alt"></em>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-users">
+                        <div class="nk-block nk-block-lg p-md-4">
+                            <div class="nk-block-head">
+                                <div class="nk-block-head-content">
+                                    <h4 class="nk-block-title">{% trans 'System Users' %}</h4>
+                                </div>
+                            </div>
+                            <div class="card card-preview">
+                                <div class="card-title-group my-2 p-3 d-block">
+                                    <!-- card-tools -->
+                                    <div class="card-search col-12" data-search="search">
+                                        <div class="search-content">
+                                            <input type="text" id="search-system-users"
+                                                   class="form-control form-control-sm border-transparent form-focus-none"
+                                                   placeholder="{% trans 'Search by name, username or ..' %}">
+                                            <button class="search-submit btn btn-icon"><em
+                                                    class="icon ni ni-search"></em></button>
+                                        </div>
+                                    </div>
+                                    <!-- card-search -->
+                                </div>
+                                <table class="table table-orders">
+                                    <thead class="tb-odr-head bg-light bg-opacity-75">
+                                    <tr class="tb-odr-item">
+                                        <th class="tb-odr-info">
+                                            <span class="tb-odr-id">{% trans 'Name' %}</span>
+                                            <span class="tb-odr-date">{% trans 'Email' %}</span>
+                                        </th>
+                                        <th class="tb-odr-action">&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="tb-odr-body" id="container-system-users"
+                                           data-content-id="{{ system_users_content_type.id }}">
+                                    <!-- Initial & Set by Js  -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- .card -->
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-inventory">
+                        <div class="nk-block nk-block-lg p-md-4">
+                            <div class="nk-block-head">
+                                <div class="nk-block-head-content">
+                                    <h4 class="nk-block-title">{% trans 'Warehouses' %}</h4>
+                                </div>
+                            </div>
+                            <div class="card card-preview">
+                                <div class="card-title-group my-2 p-3 d-block">
+                                    <!-- card-tools -->
+                                    <div class="card-search col-12" data-search="search">
+                                        <div class="search-content">
+                                            <input type="text" id="search-warehouse"
+                                                   class="form-control form-control-sm border-transparent form-focus-none"
+                                                   placeholder="{% trans 'Search by name' %}">
+                                            <button class="search-submit btn btn-icon"><em
+                                                    class="icon ni ni-search"></em></button>
+                                        </div>
+                                    </div>
+                                    <!-- card-search -->
+                                </div>
+                                <table class="table table-orders">
+                                    <thead class="tb-odr-head bg-light bg-opacity-75">
+                                    <tr class="tb-odr-item">
+                                        <th class="tb-odr-info">
+                                            <span class="tb-odr-id">{% trans 'Name' %}</span>
+                                        </th>
+                                        <th class="tb-odr-action">&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="tb-odr-body" id="container-warehouses"
+                                           data-content-id="{{ warehouse_content_type.id }}">
+                                    <!-- Initial & Set by Js  -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- .card -->
+                        </div>
+                        <div class="nk-block nk-block-lg p-md-4">
+                            <div class="nk-block-head">
+                                <div class="nk-block-head-content">
+                                    <h4 class="nk-block-title">{% trans 'Inventory Items' %}</h4>
+                                </div>
+                            </div>
+                            <div class="card card-preview">
+                                <div class="card-title-group my-2 p-3 d-block">
+                                    <!-- card-tools -->
+                                    <div class="card-search col-12" data-search="search">
+                                        <div class="search-content">
+                                            <input type="text" id="search-warehouse-items"
+                                                   class="form-control form-control-sm border-transparent form-focus-none"
+                                                   placeholder="{% trans 'Search by name or unit measure' %}">
+                                            <button class="search-submit btn btn-icon"><em
+                                                    class="icon ni ni-search"></em></button>
+                                        </div>
+                                    </div>
+                                    <!-- card-search -->
+                                </div>
+                                <table class="table table-orders">
+                                    <thead class="tb-odr-head bg-light bg-opacity-75">
+                                    <tr class="tb-odr-item">
+                                        <th class="tb-odr-info">
+                                            <span class="tb-odr-id">{% trans 'Name' %}</span>
+                                            <span class="tb-odr-id">{% trans 'Unit Measure' %}</span>
+                                            <span class="tb-odr-id">{% trans 'Warehouse' %}</span>
+                                        </th>
+                                        <th class="tb-odr-action">&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="tb-odr-body" id="container-warehouse-items"
+                                           data-content-id="{{ warehouse_item_content_type.id }}">
+                                    <!-- Initial & Set by Js  -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- .card -->
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-assets">
+                        <div class="nk-block nk-block-lg p-md-4">
+                            <div class="nk-block-head">
+                                <div class="nk-block-head-content">
+                                    <h4 class="nk-block-title">{% trans 'Fixed Assets' %}</h4>
+                                </div>
+                            </div>
+                            <div class="card card-preview">
+                                <div class="card-title-group my-2 p-3 d-block">
+                                    <!-- card-tools -->
+                                    <div class="card-search col-12" data-search="search">
+                                        <div class="search-content">
+                                            <input type="text" id="search-fixed-assets"
+                                                   class="form-control form-control-sm border-transparent form-focus-none"
+                                                   placeholder="{% trans 'Search by name' %}">
+                                            <button class="search-submit btn btn-icon"><em
+                                                    class="icon ni ni-search"></em></button>
+                                        </div>
+                                    </div>
+                                    <!-- card-search -->
+                                </div>
+                                <table class="table table-orders">
+                                    <thead class="tb-odr-head bg-light bg-opacity-75">
+                                    <tr class="tb-odr-item">
+                                        <th class="tb-odr-info">
+                                            <span class="tb-odr-id">{% trans 'Name' %}</span>
+                                            <span class="tb-odr-id">{% trans 'Useful Life' %}</span>
+                                        </th>
+                                        <th class="tb-odr-action">&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="tb-odr-body" id="container-fixed-assets"
+                                           data-content-id="{{ fixed_assets_content_type.id }}">
+                                    <!-- Initial & Set by Js  -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- .card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{% load i18n %}
+
+<div class="nk-tb-list nk-tb-tnx">
+    <div class="nk-tb-item nk-tb-head text-center">
+        <div class="nk-tb-col"><span>{% trans "Name" %}</span>
+        </div>
+        <div class="nk-tb-col">
+            <span>{% trans "Account" %}</span></div>
+        <div class="nk-tb-col">
+            <span>{% trans "Entry" %}</span></div>
+        <div class="nk-tb-col">
+            <span>{% trans "Debit Amount" %}</span></div>
+        <div class="nk-tb-col">
+            <span>{% trans "Credit Amount" %}</span></div>
+        <div class="nk-tb-col">
+            <span>{% trans "Created At" %}</span></div>
+        <div class="nk-tb-col nk-tb-col-tools"></div>
+    </div>
+    {% for journal_line in journal_lines %}
+        {% include 'accounting/journal_line/components/item.html' with journal_line=journal_line %}
+    {% empty %}
+        <div class="container-not-found-base">
+            <p>{% trans "Nothing Found" %}</p>
+        </div>
+    {% endfor %}
+</div>

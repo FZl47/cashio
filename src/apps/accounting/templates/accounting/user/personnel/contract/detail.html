@@ -1,0 +1,977 @@
+{% extends 'base/base_template.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block Title %}
+    {% trans 'Detail' %}
+    {{ object.name }}
+{% endblock %}
+
+{% block Style %}
+    <style>
+
+        input[disabled] {
+            opacity: .35 !important;
+        }
+
+        .form-number-child[disabled] + .number-label {
+            opacity: .35;
+        }
+
+        .calculated-net-pay .pay-items {
+            padding: 10px;
+        }
+
+
+        .calculated-net-pay .plus {
+            font-size: 20px;
+            color: #0dd786;
+        }
+
+        .calculated-net-pay .minus {
+            font-size: 20px;
+            color: #d70d2b;
+        }
+
+        .calculated-net-pay .equal {
+            font-size: 22px;
+            color: #168aff;
+        }
+
+        #total-pay-items {
+            border-radius: 24px;
+            padding: 5px 10px;
+            font-size: 16px;
+            border: 1px dashed #156bc1;
+        }
+
+        #total-pay-items .currency-label {
+            font-size: 14px;
+        }
+
+        .calculated-net-pay .pay-items > div {
+            display: inline-block;
+            border-radius: 7px;
+            font-size: 13px;
+            margin: 5px;
+        }
+
+        .calculated-net-pay .pay-items > div span {
+            display: inline-block;
+            padding: 7px;
+            border-radius: 10px;
+        }
+
+        .calculated-net-pay .pay-items > div span:last-child {
+            padding-right: 10px;
+        }
+
+        .calculated-net-pay .pay-items > div.pay span:first-child {
+            background: #8ebf9b6b;
+            color: #103e23;
+            font-size: 11px;
+        }
+
+        .calculated-net-pay .pay-items > div.cost span:first-child {
+            background: #dda4b1;
+            color: #480111;
+            font-size: 11px;
+        }
+
+        .calculated-net-pay .pay-items > div.pay {
+            background: #c4ffd7;
+            color: #077a3d;
+        }
+
+        .calculated-net-pay .pay-items > div.cost {
+            background: #ffc4d2;
+            color: #a11031;
+        }
+
+    </style>
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body ui-rounder has-sidebar no-touch nk-nio-theme
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            <!-- sidebar @s -->
+            {% include 'base/components/menu.html' %}
+            <!-- sidebar @e -->
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                {% include 'base/components/header.html' %}
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between g-3">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">
+                                            {% trans 'Personnel Contract Detail' %}
+                                            <b>{{ object.name }}</b>
+                                        </h3>
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item"><a
+                                                        href="{% url 'public:index' %}">{% trans 'Home Page' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Personnel Users' %}</a></li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="{{ object.personnel.get_absolute_url }}">
+                                                        {{ object.personnel.get_full_name }}
+                                                    </a></li>
+                                                <li class="breadcrumb-item"><a>{{ object.name }}</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                    <div class="nk-block-head-content d-flex justify-content-between gx-1">
+                                        <div class="dropdown">
+                                            <button
+                                                    class="btn btn-outline-light bg-white d-none d-sm-inline-flex dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                                     <span>
+                                                        {% trans 'Action' %}
+                                                    </span>
+                                                <em class="icon ni ni-setting"></em>
+                                            </button>
+                                            <button
+                                                    class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                                <em class="icon ni ni-setting">
+                                                </em>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <ul class="link-list-opt">
+                                                    {% if perms.accounting.add_payrollperiod %}
+                                                        <li data-bs-toggle="modal"
+                                                            data-bs-target="#modal-create-contract-period-payroll-object">
+                                                            <a class="d-flex justify-content-between text-orange">
+                                                                <span>{% trans 'Create Period Payroll' %}</span>
+                                                                <em class="icon ni ni-file-plus"></em>
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                    <li data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-object" class="d-none">
+                                                        <a class="d-flex justify-content-between text-info">
+                                                            <span>{% trans 'Edit' %}</span>
+                                                            <em class="icon ni ni-pen2"></em>
+                                                        </a>
+                                                    </li>
+                                                    <li data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete-object" class="d-none">
+                                                        <a class="d-flex justify-content-between text-danger">
+                                                            <span>{% trans 'Delete' %}</span>
+                                                            <em class="icon ni ni-trash-empty"></em>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                </div>
+                                <!-- .nk-block-between -->
+                            </div>
+                            <div class="nk-block">
+                                <div class="row gy-5">
+                                    <div class="col-lg-12">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h5 class="nk-block-title title">{% trans 'Contract Information' %}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <ul class="data-list is-compact">
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Status' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.is_active %}
+                                                                <span class="text-success">
+                                                                    {% trans 'Is Active' %}
+                                                                    <em class="icon ni ni-check-circle text-success"></em>
+                                                                </span>
+                                                            {% else %}
+                                                                <span class="text-danger">
+                                                                    {% trans 'Expired' %}
+                                                                    <em class="icon ni ni-cross-circle text-danger"></em>
+                                                                </span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Start Date' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-sm bg-secondary">{{ object.start_date }}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'End Date' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.end_date %}
+                                                                <span class="badge badge-sm bg-secondary">{{ object.end_date }}</span>
+                                                            {% else %}
+                                                                <span class="badge badge-sm bg-orange">{% trans 'Forever' %}</span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Base Salary' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-sm bg-info">
+                                                                <span class="price-el">{{ object.base_salary }}</span>
+                                                                <span class="currency-label"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Allowance' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-sm bg-info">
+                                                                <span class="price-el">{{ object.allowance }}</span>
+                                                                <span class="currency-label"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Insurance Rate' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-sm bg-abstract">
+                                                                <span class="price-el">{{ object.insurance_rate }}</span>
+                                                                <em class="ni ni-percent"></em>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Tax Group' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.tax_group %}
+                                                                <a href="{{ object.tax_group.get_absolute_url }}">
+                                                                    {{ object.tax_group.name }}
+                                                                </a>
+                                                            {% else %}
+                                                                <span class="icon ni ni-cross-circle text-warning"></span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Payable Account' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.payable_account %}
+                                                                <a href="{{ object.payable_account.get_absolute_url }}">
+                                                                    {{ object.payable_account.name }}
+                                                                </a>
+                                                            {% else %}
+                                                                <span class="icon ni ni-cross-circle text-warning"></span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Wage Expense Account' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.wage_expense_account %}
+                                                                <a href="{{ object.wage_expense_account.get_absolute_url }}">
+                                                                    {{ object.wage_expense_account.name }}
+                                                                </a>
+                                                            {% else %}
+                                                                <span class="icon ni ni-cross-circle text-warning"></span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Insurance Account' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.insurance_payable_account %}
+                                                                <a href="{{ object.insurance_payable_account.get_absolute_url }}">
+                                                                    {{ object.insurance_payable_account.name }}
+                                                                </a>
+                                                            {% else %}
+                                                                <span class="icon ni ni-cross-circle text-warning"></span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Deduction Account' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.deduction_account %}
+                                                                <a href="{{ object.deduction_account.get_absolute_url }}">
+                                                                    {{ object.deduction_account.name }}
+                                                                </a>
+                                                            {% else %}
+                                                                <span class="icon ni ni-cross-circle text-warning"></span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Note' %}</div>
+                                                        <div class="data-value">
+                                                            <pre>{{ object.note|default:'-' }}</pre>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Attached File' %}</div>
+                                                        <div class="data-value text-center">
+                                                            {% if object.get_attached_file %}
+                                                                <a href="{{ object.get_attached_file.url }}"
+                                                                   class="btn btn-primary d-inline-block">
+                                                                    {% trans 'Visit' %}
+                                                                    <em class="ni ni-eye"></em>
+                                                                </a>
+                                                                <a href="{{ object.get_attached_file.url }}" download=""
+                                                                   class="btn btn-primary m-1 d-inline-block">
+                                                                    {% trans 'Download' %}
+                                                                    <em class="ni ni-download"></em>
+                                                                </a>
+                                                            {% else %}
+                                                                <span class="icon ni ni-cross-circle text-warning"></span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Created at' %}</div>
+                                                        <div class="data-value datetime-convert">
+                                                            {{ object.get_created_at|default:'-' }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                    <div class="col-12">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content d-flex justify-content-between">
+                                                <h5 class="nk-block-title title">{% trans 'Period Payment/Payrolls' %}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="nk-block">
+                                            <div class="card card-stretch">
+                                                <div class="card-inner-group">
+                                                    <!-- .card-inner -->
+                                                    <div class="card-inner p-2">
+                                                        <div class="accordionPeriod"
+                                                             id="accordionPeriod">
+                                                            {% for period in object.get_payroll_periods %}
+                                                                <div class="accordion-item">
+                                                                    <a href="#" class="accordion-head"
+                                                                       data-bs-toggle="collapse" aria-expanded="false"
+                                                                       data-bs-target="#accordion-item-{{ forloop.counter }}">
+                                                                        <h6 class="title fs-14px">
+                                                                            {{ period.name }}
+                                                                            {% if period.is_closed %}
+                                                                                <span class="badge badge-dim bg-success">{% trans 'Is Closed' %}</span>
+                                                                            {% else %}
+                                                                                <span class="badge badge-dim bg-danger">{% trans 'Is Open' %}</span>
+                                                                            {% endif %}
+                                                                        </h6>
+                                                                        <span class="accordion-icon"></span>
+                                                                    </a>
+                                                                    {% if not period.is_closed %}
+                                                                        <div class="btn-group p-2">
+                                                                            {% if perms.accounting.add_payrollitem %}
+                                                                                <button class="btn btn-outline-success"
+                                                                                        data-id="{{ period.id }}"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#modal-create-contract-payroll-object">
+                                                                                    {% trans 'Pay' %}
+                                                                                    <em class="ni ni-blank"></em>
+                                                                                </button>
+                                                                            {% endif %}
+                                                                            {% if perms.accounting.change_payrollitem %}
+                                                                                <button class="btn btn-outline-info"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#modal-update-status-period-payroll-object-{{ period.id }}">
+                                                                                    {% trans 'Update Status' %}
+                                                                                    <em class="ni ni-edit"></em>
+                                                                                </button>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                    <div class="accordion-body collapse {% if forloop.first %}show{% endif %}"
+                                                                         id="accordion-item-{{ forloop.counter }}"
+                                                                         data-bs-parent="#accordionPeriod">
+                                                                        <div class="accordion-inner">
+                                                                            <div class="nk-tb-list nk-tb-tnx">
+                                                                                <div class="nk-tb-item nk-tb-head text-center">
+                                                                                    <div class="nk-tb-col">
+                                                                                        <span>{% trans 'Net Pay' %}</span>
+                                                                                    </div>
+                                                                                    <div class="nk-tb-col">
+                                                                                        <span>{% trans 'Entry' %}</span>
+                                                                                    </div>
+                                                                                    <div class="nk-tb-col">
+                                                                                        <span>{% trans 'Created at' %}</span>
+                                                                                    </div>
+                                                                                    <div class="nk-tb-col">
+                                                                                        <span>{% trans 'Action' %}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                {% for payroll in period.get_payrolls %}
+                                                                                    <div class="nk-tb-item text-center">
+                                                                                        <div class="nk-tb-col">
+                                                                                            <span class="price-el">
+                                                                                                {{ payroll.net_pay }}
+                                                                                            </span>
+                                                                                            <span class="currency-label"></span>
+                                                                                        </div>
+                                                                                        <div class="nk-tb-col">
+                                                                                            {% with payroll.journal_entries.first as entry %}
+                                                                                                {% if entry %}
+                                                                                                    <a href="{{ entry.get_absolute_url }}">{% trans 'Visit' %}</a>
+                                                                                                {% else %}
+                                                                                                    <em class="icon ni ni-cross-circle text-danger"></em>
+                                                                                                {% endif %}
+                                                                                            {% endwith %}
+                                                                                        </div>
+                                                                                        <div class="nk-tb-col">
+                                                                                            <span class="datetime-convert">{{ payroll.get_created_at }}</span>
+                                                                                        </div>
+                                                                                        <div class="nk-tb-col">
+                                                                                            <a href="{{ payroll.get_absolute_url }}">
+                                                                                                <em class="icon ni ni-eye"></em>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="container-not-found-base">
+                                                                    <p>{% trans 'Nothing Found' %}</p>
+                                                                </div>
+                                                                <!-- .nk-tb-item -->
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!-- .nk-tb-list -->
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                </div>
+                                                <!-- .card-inner-group -->
+                                            </div>
+                                            <!-- .card -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- .row -->
+                            </div>
+                            <!-- .components-preview -->
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                {% include 'base/components/footer.html' %}
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+        <!-- modals -->
+
+        <div class="modal fade" tabindex="-1" id="modal-create-contract-period-payroll-object">
+            <div class="modal-dialog modal-dialog-top modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="{% trans 'Close' %}">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Create Contract Period Payroll' %}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'accounting:user_personnel_contract_period__create' %}"
+                              class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="contract" value="{{ object.pk }}">
+                            <div class="row g-4">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{% trans 'Start Date' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" name="start_date" id="start_date" required=""
+                                                   class="form-control date-picker-alt" placeholder="Date" readonly="">
+                                        </div>
+                                        <div class="form-note">Date format <code>Day-Month-Year</code>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{% trans 'End Date' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" name="end_date" id="end_date" required=""
+                                                   class="form-control date-picker-alt" placeholder="Date" readonly="">
+                                        </div>
+                                        <div class="form-note">Date format <code>Day-Month-Year</code>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            {% trans 'Create Contract Period Payroll' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" tabindex="-1" id="modal-create-contract-payroll-object">
+            <div class="modal-dialog modal-dialog-top modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="{% trans 'Close' %}">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Create Contract Payroll Item' %}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'accounting:user_personnel_contract_period_payroll_item__create' %}"
+                              class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="created_by" value="{{ request.user.pk }}">
+                            <div class="row g-4">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{% trans 'Base Salary' %}</label>
+                                        <div class="form-control-wrap form-number-child" disabled>
+                                            <input type="number" id="base_salary_input" class="form-control" disabled
+                                                   value="{{ object.base_salary }}"
+                                                   placeholder="{% trans 'Base Salary' %}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">{% trans 'Allowance' %}</label>
+                                        <div class="form-control-wrap form-number-child" disabled>
+                                            <input type="number" id="allowance_input" class="form-control" disabled
+                                                   value="{{ object.allowance }}"
+                                                   placeholder="{% trans 'Allowance' %}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="period">{% trans 'Period Payroll' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select name="period" id="period" class="form-select js-select2" required>
+                                                {% for period in object.get_payroll_periods %}
+                                                    {% if not period.is_closed %}
+                                                        <option value="{{ period.id }}">{{ period.name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="bonus">{% trans 'Bonus Pay' %}</label>
+                                        <div class="form-control-wrap form-number-child">
+                                            <input type="number" class="form-control" name="bonus" required
+                                                   placeholder="{% trans 'Bonus Pay' %}" value="0"
+                                                   id="bonus">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="overtime">{% trans 'Overtime Pay' %}</label>
+                                        <div class="form-control-wrap form-number-child">
+                                            <input type="number" class="form-control" name="overtime" required
+                                                   placeholder="{% trans 'Overtime Pay' %}" value="0"
+                                                   id="overtime">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="tax">{% trans 'Tax Cost' %}</label>
+                                        <div class="form-control-wrap form-number-child" {% if not object.tax_group %}disabled{% endif %}>
+                                            <input type="number" class="form-control" name="tax" {% if not object.tax_group %}disabled{% endif %} required
+                                                   placeholder="{% trans 'Tax Cost' %}" value="0"
+                                                   id="tax">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="insurance">{% trans 'Insurance Cost' %}</label>
+                                        <div class="form-control-wrap form-number-child">
+                                            <input type="number" class="form-control" name="insurance" required
+                                                   placeholder="{% trans 'Insurance Cost' %}" value="0"
+                                                   id="insurance">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="deductions">{% trans 'Deductions Cost' %}</label>
+                                        <div class="form-control-wrap form-number-child">
+                                            <input type="number" class="form-control" name="deductions" required
+                                                   placeholder="{% trans 'Deductions Cost' %}" value="0"
+                                                   id="deductions">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="calculated-net-pay">
+                                        <label class="form-label">{% trans 'Calculated Net Pay' %}</label>
+                                        <div class="pay-items form-control">
+                                            <div class="pay">
+                                                <span>{% trans 'Base Salary' %}</span>
+                                                <span class="price-el">{{ object.base_salary }}</span>
+                                            </div>
+                                            <span class="plus">+</span>
+                                            <div class="pay">
+                                                <span>{% trans 'Allowance' %}</span>
+                                                <span class="price-el">{{ object.allowance }}</span>
+                                            </div>
+                                            <span class="plus">+</span>
+                                            <div class="pay">
+                                                <span>{% trans 'Bonus Pay' %}</span>
+                                                <span id="pay_bonus">0</span>
+                                            </div>
+                                            <span class="plus">+</span>
+                                            <div class="pay">
+                                                <span>{% trans 'Overtime Pay' %}</span>
+                                                <span id="pay_overtime">0</span>
+                                            </div>
+                                            <span class="minus">-</span>
+                                            <div class="cost">
+                                                <span>{% trans 'Tax Cost' %}</span>
+                                                <span id="cost_tax">0</span>
+                                            </div>
+                                            <span class="minus">-</span>
+                                            <div class="cost">
+                                                <span>{% trans 'Insurance Cost' %}</span>
+                                                <span id="cost_insurance">0</span>
+                                            </div>
+                                            <span class="minus">-</span>
+                                            <div class="cost">
+                                                <span>{% trans 'Deductions Cost' %}</span>
+                                                <span id="cost_deductions">0</span>
+                                            </div>
+                                            <span class="equal">=</span>
+                                            <div id="total-pay-items">
+                                                <span id="total-pay-items-value"></span>
+                                                <span class="currency-label"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="note">{% trans 'Note' %}</label>
+                                        <div class="form-control-wrap">
+                                                                <textarea name="note" id="note"
+                                                                          class="form-control"
+                                                                          placeholder="{% trans 'Note' %}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="attach_file">{% trans 'Attach File' %}</label>
+                                        <div class="form-control-wrap">
+                                            <div class="form-file">
+                                                <input type="file" name="attached_file" class="form-file-input"
+                                                       id="attach_file_label">
+                                                <label class="form-file-label"
+                                                       for="attach_file_label">{% trans 'Select File' %}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 text-left">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            {% trans 'Create Contract Payroll' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" tabindex="-1" id="modal-delete-object" aria-modal="true" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body modal-body-lg text-center">
+                        <div class="nk-modal">
+                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash-empty bg-danger"></em>
+                            <h4 class="nk-modal-title">{% trans 'Delete Account' %}</h4>
+                            <div class="nk-modal-text">
+                                <p class="bg-outline-danger">
+                                    Are you sure you want to delete the account
+                                    <b>{{ object.name }}</b>
+                                    ? By deleting the account, all related items will be removed, and there will be no
+                                    possibility of recovery.
+                                </p>
+                            </div>
+                            <div class="nk-modal-action mt-5">
+                                <a class="btn btn-lg btn-mw btn-light m-1"
+                                   data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
+                                <a href="{% url 'accounting:account__delete' pk=object.id %}"
+                                   class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete Account' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .modal-body -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" tabindex="-1" id="modal-update-object">
+            <div class="modal-dialog modal-dialog-top" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="{% trans 'Close' %}">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Edit' %}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'accounting:account__update' pk=object.id %}"
+                              class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="name">{% trans 'Name' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="name"
+                                                   placeholder="{% trans 'Name' %}"
+                                                   id="name" required value="{{ object.name|default:'' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="code">{% trans 'Code' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="code"
+                                                   placeholder="{% trans 'Code' %}"
+                                                   id="code" required value="{{ object.code|default:'' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if object.parent %}
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="code">{% trans 'Parent' %}</label>
+                                            <div class="form-control-wrap">
+                                                <select id="parent" name="parent"
+                                                        class="form-select js-select2 select-by-value"
+                                                        value="{{ object.parent.id }}" data-search="on">
+                                                    {% for account in accounts %}
+                                                        <option value="{{ account.id }}">{{ account.name }}
+                                                            | {{ account.code }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="is_active">{% trans 'Status' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="is_active" name="is_active"
+                                                    class="form-select js-select2 select-by-value"
+                                                    value="{{ object.is_active }}" data-search="on">
+                                                <option value="true">{% trans 'Active' %}</option>
+                                                <option value="false">{% trans 'Disable' %}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="description">{% trans 'Description' %}</label>
+                                        <div class="form-control-wrap">
+                                                                <textarea name="description" id="description"
+                                                                          class="form-control"
+                                                                          placeholder="{% trans 'Description' %}">{{ object.description|default:'' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            {% trans 'Update' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TODO: for better performance use one modal and set data dynamically -->
+        {% for period in object.get_payroll_periods %}
+            <div class="modal fade" tabindex="-1" id="modal-update-status-period-payroll-object-{{ period.id }}">
+                <div class="modal-dialog modal-dialog-top" role="document">
+                    <div class="modal-content">
+                        <a href="#" class="close" data-dismiss="modal" data-bs-dismiss="modal"
+                           aria-label="{% trans 'Close' %}">
+                            <em class="icon ni ni-cross"></em>
+                        </a>
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                {% trans 'Update Status Period Payroll' %}
+                                <p><b>{{ period.name }}</b></p>
+                            </h5>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'accounting:user_personnel_contract_period__update_status' pk=period.id %}"
+                                  class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row g-4">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                   for="status-{{ forloop.counter }}">{% trans 'Status' %}</label>
+                                            <div class="form-control-wrap">
+                                                <select id="status-{{ forloop.counter }}" name="is_closed"
+                                                        class="form-select js-select2 select-by-value"
+                                                        value="{{ period.is_closed }}"
+                                                        tabindex="-1" aria-hidden="true">
+                                                    <option value="false">{% trans 'Open' %}</option>
+                                                    <option value="true">{% trans 'Closed' %}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-left">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-lg btn-primary">
+                                                {% trans 'Update Period Payroll Status' %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <!-- end modals -->
+    </div>
+{% endblock %}
+
+
+{% block Script %}
+    <script>
+
+        let bonus_input = document.querySelector('input[name="bonus"]')
+        bonus_input.addEventListener('input', function (el) {
+            document.getElementById('pay_bonus').innerText = numberWithCommas(this.value) || 0
+            updateNetPay()
+        })
+
+        let overtime_input = document.querySelector('input[name="overtime"]')
+        overtime_input.addEventListener('input', function (el) {
+            document.getElementById('pay_overtime').innerText = numberWithCommas(this.value) || 0
+            updateNetPay()
+        })
+
+        let tax_input = document.querySelector('input[name="tax"]')
+        tax_input.addEventListener('input', function (el) {
+            document.getElementById('cost_tax').innerText = numberWithCommas(this.value) || 0
+            updateNetPay()
+        })
+
+        let insurance_input = document.querySelector('input[name="insurance"]')
+        insurance_input.addEventListener('input', function (el) {
+            document.getElementById('cost_insurance').innerText = numberWithCommas(this.value) || 0
+            updateNetPay()
+        })
+
+        let deductions_input = document.querySelector('input[name="deductions"]')
+        deductions_input.addEventListener('input', function (el) {
+            document.getElementById('cost_deductions').innerText = numberWithCommas(this.value) || 0
+            updateNetPay()
+        })
+        let base_salary_input = document.querySelector('#base_salary_input')
+        let allowance_input = document.querySelector('#allowance_input')
+
+
+        function updateNetPay() {
+            let base_salary = parseInt(base_salary_input.value || 0)
+            let allowance = parseInt(allowance_input.value || 0)
+            let bonus = parseInt(bonus_input.value || 0)
+            let overtime = parseInt(overtime_input.value || 0)
+
+            let tax = parseInt(tax_input.value || 0)
+            let insurance = parseInt(insurance_input.value || 0)
+            let deductions = parseInt(deductions_input.value || 0)
+
+            let net_pay = (base_salary + allowance + bonus + overtime) - (tax + insurance + deductions)
+
+            document.getElementById('total-pay-items-value').innerText = numberWithCommas(net_pay) || 0
+        }
+
+        updateNetPay()
+
+
+        document.querySelectorAll('[data-bs-target="#modal-create-contract-payroll-object"]').forEach(function (el) {
+            el.addEventListener('click', function (el) {
+                let select = $('#period')
+                select.val(this.getAttribute('data-id'))
+                select.trigger('change')
+            })
+        })
+
+    </script>
+{% endblock %}

@@ -1,0 +1,569 @@
+{% extends 'base/base_template.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block Title %}
+    {% trans 'Detail' %}
+    {{ object.get_full_name }}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body ui-rounder has-sidebar no-touch nk-nio-theme
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            <!-- sidebar @s -->
+            {% include 'base/components/menu.html' %}
+            <!-- sidebar @e -->
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                {% include 'base/components/header.html' %}
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between g-3">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">
+                                            {% trans 'Detail' %}
+                                            <b>{{ object.get_full_name }}</b>
+                                        </h3>
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item"><a
+                                                        href="{% url 'public:index' %}">{% trans 'Home Page' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'System Users' %}</a></li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="{% url 'account:user__list' %}">
+                                                        {% trans 'List of System Users' %}
+                                                    </a></li>
+                                                <li class="breadcrumb-item"><a>{{ object.get_full_name }}</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                    <div class="nk-block-head-content d-flex justify-content-between gx-1">
+                                        <div class="dropdown">
+                                            <button
+                                                    class="btn btn-outline-light bg-white d-none d-sm-inline-flex dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                                     <span>
+                                                        {% trans 'Action' %}
+                                                    </span>
+                                                <em class="icon ni ni-setting"></em>
+                                            </button>
+                                            <button
+                                                    class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                                <em class="icon ni ni-setting">
+                                                </em>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <ul class="link-list-opt">
+                                                    <li data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-permissions-object">
+                                                        <a class="d-flex justify-content-between text-primary">
+                                                            <span>{% trans 'Permissions' %}</span>
+                                                            <em class="icon ni ni-account-setting"></em>
+                                                        </a>
+                                                    </li>
+                                                    <li data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-object">
+                                                        <a class="d-flex justify-content-between text-info">
+                                                            <span>{% trans 'Edit' %}</span>
+                                                            <em class="icon ni ni-pen2"></em>
+                                                        </a>
+                                                    </li>
+                                                    <li data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete-object">
+                                                        <a class="d-flex justify-content-between text-danger">
+                                                            <span>{% trans 'Delete' %}</span>
+                                                            <em class="icon ni ni-trash-empty"></em>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                </div>
+                                <!-- .nk-block-between -->
+                            </div>
+                            <div class="nk-block">
+                                <div class="row gy-5">
+                                    <div class="col-lg-12">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h5 class="nk-block-title title">{% trans 'Basic Information' %}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <ul class="data-list is-compact">
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Full Name' %}</div>
+                                                        <div class="data-value">{{ object.get_full_name }}</div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Email' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-dim badge-sm bg-info">{{ object.email }}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Active Status' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.is_active %}
+                                                                <div class="text-success">
+                                                                    <span>{% trans 'Is Active' %}</span>
+                                                                    <em class="icon text-success ni ni-check-c"></em>
+                                                                </div>
+                                                            {% else %}
+                                                                <div class="text-danger">
+                                                                    <span>{% trans 'Not Active' %}</span>
+                                                                    <em class="icon text-danger ni ni-cross-c"></em>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Created at' %}</div>
+                                                        <div class="data-value datetime-convert">
+                                                            {{ object.get_created_at|default:'-' }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Updated at' %}</div>
+                                                        <div class="data-value datetime-convert">
+                                                            {{ object.get_updated_at|default:'-' }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                    <div class="col-12 col-lg-5">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content d-flex justify-content-between">
+                                                <h5 class="nk-block-title title">{% trans 'Inventory Transactions' %}</h5>
+                                                <a href="#" class="fs-15px mt-1">
+                                                    {% trans 'View All' %}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="nk-block">
+                                            <div class="card card-stretch">
+                                                <div class="card-inner-group">
+                                                    <!-- .card-inner -->
+                                                    <div class="card-inner p-2">
+                                                        <div class="nk-tb-list nk-tb-tnx">
+                                                            <div class="nk-tb-item nk-tb-head text-center">
+                                                                <div class="nk-tb-col"><span>{% trans 'Name' %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Type' %}</span></div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Date' %}</span></div>
+                                                            </div>
+                                                            {% for transaction in object.get_inventory_transactions|slice:':20' %}
+                                                                <!-- .nk-tb-item -->
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">
+                                                                        <a href="{{ transaction.get_absolute_url }}"><span>
+                                                                            {{ transaction.name }}
+                                                                        </span></a>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span class="badge bg-info">
+                                                                            {{ transaction.get_transaction_type_label }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span class="datetime-convert">
+                                                                            {{ transaction.get_created_at }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="container-not-found-base">
+                                                                    <p>{% trans 'Nothing Found' %}</p>
+                                                                </div>
+                                                                <!-- .nk-tb-item -->
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!-- .nk-tb-list -->
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                </div>
+                                                <!-- .card-inner-group -->
+                                            </div>
+                                            <!-- .card -->
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                    <div class="col-12 col-lg-7">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content d-flex justify-content-between">
+                                                <h5 class="nk-block-title title">{% trans 'Journals' %}</h5>
+                                                <a href="#" class="fs-15px mt-1">
+                                                    {% trans 'View All' %}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="nk-block">
+                                            <div class="card card-stretch">
+                                                <div class="card-inner-group">
+                                                    <!-- .card-inner -->
+                                                    <div class="card-inner p-2">
+                                                        <div class="nk-tb-list nk-tb-tnx">
+                                                            <div class="nk-tb-item nk-tb-head text-center">
+                                                                <div class="nk-tb-col"><span>{% trans 'Name' %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Balance Status' %}</span></div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Number of Lines' %}</span></div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Date' %}</span></div>
+                                                            </div>
+                                                            {% for journal in object.get_journals|slice:':20' %}
+                                                                <!-- .nk-tb-item -->
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">
+                                                                        <a href="{{ journal.get_absolute_url }}"><span>
+                                                                            {{ journal.name }}
+                                                                        </span></a>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span class="badge bg-secondary">
+                                                                            {{ journal.net_balance.type }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span>
+                                                                            {{ journal.get_lines.count }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span>
+                                                                            {{ journal.get_date }}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="container-not-found-base">
+                                                                    <p>{% trans 'Nothing Found' %}</p>
+                                                                </div>
+                                                                <!-- .nk-tb-item -->
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!-- .nk-tb-list -->
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                </div>
+                                                <!-- .card-inner-group -->
+                                            </div>
+                                            <!-- .card -->
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                    <div class="col-12">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content d-flex justify-content-between">
+                                                <h5 class="nk-block-title title">{% trans 'Login Activities' %}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="nk-block">
+                                            <div class="card card-stretch">
+                                                <div class="card-inner-group">
+                                                    <!-- .card-inner -->
+                                                    <div class="card-inner p-2">
+                                                        <div class="nk-tb-list nk-tb-tnx">
+                                                            <div class="nk-tb-item nk-tb-head text-center">
+                                                                <div class="nk-tb-col"><span>{% trans 'IP' %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Agent' %}</span></div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Time' %}</span></div>
+                                                            </div>
+                                                            {% for activity in object.get_login_activities|slice:':20' %}
+                                                                <!-- .nk-tb-item -->
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">
+                                                                        <span class="badge bg-secondary badge-sm fs-15px">{{ activity.ip }}</span>
+                                                                    </div>
+                                                                    <div class="nk-tb-col fs-11px">
+                                                                        {{ activity.agent }}
+                                                                    </div>
+                                                                    <div class="nk-tb-col datetime-convert">
+                                                                        {{ activity.get_created_at }}
+                                                                    </div>
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="container-not-found-base">
+                                                                    <p>{% trans 'Nothing Found' %}</p>
+                                                                </div>
+                                                                <!-- .nk-tb-item -->
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!-- .nk-tb-list -->
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                </div>
+                                                <!-- .card-inner-group -->
+                                            </div>
+                                            <!-- .card -->
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                </div>
+                                <!-- .row -->
+                            </div>
+                            <!-- .components-preview -->
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                {% include 'base/components/footer.html' %}
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+        <!-- modals -->
+        <div class="modal fade" tabindex="-1" id="modal-delete-object" aria-modal="true" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body modal-body-lg text-center">
+                        <div class="nk-modal">
+                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash-empty bg-danger"></em>
+                            <h4 class="nk-modal-title">{% trans 'Delete User' %}</h4>
+                            <div class="nk-modal-text">
+                                <p class="bg-outline-danger">
+                                    Are you sure you want to delete the user
+                                    <b>{{ object.get_full_name }}</b>
+                                    ? By deleting the user, all related items will be removed, and there will be no
+                                    possibility of recovery.
+                                </p>
+                            </div>
+                            <div class="nk-modal-action mt-5">
+                                <a class="btn btn-lg btn-mw btn-light m-1"
+                                   data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
+                                <a href="{% url 'account:user__delete' pk=object.id %}"
+                                   class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete User' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .modal-body -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" tabindex="-1" id="modal-update-object">
+            <div class="modal-dialog modal-dialog-top modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="{% trans 'Close' %}">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Edit' %}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'account:user__update' pk=object.id %}"
+                              class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="first_name">
+                                            {% trans 'First Name' %}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control"
+                                                   name="first_name"
+                                                   placeholder="{% trans 'First Name' %}"
+                                                   id="first_name" required value="{{ object.first_name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="last_name">
+                                            {% trans 'Last Name' %}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="last_name"
+                                                   placeholder="{% trans 'Last Name' %}"
+                                                   id="last_name" required value="{{ object.last_name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="is_active">
+                                            {% trans 'Active Status' %}
+                                        </label>
+                                        <div class="form-control-wrap">
+                                            <select name="is_active" id="is_active" class="form-select js-select2 select-by-value" value="{{ object.is_active }}">
+                                                <option value="false">{% trans 'Inactive' %}</option>
+                                                <option value="true">{% trans 'Active' %}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">
+                                            {% trans 'Email' %}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="form-control-wrap">
+                                            <input type="email" class="form-control" name="email"
+                                                   placeholder="{% trans 'Email(username)' %}"
+                                                   autocomplete="off"
+                                                   id="email" required value="{{ object.email }}">
+                                        </div>
+                                        <div class="form-note">
+                                            {% trans 'Please note that the email must be unique' %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            {% trans 'Update' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" id="modal-update-permissions-object">
+            <div class="modal-dialog modal-dialog-top modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="{% trans 'Close' %}">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Manage User Permissions' %}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'account:user_permission__update' pk=object.id %}"
+                              class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="groups">{% trans 'Permissions' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="groups" name="groups" multiple
+                                                    class="form-select"
+                                                    data-search="on">
+                                                {% for permission_group in permission_groups %}
+                                                    <option value="{{ permission_group.id }}"
+                                                            {% if permission_group in object.groups.all %}selected{% endif %}>{{ permission_group.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            {% trans 'Submit' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end modals -->
+    </div>
+{% endblock %}
+
+
+{% block Script %}
+    <script>
+
+        const values1 = [100, 20, 15, 44, 31, 13, 43, 54, 64, 12, 33, 88, 98, 17];
+        const values2 = [100, 20, 22, 44, 50, 65, 43, 54, 60, 22, 9, 88, 95, 17];
+
+        const backgroundColorsDiff = values1.map((value, index) => {
+            return value === values2[index] ? 'rgb(20,194,115)' : 'rgb(199,25,44)';
+        });
+
+        const chart_of_lines_ctx = document.getElementById('chart_of_lines').getContext('2d');
+
+        const chart_of_lines = new Chart(chart_of_lines_ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Entry 1', 'Entry 2', 'Entry 3', 'Entry 4', 'Entry 5', 'Entry 6', 'Entry 7', 'Entry 8',
+                    'Entry 9', 'Entry 10', 'Entry 11', 'Entry 12', 'Entry 13', 'Entry 14'],
+                datasets: [
+                    {
+                        label: translate('Credit'),
+                        data: values1,
+                        backgroundColor: backgroundColorsDiff,
+                        borderWidth: 1,
+                        borderRadius: 10
+                    },
+                    {
+                        label: translate('Debit'),
+                        data: values2,
+                        backgroundColor: backgroundColorsDiff,
+                        borderWidth: 1,
+                        borderRadius: 10
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            display: true
+                        },
+                    },
+                }
+            }
+        });
+
+    </script>
+
+{% endblock %}

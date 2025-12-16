@@ -1,0 +1,675 @@
+{% extends 'base/base_template.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block Title %}
+    {% trans 'Detail' %}
+    {{ object.get_full_name }}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body ui-rounder has-sidebar no-touch nk-nio-theme
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            <!-- sidebar @s -->
+            {% include 'base/components/menu.html' %}
+            <!-- sidebar @e -->
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                {% include 'base/components/header.html' %}
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between g-3">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">
+                                            {% trans 'Personnel Detail' %}
+                                            <b>{{ object.get_full_name }}</b>
+                                        </h3>
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item"><a
+                                                        href="{% url 'public:index' %}">{% trans 'Home Page' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Personnel Users' %}</a></li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="{% url 'accounting:user_personnel__list' %}">
+                                                        {% trans 'List of Personnel Users' %}
+                                                    </a></li>
+                                                <li class="breadcrumb-item"><a>{{ object.get_full_name }}</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                    <div class="nk-block-head-content d-flex justify-content-between gx-1">
+                                        <div class="dropdown">
+                                            <button
+                                                    class="btn btn-outline-light bg-white d-none d-sm-inline-flex dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                                     <span>
+                                                        {% trans 'Action' %}
+                                                    </span>
+                                                <em class="icon ni ni-setting"></em>
+                                            </button>
+                                            <button
+                                                    class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                                <em class="icon ni ni-setting">
+                                                </em>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <ul class="link-list-opt">
+                                                    {% if perms.accounting.add_personnelcontract %}
+                                                        <li data-bs-toggle="modal"
+                                                            data-bs-target="#modal-create-contract-object">
+                                                            <a class="d-flex justify-content-between text-info">
+                                                                <span>{% trans 'Create Contract' %}</span>
+                                                                <em class="icon ni ni-file-plus"></em>
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                    <li data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-object" class="d-none">
+                                                        <a class="d-flex justify-content-between text-info">
+                                                            <span>{% trans 'Edit' %}</span>
+                                                            <em class="icon ni ni-pen2"></em>
+                                                        </a>
+                                                    </li>
+                                                    <li data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete-object" class="d-none">
+                                                        <a class="d-flex justify-content-between text-danger">
+                                                            <span>{% trans 'Delete' %}</span>
+                                                            <em class="icon ni ni-trash-empty"></em>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="d-none">
+                                            <button data-bs-toggle="modal"
+                                                    data-bs-target="#modal-create-status-object"
+                                                    class="btn btn-outline-success bg-success text-white d-none d-sm-inline-flex">
+                                                         <span>
+                                                            {% trans 'Create Status' %}
+                                                        </span>
+                                                <em class="icon ni ni-property-add"></em>
+                                            </button>
+                                            <button data-bs-toggle="modal"
+                                                    data-bs-target="#modal-create-status-object"
+                                                    class="btn btn-icon btn-outline-success bg-success text-white d-inline-flex d-sm-none">
+                                                <em
+                                                        class="icon ni ni-property-add"></em></button>
+                                        </div>
+
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                </div>
+                                <!-- .nk-block-between -->
+                            </div>
+                            <div class="nk-block">
+                                <div class="row gy-5">
+                                    <div class="col-lg-12">
+                                        <div class="nk-block-head">
+                                            {% if not object.get_active_contracts %}
+                                                <div class="alert alert-icon alert-danger" role="alert">
+                                                    <em class="icon ni ni-cross-circle"></em>
+                                                    {% trans 'This personnel does not have an active contract' %}
+                                                </div>
+                                            {% endif %}
+                                            <div class="nk-block-head-content">
+                                                <h5 class="nk-block-title title">{% trans 'Basic Information' %}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <ul class="data-list is-compact">
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Full Name' %}</div>
+                                                        <div class="data-value">{{ object.get_full_name }}</div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'National ID' %}</div>
+                                                        <div class="data-value">{{ object.national_id }}</div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Position' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-dim badge-sm bg-primary">{{ object.position }}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Department' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-dim badge-sm bg-primary">{{ object.department }}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Created at' %}</div>
+                                                        <div class="data-value datetime-convert">
+                                                            {{ object.get_created_at|default:'-' }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Contact Info' %}</div>
+                                                        <div class="data-value">
+                                                            <pre>{{ object.contact_info|default:'-' }}</pre>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Note' %}</div>
+                                                        <div class="data-value">
+                                                            <pre>{{ object.note|default:'-' }}</pre>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                    <div class="col-12 col-lg-7">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content d-flex justify-content-between">
+                                                <h5 class="nk-block-title title">{% trans 'Contracts' %}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="nk-block">
+                                            <div class="card card-stretch">
+                                                <div class="card-inner-group">
+                                                    <!-- .card-inner -->
+                                                    <div class="card-inner p-2">
+                                                        <div class="nk-tb-list nk-tb-tnx">
+                                                            <div class="nk-tb-item nk-tb-head text-center">
+                                                                <div class="nk-tb-col"><span>{% trans 'Time' %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Base Salary' %}</span></div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Status' %}</span></div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans 'Created at' %}</span></div>
+                                                            </div>
+                                                            {% for contract in object.get_contracts %}
+                                                                <!-- .nk-tb-item -->
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">
+                                                                        <a href="{{ contract.get_absolute_url }}"><span>
+                                                                            {{ contract.start_date }}
+                                                                            <em class="icon ni ni-arrow-long-right"></em>
+                                                                            {% if contract.end_date %}
+                                                                                {{ contract.end_date }}
+                                                                            {% else %}
+                                                                                {% trans 'Forever' %}
+                                                                            {% endif %}
+                                                                        </span></a>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span class="price-el">
+                                                                            {{ contract.base_salary }}
+                                                                        </span>
+                                                                        <span class="currency-label"></span>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        {% if contract.is_active %}
+                                                                            <span class="badge badge-dim bg-success">
+                                                                                {% trans 'Is Active' %}
+                                                                            </span>
+                                                                        {% else %}
+                                                                            <span class="badge badge-dim bg-danger">
+                                                                                {% trans 'Expired' %}
+                                                                            </span>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span class="datetime-convert">{{ contract.get_created_at }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="container-not-found-base">
+                                                                    <p>{% trans 'Nothing Found' %}</p>
+                                                                </div>
+                                                                <!-- .nk-tb-item -->
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!-- .nk-tb-list -->
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                </div>
+                                                <!-- .card-inner-group -->
+                                            </div>
+                                            <!-- .card -->
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                    <div class="col-12 col-lg-5">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h5 class="nk-block-title title">{% trans 'Contacts/Payments Info' %}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <ul class="data-list is-compact">
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Has Active Contract' %}</div>
+                                                        <div class="data-value">
+                                                            {% if object.get_active_contracts %}
+                                                                <em class="icon ni ni-check-circle text-success"></em>
+                                                            {% else %}
+                                                                <em class="icon ni ni-cross-circle text-danger"></em>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Number of Contracts' %}</div>
+                                                        <div class="data-value">{{ object.get_contracts.count }}</div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Number of Payments' %}</div>
+                                                        <div class="data-value">
+                                                            {{ object.get_payroll_items.count }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Number of Period Payments' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="price-el">{{ object.get_payroll_period_payments.count }}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Last Pay' %}</div>
+                                                        <div class="data-value">
+                                                            {% with object.get_payroll_items.first as last_pay %}
+                                                                {% if last_pay %}
+                                                                    <a href="{{ last_pay.get_absolute_url }}">{% trans 'Visit' %}</a>
+                                                                {% else %}
+                                                                    <span class="badge badge-dim bg-warning">{% trans 'Nothing Found' %}</span>
+                                                                {% endif %}
+                                                            {% endwith %}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Total Net Payment' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge badge-sm bg-info">
+                                                                <span class="price-el">{{ object.get_total_net_payment }}</span>
+                                                                <span class="currency-label"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'Avg Base Salary' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge badge-sm bg-info">
+                                                                <span class="price-el"> {{ object.get_avg_base_salary }}</span>
+                                                                <span class="currency-label"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="data-item">
+                                                    <div class="data-col">
+                                                        <div class="data-label">{% trans 'First Contract In' %}</div>
+                                                        <div class="data-value">
+                                                            <span class="badge badge-dim badge-sm bg-secondary datetime-convert">
+                                                                {{ object.get_contracts.last.get_created_at }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- .col -->
+                                </div>
+                                <!-- .row -->
+                            </div>
+                            <!-- .components-preview -->
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                {% include 'base/components/footer.html' %}
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+        <!-- modals -->
+        <div class="modal fade" tabindex="-1" id="modal-delete-object" aria-modal="true" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body modal-body-lg text-center">
+                        <div class="nk-modal">
+                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash-empty bg-danger"></em>
+                            <h4 class="nk-modal-title">{% trans 'Delete Account' %}</h4>
+                            <div class="nk-modal-text">
+                                <p class="bg-outline-danger">
+                                    Are you sure you want to delete the account
+                                    <b>{{ object.name }}</b>
+                                    ? By deleting the account, all related items will be removed, and there will be no
+                                    possibility of recovery.
+                                </p>
+                            </div>
+                            <div class="nk-modal-action mt-5">
+                                <a class="btn btn-lg btn-mw btn-light m-1"
+                                   data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
+                                <a href="{% url 'accounting:account__delete' pk=object.id %}"
+                                   class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete Account' %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .modal-body -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" tabindex="-1" id="modal-update-object">
+            <div class="modal-dialog modal-dialog-top" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="{% trans 'Close' %}">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Edit' %}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'accounting:account__update' pk=object.id %}"
+                              class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="name">{% trans 'Name' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="name"
+                                                   placeholder="{% trans 'Name' %}"
+                                                   id="name" required value="{{ object.name|default:'' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="code">{% trans 'Code' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" class="form-control" name="code"
+                                                   placeholder="{% trans 'Code' %}"
+                                                   id="code" required value="{{ object.code|default:'' }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if object.parent %}
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="code">{% trans 'Parent' %}</label>
+                                            <div class="form-control-wrap">
+                                                <select id="parent" name="parent"
+                                                        class="form-select js-select2 select-by-value"
+                                                        value="{{ object.parent.id }}" data-search="on">
+                                                    {% for account in accounts %}
+                                                        <option value="{{ account.id }}">{{ account.name }}
+                                                            | {{ account.code }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="is_active">{% trans 'Status' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="is_active" name="is_active"
+                                                    class="form-select js-select2 select-by-value"
+                                                    value="{{ object.is_active }}" data-search="on">
+                                                <option value="true">{% trans 'Active' %}</option>
+                                                <option value="false">{% trans 'Disable' %}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="description">{% trans 'Description' %}</label>
+                                        <div class="form-control-wrap">
+                                                                <textarea name="description" id="description"
+                                                                          class="form-control"
+                                                                          placeholder="{% trans 'Description' %}">{{ object.description|default:'' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            {% trans 'Update' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" tabindex="-1" id="modal-create-contract-object">
+            <div class="modal-dialog modal-dialog-top modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-dismiss="modal" aria-label="{% trans 'Close' %}">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Create Contract' %}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'accounting:user_personnel_contract__create' %}"
+                              class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="personnel" value="{{ object.pk }}">
+                            <div class="row g-4">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="start_date">{% trans 'Start Date' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" name="start_date" id="start_date" required
+                                                   class="form-control date-picker-alt"
+                                                   placeholder="{% trans 'Start Date' %}" readonly>
+                                        </div>
+                                        <div class="form-note">{% trans 'Date Format' %}
+                                            <code>
+                                                {% trans 'Year-Month-Day' %}
+                                            </code>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="end_date">{% trans 'End Date' %}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="text" name="end_date" id="end_date"
+                                                   class="form-control date-picker-alt"
+                                                   placeholder="{% trans 'End Date' %}" readonly>
+                                        </div>
+                                        <div class="form-note">{% trans 'Date Format' %}
+                                            <code>
+                                                {% trans 'Year-Month-Day' %}
+                                            </code>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="base_salary">{% trans 'Base Salary' %}</label>
+                                        <div class="form-control-wrap form-number-child">
+                                            <input type="number" class="form-control" name="base_salary"
+                                                   placeholder="{% trans 'Base Salary' %}"
+                                                   id="base_salary" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="allowance">{% trans 'Allowance' %}</label>
+                                        <div class="form-control-wrap form-number-child">
+                                            <input type="number" class="form-control" name="allowance"
+                                                   placeholder="{% trans 'Allowance' %}"
+                                                   id="allowance" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="insurance_rate">{% trans 'Insurance Rate' %}</label>
+                                        <div class="form-control-wrap form-number-child" data-currency="false">
+                                            <input type="number" class="form-control" name="insurance_rate"
+                                                   placeholder="{% trans 'Insurance Rate' %}"
+                                                   id="insurance_rate" required value="7.0" step="0.1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="tax_group">{% trans 'Tax Group' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="tax_group" name="tax_group"
+                                                    class="form-select js-select2" data-search="on"
+                                                    tabindex="-1" aria-hidden="true">
+                                                {% for tax_group in tax_groups %}
+                                                    <option value="{{ tax_group.id }}">{{ tax_group }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="account_recv">{% trans 'Account Payable' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="account_recv" name="payable_account"
+                                                    class="form-select js-select2" data-search="on"
+                                                    tabindex="-1" aria-hidden="true">
+                                                {% for account in accounts %}
+                                                    <option value="{{ account.id }}">{{ account }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="wage_expense_account">{% trans 'Account Wage Expense' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="wage_expense_account" name="wage_expense_account"
+                                                    class="form-select js-select2" data-search="on"
+                                                    tabindex="-1" aria-hidden="true">
+                                                {% for account in accounts %}
+                                                    <option value="{{ account.id }}">{{ account }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="deduction_account">{% trans 'Account Deduction' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="deduction_account" name="deduction_account"
+                                                    class="form-select js-select2" data-search="on"
+                                                    tabindex="-1" aria-hidden="true">
+                                                {% for account in accounts %}
+                                                    <option value="{{ account.id }}">{{ account }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="insurance_payable_account">{% trans 'Account Insurance Payble' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select id="insurance_payable_account" name="insurance_payable_account"
+                                                    class="form-select js-select2" data-search="on"
+                                                    tabindex="-1" aria-hidden="true">
+                                                {% for account in accounts %}
+                                                    <option value="{{ account.id }}">{{ account }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="note">{% trans 'Note' %}</label>
+                                        <div class="form-control-wrap">
+                                                                <textarea name="note" id="note"
+                                                                          class="form-control"
+                                                                          placeholder="{% trans 'Note' %}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="attach_file">{% trans 'Attach File' %}</label>
+                                        <div class="form-control-wrap">
+                                            <div class="form-file">
+                                                <input type="file" name="attached_file" class="form-file-input"
+                                                       id="attach_file_label">
+                                                <label class="form-file-label"
+                                                       for="attach_file_label">{% trans 'Select File' %}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 text-left">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-lg btn-primary">
+                                            {% trans 'Create Contract' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modals -->
+    </div>
+{% endblock %}

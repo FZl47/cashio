@@ -1,0 +1,202 @@
+{% extends 'base/base_template.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block Title %}
+    {% trans 'Create System User' %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body ui-rounder has-sidebar no-touch nk-nio-theme
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            {% include 'base/components/menu.html' %}
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                {% include 'base/components/header.html' %}
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between g-3">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">{% trans 'Create System User' %}</h3>
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item"><a
+                                                        href="{% url 'public:index' %}">{% trans 'Home Page' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
+                                                <li class="breadcrumb-item"><a
+                                                        href="{% url 'account:user__list' %}">{% trans 'System Users' %}</a>
+                                                </li>
+                                                <li class="breadcrumb-item active">{% trans 'Create System User' %}</li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                    <div class="nk-block-head-content">
+                                        <div class="toggle-wrap nk-block-tools-toggle">
+                                            <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                               data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                            <div class="toggle-expand-content" data-content="pageMenu">
+                                                <ul class="nk-block-tools g-3">
+                                                    <li class="nk-block-tools-opt">
+                                                        <div class="drodown">
+                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-primary"
+                                                               data-bs-toggle="dropdown"><em
+                                                                    class="icon ni ni-plus"></em></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <ul class="link-list-opt no-bdr">
+                                                                    <li>
+                                                                        <a href="#"><span>{% trans 'Import' %}</span></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                </div>
+                                <!-- .nk-block-between -->
+                            </div>
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block nk-block-lg">
+                                    <div class="card">
+                                        <div class="card-inner">
+                                            <div class="card-head">
+                                                <h5 class="card-title">{% trans 'User Information' %}</h5>
+                                            </div>
+                                            <form class="form-validate is-alter" id="form"
+                                                  method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="row g-4">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="first_name">
+                                                                {% trans 'First Name' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" class="form-control"
+                                                                       name="first_name"
+                                                                       placeholder="{% trans 'First Name' %}"
+                                                                       id="first_name" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="last_name">
+                                                                {% trans 'Last Name' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" class="form-control" name="last_name"
+                                                                       placeholder="{% trans 'Last Name' %}"
+                                                                       id="last_name" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email">
+                                                                {% trans 'Email' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="email" class="form-control" name="email"
+                                                                       placeholder="{% trans 'Email(username)' %}"
+                                                                       autocomplete="off"
+                                                                       id="email" required>
+                                                            </div>
+                                                            <div class="form-note">
+                                                                {% trans 'Please note that the email must be unique' %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="password">
+                                                                {% trans 'Password' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="password" class="form-control"
+                                                                       name="password" minlength="8" autocomplete="off"
+                                                                       placeholder="{% trans 'Password' %}"
+                                                                       id="password" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="password2">
+                                                                {% trans 'Password Confirm' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="password" class="form-control"
+                                                                       minlength="8" name="password2" autocomplete="off"
+                                                                       placeholder="{% trans 'Password Confirm' %}"
+                                                                       id="password2" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 text-left">
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-lg btn-primary">
+                                                                {% trans 'Create' %}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- .components-preview -->
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                {% include 'base/components/footer.html' %}
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+{% endblock %}
+
+{% block Script %}
+    <script>
+        $('#form').validate({
+            rules: {
+                password: "required",
+                password2: {
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                password2: {
+                    equalTo: translate('Passwords is Not Same')
+                }
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,10 @@
+<li>
+    <a href="{{ node.get_absolute_url }}" active="{{ node.is_active|lower }}">{{ node }}</a>
+  {% if node.get_children %}
+    <ul>
+      {% for child in node.get_children %}
+        {% include "accounting/account/components/node.html" with node=child %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</li>

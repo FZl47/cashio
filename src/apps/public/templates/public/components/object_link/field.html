@@ -1,0 +1,28 @@
+{% load i18n %}
+
+<div class="col-lg-12">
+    <div class="form-group">
+        <label class="form-label" for="object_id_rel">
+            {% trans 'Object Link' %}
+            <span>
+            <em class="icon ni ni-info" data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                title="{% trans 'You can use this field to link this item to any other item.' %}"></em>
+        </span>
+        </label>
+        <div class="form-control-wrap">
+            <button
+                    id="object_link_select_btn"
+                    data-bs-toggle="modal"
+                    type="button"
+                    data-bs-target="#modal-object-link"
+                    class="form-select text-start"
+                    style="padding: 7px 10px;border-radius: 7px"
+                    tabindex="-1" aria-hidden="true">
+                -
+            </button>
+            <input type="hidden" id="object_id_rel" name="object_id_rel">
+            <input type="hidden" id="content_type_rel" name="content_type_rel">
+        </div>
+    </div>
+</div>

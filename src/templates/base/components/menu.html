@@ -1,0 +1,307 @@
+{% load static %}
+{% load i18n %}
+
+<div class="nk-aside" data-content="sidebarMenu" data-content="sideNav" data-toggle-overlay="true" data-toggle-screen="lg" data-toggle-body="true">
+    <div class="nk-sidebar-element nk-sidebar-head">
+        <div class="nk-menu-trigger me-n2">
+            <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em
+                    class="icon ni ni-arrow-left"></em></a>
+        </div>
+    </div>
+    <div class="nk-sidebar-element">
+        <div class="nk-sidebar-content">
+            <div class="nk-sidebar-menu" data-simplebar>
+                <ul class="nk-menu">
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-heading">
+                        <h6 class="overline-title text-primary-alt">{% trans 'Menu and Sections' %}</h6>
+                    </li>
+                    <!-- .nk-menu-heading -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
+                            <span class="nk-menu-text">پروژه ها</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/project-card.html" class="nk-menu-link"><span class="nk-menu-text">کارت های پروژه</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/project-list.html" class="nk-menu-link"><span class="nk-menu-text">لیست پروژه ها</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
+                            <span class="nk-menu-text">مدیریت کاربران</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/user-list-regular.html" class="nk-menu-link"><span class="nk-menu-text">لیست کاربران - عادی</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/user-list-compact.html" class="nk-menu-link"><span class="nk-menu-text">لیست کاربران - فشرده</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/user-details-regular.html" class="nk-menu-link"><span
+                                        class="nk-menu-text">مشخصات کاربر - عادی</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/user-profile-regular.html" class="nk-menu-link"><span
+                                        class="nk-menu-text">پروفایل کاربر - عادی</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/user-card.html" class="nk-menu-link"><span class="nk-menu-text">تماس با کاربر - کارت</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-user-list"></em></span>
+                            <span class="nk-menu-text">مشتریان</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/customer-list.html" class="nk-menu-link"><span class="nk-menu-text">لیست مشتریان</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/customer-details.html" class="nk-menu-link"><span class="nk-menu-text">مشخصات مشتری</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-tranx"></em></span>
+                            <span class="nk-menu-text">سفارشات و فاکتورها</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/history-payment.html" class="nk-menu-link"><span class="nk-menu-text">تاریخچه پرداخت ها</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/history-invoice-list.html" class="nk-menu-link"><span
+                                        class="nk-menu-text">لیست فاکتورها</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/history-invoice.html" class="nk-menu-link"><span class="nk-menu-text">جزئیات فاکتور</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-card-view"></em></span>
+                            <span class="nk-menu-text">محصولات</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/product-list.html" class="nk-menu-link"><span class="nk-menu-text">لیست محصولات</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/product-card.html" class="nk-menu-link"><span class="nk-menu-text">کارت های محصول</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/product-details.html" class="nk-menu-link"><span class="nk-menu-text">جزئیات محصول</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="html/pricing-table.html" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-view-col"></em></span>
+                            <span class="nk-menu-text">جداول قیمت گذاری</span>
+                        </a>
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="html/gallery.html" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-img"></em></span>
+                            <span class="nk-menu-text">گالری تصاویر</span>
+                        </a>
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-help-alt"></em></span>
+                            <span class="nk-menu-text">پشتیبانی و تیکت ها</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/support-kb.html" class="nk-menu-link"><span class="nk-menu-text">پشتیبانی - دانش بنیان</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/support-kb-topics.html" class="nk-menu-link"><span class="nk-menu-text">پشتیبانی - مقالات دانش بنیان</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/support-kb-details.html" class="nk-menu-link"><span class="nk-menu-text">پشتیبانی - جزئیات دانش بنیان</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/ticket-list.html" class="nk-menu-link"><span class="nk-menu-text">لیست تیکت ها</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/ticket-details.html" class="nk-menu-link"><span class="nk-menu-text">جزئیات تیکت</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/history-invoice.html" class="nk-menu-link"><span class="nk-menu-text">جزئیات فاکتور</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-signin"></em></span>
+                            <span class="nk-menu-text">صفحه های احراز هویت</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/pages/auths/auth-login.html" class="nk-menu-link" target="_blank"><span
+                                        class="nk-menu-text">ورود</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/auths/auth-register.html" class="nk-menu-link" target="_blank"><span
+                                        class="nk-menu-text">ثبت نام / عضویت</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/auths/auth-reset.html" class="nk-menu-link" target="_blank"><span
+                                        class="nk-menu-text">فراموشی رمز عبور</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/auths/auth-success.html" class="nk-menu-link" target="_blank"><span
+                                        class="nk-menu-text">موفقیت آمیز / تایید</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="#" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-text">نسخه کلاسیک - نسخه 2</span></a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-login-v2.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">ورود</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">ثبت نام / عضویت</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">فراموشی رمز عبور</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-success-v2.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">موفقیت آمیز / تایید</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="#" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-text">نسخه بدون اسلایدر - نسخه 3</span></a>
+                                <ul class="nk-menu-sub">
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-login-v3.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">ورود</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-register-v3.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">ثبت نام / عضویت</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-reset-v3.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">فراموشی رمز عبور</span></a>
+                                    </li>
+                                    <li class="nk-menu-item">
+                                        <a href="html/pages/auths/auth-success-v3.html" class="nk-menu-link"
+                                           target="_blank"><span class="nk-menu-text">موفقیت آمیز / تایید</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-files"></em></span>
+                            <span class="nk-menu-text">صفحه های خطا</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/pages/errors/404-classic.html" target="_blank" class="nk-menu-link"><span
+                                        class="nk-menu-text">404 کلاسیک</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/errors/504-classic.html" target="_blank" class="nk-menu-link"><span
+                                        class="nk-menu-text">504 کلاسیک</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/errors/404-s1.html" target="_blank" class="nk-menu-link"><span
+                                        class="nk-menu-text">404 مدرن</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/errors/504-s1.html" target="_blank" class="nk-menu-link"><span
+                                        class="nk-menu-text">504 مدرن</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-files"></em></span>
+                            <span class="nk-menu-text">سایر صفحه ها</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="html/_blank.html" class="nk-menu-link"><span class="nk-menu-text">خالی / راه اندازی</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/pricing.html" class="nk-menu-link"><span class="nk-menu-text">طرح های قیمت گذاری</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/faqs.html" class="nk-menu-link"><span class="nk-menu-text">سوالات متداول / راهنمایی</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/contact.html" class="nk-menu-link"><span
+                                        class="nk-menu-text">تماس</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/terms-policy.html" class="nk-menu-link"><span class="nk-menu-text">شرایط و ضوابط / سیاست</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/regular-v1.html" class="nk-menu-link"><span class="nk-menu-text">صفحه عادی - نسخه 1</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="html/pages/regular-v2.html" class="nk-menu-link"><span class="nk-menu-text">صفحه عادی - نسخه 2</span></a>
+                            </li>
+                        </ul>
+                        <!-- .nk-menu-sub -->
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'public:index' %}#" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-home"></em></span>
+                            <span class="nk-menu-text">{% trans 'Home Page' %}</span>
+                        </a>
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'account:logout' %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>
+                            <span class="nk-menu-text">{% trans 'Logout' %}</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- .nk-menu -->
+            </div>
+
+            <!-- .nk-sidebar-menu -->
+        </div>
+        <!-- .nk-sidebar-content -->
+    </div>
+</div>

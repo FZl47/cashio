@@ -1,0 +1,53 @@
+{% load i18n %}
+
+<div class="nk-tb-item text-center">
+    <div class="nk-tb-col">
+        <a href="{{ journal_line.get_absolute_url }}">
+            <span>{{ journal_line.name|truncatechars:'40' }}</span>
+        </a>
+    </div>
+    <div class="nk-tb-col">
+        <a href="{{ journal_line.account.get_absolute_url }}"><span>{{ journal_line.account.name|truncatechars:'40' }}</span></a>
+    </div>
+    <div class="nk-tb-col">
+        <a href="{{ journal_line.entry.get_absolute_url }}"><span>{{ journal_line.entry.name|truncatechars:'40' }}</span></a>
+    </div>
+    <div class="nk-tb-col">
+        <div class="d-inline-block">
+            <span class="price-el">
+                {{ journal_line.get_debit }}
+            </span>
+            <span class="currency-convert-label">{{ journal_line.debit_base_currency }}</span>
+        </div>
+        <div class="d-inline-block badge badge-dim bg-info">
+            <span class="price-el">
+                {{ journal_line.get_debit_org }}
+            </span>
+            <span class="currency-convert-label">{{ journal_line.debit_default_currency }}</span>
+        </div>
+    </div>
+    <div class="nk-tb-col">
+        <div class="d-inline-block">
+            <span class="price-el">
+                {{ journal_line.get_credit }}
+            </span>
+            <span class="currency-convert-label">{{ journal_line.credit_base_currency }}</span>
+        </div>
+        <div class="d-inline-block badge badge-dim bg-info">
+            <span class="price-el">
+                {{ journal_line.get_credit_org }}
+            </span>
+            <span class="currency-convert-label">{{ journal_line.credit_default_currency }}</span>
+        </div>
+    </div>
+    <div class="nk-tb-col">
+        <span class="datetime-convert">{{ journal_line.get_created_at }}</span>
+    </div>
+    <div class="nk-tb-col">
+        {% if journal_line.has_multiple_currencies %}
+            <span class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="{% trans 'Has Multiple Currencies' %}">
+                <em class="icon ni ni-bar-c"></em>
+            </span>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="card-inner">
+    <ul class="pagination justify-content-center justify-content-md-start">
+        {% if pagination.has_previous %}
+            <li class="page-item"><a class="page-link add-params-to-href"
+                                     href="?{{ page_name|default:'page' }}=1">{% trans 'First' %}</a></li>
+            <li class="page-item"><a class="page-link add-params-to-href"
+                                     href="?{{ page_name|default:'page' }}={{ pagination.previous_page_number }}">{% trans 'Previous' %}</a>
+            </li>
+        {% endif %}
+
+        <span class="current page-link">
+            {% trans 'Page' %} {{ pagination.number }} {% trans 'of' %} {{ pagination.paginator.num_pages }}.
+        </span>
+
+        {% if pagination.has_next %}
+            <li class="page-item"><a class="page-link add-params-to-href"
+                                     href="?{{ page_name|default:'page' }}={{ pagination.next_page_number }}">{% trans 'Next' %}</a>
+            </li>
+            <li class="page-item"><a class="page-link add-params-to-href"
+                                     href="?{{ page_name|default:'page' }}={{ pagination.paginator.num_pages }}">{% trans 'Last' %}</a>
+            </li>
+        {% endif %}
+
+    </ul>
+</div>

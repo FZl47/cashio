@@ -1,0 +1,86 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="shortcut icon" href="{% static 'images/logo/logo.png' %}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css"/>
+    <!-- Must be in Head -->
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
+
+    <title>
+        {% block Title %}
+
+        {% endblock %}
+        |
+        Cashio
+
+    </title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notify.css' %}">
+
+    {% if LANGUAGE_CODE == 'fa' %}
+        {# Select Main Css File by Language(RTL or LTR) #}
+        <link rel="stylesheet" href="{% static 'css/dashlite.rtl.css' %}"/>
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/dashlite.css' %}"/>
+    {% endif %}
+
+    <link id="skin-default" rel="stylesheet" href="{% static 'css/theme.css' %}"/>
+
+    {% block Link %}
+    {% endblock %}
+
+    {% block Style %}
+    {% endblock %}
+
+</head>
+<body class="{% block BodyClass %}{% endblock %}">
+{% block Content %}
+{% endblock %}
+<script>
+    const CSRF_TOKEN = '{{ csrf_token }}'
+    const LANGUAGE_CODE = "{{ LANGUAGE_CODE }}"
+</script>
+
+<script src="{% static 'translate/main.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="{% static 'js/urls.js' %}"></script>
+<script src="{% static 'js/notify.js' %}"></script>
+
+<script src="{% static 'js/base.js' %}"></script>
+
+
+<script src="{% static 'js/bundle.js' %}"></script>
+<script src="{% static 'js/scripts.js' %}"></script>
+<script src="{% static 'js/charts/gd-default.js' %}"></script>
+<script src="{% static 'js/charts/gd-default.js' %}"></script>
+<script src="{% static 'js/jdate.js' %}"></script>
+
+
+
+<script>
+
+    {% for message in messages %}
+        createNotify({
+            title: '{{ message.tags }}' == 'success' ? '{% trans 'Success' %}' : '{% trans 'Error' %}',
+            message: '{{ message }}',
+            theme: '{{ message.tags }}'
+        })
+    {% endfor %}
+
+</script>
+
+{% block Script %}
+{% endblock %}
+
+{% block Js %}
+{% endblock %}
+</body>
+
+</html>

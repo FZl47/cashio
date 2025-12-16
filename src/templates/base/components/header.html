@@ -1,0 +1,182 @@
+{% load static %}
+{% load i18n %}
+
+<div class="nk-header nk-header-fixed is-light">
+    <div class="container-xl wide-xl">
+        <div class="nk-header-wrap">
+            <div class="nk-menu-trigger d-xl-none ms-n1 me-3">
+                <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em
+                        class="icon ni ni-menu"></em></a>
+            </div>
+            <div class="nk-header-brand d-xl-none">
+                <a href="{% url 'public:index' %}" class="logo-link">
+                    <img class="logo-light logo-img" src="{% static 'images/logo/logo.png' %}"
+                         srcset="{% static 'images/logo/logo.png' %} 2x" alt="Logo"/>
+                    <img class="logo-dark logo-img" src="{% static 'images/logo/logo-dark.png' %}"
+                         srcset="{% static 'images/logo/logo-dark.png' %} 2x" alt="Dark logo"/>
+                </a>
+            </div>
+            <!-- .nk-header-brand -->
+            <div class="nk-header-menu is-light">
+                <div class="nk-header-menu-inner">
+                    <!-- Menu -->
+                    <ul class="nk-menu nk-menu-main">
+                        <li class="nk-menu-item">
+                                <a href="{% url 'public:index' %}" class="logo-link">
+                    <img class="logo-light logo-img" src="{% static 'images/logo/logo.png' %}"
+                         srcset="{% static 'images/logo/logo.png' %} 2x" alt="Logo"/>
+                    <img class="logo-dark logo-img" src="{% static 'images/logo/logo-dark.png' %}"
+                         srcset="{% static 'images/logo/logo-dark.png' %} 2x" alt="Dark logo"/>
+                </a>
+                        </li>
+                        <!-- .nk-menu-item -->
+                    </ul>
+                    <!-- Menu -->
+                </div>
+            </div>
+            <!-- .nk-header-menu -->
+            <div class="nk-header-tools">
+                <ul class="nk-quick-nav">
+                    <li class="dropdown chats-dropdown hide-mb-sm">
+                        <button class="nk-quick-nav-icon btn" onclick="_showTour()">
+                            <div class="icon-status icon-status-na"><em style="font-size: 1.5rem;"
+                                                                        class="icon ni ni-help"></em></div>
+                        </button>
+                    </li>
+                    <li class="dropdown chats-dropdown hide-mb-sm">
+                        <a href="{% url 'account:logout' %}" class="nk-quick-nav-icon">
+                            <div class="icon-status icon-status-na"><em
+                                    class="icon ni ni-signout"></em></div>
+                        </a>
+                    </li>
+                    <!-- .dropdown -->
+                    <li class="dropdown notification-dropdown">
+                        <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                            <div class="{% if user.get_unread_notifications.count > 0 %}icon-status icon-status-info{% endif %}">
+                                <em class="icon ni ni-bell"></em>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end">
+                            <div class="dropdown-head">
+                                <span class="sub-title nk-dropdown-title">{% trans 'Notifications' %}</span>
+                                <a href="#">
+                                    {% trans 'Mark All as Read' %}
+                                </a>
+                            </div>
+                            <div class="dropdown-body">
+                                <div class="nk-notification">
+                                    {% for notification in user.get_unread_notifications|slice:':8' %}
+                                        <div class="nk-notification-item dropdown-inner">
+                                            <div class="nk-notification-content">
+                                                <div class="nk-notification-text">
+                                                    <a href="{{ notification.get_absolute_url }}"
+                                                       class="text-soft fs-15px">{{ notification.title|truncatechars:40 }}</a>
+                                                </div>
+                                                <div class="nk-notification-time datetime-convert">{{ notification.get_created_at }}</div>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <p class="text-center m-5">{% trans 'No New Notifications' %}</p>
+                                    {% endfor %}
+                                </div>
+                                <!-- .nk-notification -->
+                            </div>
+                            <!-- .nk-dropdown-body -->
+                            <div class="dropdown-foot center">
+                                <a href="#">{% trans 'View All' %}</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown language-dropdown me-n1">
+                        <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                            <div class="quick-icon border border-light">
+                                <img class="icon" src="{% static 'images/public/lang' %}/{{ LANGUAGE_CODE }}.png"
+                                     alt="{{ LANGUAGE_CODE }}"/>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <ul class="language-list">
+                                <li>
+                                    <a href="{% url 'public:set_lang' lang='fa' %}" class="language-item">
+                                        <img src="{% static 'images/public/lang/fa.png' %}" alt="فارسی"
+                                             class="language-flag"/>
+                                        <span class="language-name">فارسی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'public:set_lang' lang='en' %}" class="language-item">
+                                        <img src="{% static 'images/public/lang/en.png' %}" alt="English"
+                                             class="language-flag"/>
+                                        <span class="language-name">English</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'public:set_lang' lang='it' %}" class="language-item">
+                                        <img src="{% static 'images/public/lang/it.png' %}" alt="Italiano"
+                                             class="language-flag"/>
+                                        <span class="language-name">Italiano</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="dropdown user-dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                            <div class="user-toggle">
+                                <div class="user-avatar sm">
+                                    <em class="icon ni ni-user-alt"></em>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end">
+                            <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+                                <div class="user-card">
+                                    <div class="user-avatar">
+                                        <span>
+                                            {{ user.first_name|slice:':1' }}
+                                            {{ user.last_name|slice:':1' }}
+                                        </span>
+                                    </div>
+                                    <div class="user-info">
+                                        <span class="lead-text">{{ user.get_full_name }}</span>
+                                        <span class="sub-text">{{ user.get_email }}</span>
+                                        <div>
+                                            {{ user.email }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-inner">
+                                <ul class="link-list">
+                                    <li>
+                                        <a href="#"><em
+                                                class="icon ni ni-user-alt"></em><span>{% trans 'View Profile' %}</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><em
+                                                class="icon ni ni-activity-alt"></em><span>{% trans 'Login Activity' %}</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="dark-switch" href="#"><em
+                                                class="icon ni ni-moon"></em><span>{% trans 'Dark mode' %}</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-inner">
+                                <ul class="link-list">
+                                    <li>
+                                        <a href="{% url 'account:logout' %}"><em
+                                                class="icon ni ni-signout"></em><span>{% trans 'Logout' %}</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- .nk-header-tools -->
+        </div>
+        <!-- .nk-header-wrap -->
+    </div>
+    <!-- .container-fliud -->
+</div>

@@ -1,0 +1,258 @@
+{% extends 'base/base_template.html' %}
+{% load static i18n %}
+
+{% block Title %}
+    {% trans "Journal List" %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body ui-rounder has-sidebar no-touch nk-nio-theme
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <div class="nk-main">
+            {% include 'base/components/menu.html' %}
+            <div class="nk-wrap">
+                {% include 'base/components/header.html' %}
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between g-3">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">{% trans "Journal List" %}</h3>
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item"><a
+                                                        href="{% url 'public:index' %}">{% trans "Home Page" %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans "Journals" %}</a></li>
+                                                <li class="breadcrumb-item active">{% trans "Journal List" %}</li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <div class="nk-block-head-content">
+                                        <div class="toggle-wrap nk-block-tools-toggle">
+                                            <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                               data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                            <div class="toggle-expand-content" data-content="pageMenu">
+                                                <ul class="nk-block-tools g-3">
+                                                    <li>
+                                                        <a href="#" class="btn btn-white btn-dim btn-outline-light">
+                                                            <em class="icon ni ni-download-cloud"></em>
+                                                            <span>{% trans "Export" %}</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% with qs=request.GET %}
+                                <div class="nk-block">
+                                    <div class="card card-stretch">
+                                        <div class="card-inner-group">
+                                            <div class="card-inner">
+                                                <div class="card-title-group">
+                                                    <div class="card-title">
+                                                        <h5 class="title">
+                                                            {% trans "Journal List" %}
+                                                            <span class="fs-15px">({{ data_count }})</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-tools me-n1">
+                                                        <ul class="btn-toolbar gx-1">
+                                                            <li>
+                                                                <div class="dropdown">
+                                                                    <a href="#"
+                                                                       class="btn btn-trigger btn-icon dropdown-toggle"
+                                                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        {% if qs.filter %}
+                                                                            <div class="dot dot-primary"></div>
+                                                                        {% endif %}
+                                                                        <em class="icon ni ni-filter-alt"></em>
+                                                                    </a>
+                                                                    <div class="filter-wg dropdown-menu dropdown-menu-xl dropdown-menu-end">
+                                                                        <div class="dropdown-head">
+                                                                            <span class="sub-title dropdown-title">{% trans "Advanced Filter" %}</span>
+                                                                        </div>
+                                                                        <div class="dropdown-body dropdown-body-rg">
+                                                                            <form class="add-params-to-form">
+                                                                                <input type="hidden" name="filter"
+                                                                                       value="true">
+                                                                                <div class="row gx-6 gy-4">
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="overline-title overline-title-alt">{% trans "Sort By" %}</label>
+                                                                                            <select class="form-select js-select2 select-by-filter"
+                                                                                                    name="sort_by"
+                                                                                                    tabindex="-1"
+                                                                                                    aria-hidden="true">
+                                                                                                <option value="latest">{% trans "Latest" %}</option>
+                                                                                                <option value="oldest">{% trans "Oldest" %}</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 text-left">
+                                                                                        <div class="form-group">
+                                                                                            <button type="submit"
+                                                                                                    class="btn btn-secondary">{% trans "Filter" %}</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="dropdown-foot between">
+                                                                            <a class="clickable"
+                                                                               href="{% url 'accounting:journal__list' %}">{% trans "Reset Filter" %}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#"
+                                                                   class="search-toggle toggle-search btn btn-icon"
+                                                                   data-target="search">
+                                                                    <em class="icon ni ni-search"></em>
+                                                                    {% if qs.search %}
+                                                                        <div class="dot dot-primary"></div>
+                                                                    {% endif %}
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="card-search search-wrap" data-search="search">
+                                                        <div class="search-content">
+                                                            <form class="add-params-to-form">
+                                                                <a href="#"
+                                                                   class="search-back btn btn-icon toggle-search"
+                                                                   data-target="search"><em
+                                                                        class="icon ni ni-arrow-left"></em></a>
+                                                                <input type="text" name="search"
+                                                                       class="form-control border-transparent form-focus-none"
+                                                                       placeholder="{% trans "Quick Search by Name" %}"
+                                                                       value="{{ qs.search }}">
+                                                                <button class="search-submit btn btn-icon"><em
+                                                                        class="icon ni ni-search"></em></button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-inner p-0">
+                                                <div class="nk-tb-list nk-tb-tnx">
+                                                    <div class="nk-tb-item nk-tb-head text-center">
+                                                        <div class="nk-tb-col"><span>{% trans "Code" %}</span></div>
+                                                        <div class="nk-tb-col"><span>{% trans "Name" %}</span></div>
+                                                        <div class="nk-tb-col"><span>{% trans "Date" %}</span></div>
+                                                        <div class="nk-tb-col"><span>{% trans "Lines Count" %}</span>
+                                                        </div>
+                                                        <div class="nk-tb-col"><span>{% trans "Balance Status" %}</span>
+                                                        </div>
+                                                        <div class="nk-tb-col"><span>{% trans "Status" %}</span></div>
+                                                        <div class="nk-tb-col nk-tb-col-tools"></div>
+                                                    </div>
+                                                    {% for journal in data %}
+                                                        <div class="nk-tb-item text-center">
+                                                            <div class="nk-tb-col">
+                                                                <a href="{{ journal.get_absolute_url }}">
+                                                                    <div class="nk-tnx-type-text">
+                                                                        <span>{{ journal.code|truncatechars:30 }}</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <a href="{{ journal.get_absolute_url }}"
+                                                                   class="text-white">
+                                                                    <div class="nk-tnx-type-text">
+                                                                        <span>{{ journal.name|truncatechars:30 }}</span>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="badge badge-dim bg-info">{{ journal.get_date }}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span>{{ journal.get_lines.count }}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                {% if journal.is_balanced %}
+                                                                    <span class="text-success">
+                                                                        {% trans 'Balanced' %}
+                                                                        <em class="icon ni ni-check-c"></em>
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span class="text-danger">
+                                                                        {% trans 'Not Balanced' %}
+                                                                        <em class="icon ni ni-cross-c"></em>
+                                                                    </span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                {% with journal.get_statuses_need_total_count as total_count %}
+                                                                    {% if total_count == journal.get_confirmed_statuses.count %}
+                                                                        <span class="text-success">
+                                                                            {% trans 'Confirmed' %}
+                                                                            <em class="icon ni ni-check-c"></em>
+                                                                        </span>
+                                                                    {% else %}
+                                                                        <span class="badge badge-dim badge-sm bg-warning">
+                                                                            {{ journal.get_confirmed_statuses.count }}/{{ total_count }}
+                                                                        </span>
+                                                                    {% endif %}
+                                                                {% endwith %}
+                                                            </div>
+                                                            <div class="nk-tb-col nk-tb-col-tools">
+                                                                <ul class="nk-tb-actions gx-2">
+                                                                    <li class="nk-tb-action-hidden">
+                                                                        <a href="{{ journal.get_absolute_url }}"
+                                                                           class="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
+                                                                           aria-label="{% trans "Details" %}"
+                                                                           data-bs-original-title="{% trans "Details" %}"><em
+                                                                                class="icon ni ni-eye"></em></a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="dropdown">
+                                                                            <a href="#"
+                                                                               class="dropdown-toggle bg-white btn btn-sm btn-outline-light btn-icon"
+                                                                               data-bs-toggle="dropdown"
+                                                                               aria-expanded="false"><em
+                                                                                    class="icon ni ni-more-h"></em></a>
+                                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                                <ul class="link-list-opt">
+                                                                                    <li>
+                                                                                        <a href="{{ journal.get_absolute_url }}"><em
+                                                                                                class="icon ni ni-eye"></em><span>{% trans "View Details" %}</span></a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    {% empty %}
+                                                        <div class="nk-tb-item">
+                                                            <div class="nk-tb-col">
+                                                                <div class="container-not-found-base">
+                                                                    <p>{% trans "Nothing Found" %}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            {% include 'base/components/list-pagination.html' %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+                {% include 'base/components/footer.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

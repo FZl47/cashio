@@ -1,0 +1,227 @@
+{% extends 'base/base_template.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block Title %}
+    {% trans 'Create Fixed Asset' %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body ui-rounder has-sidebar no-touch nk-nio-theme
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            {% include 'base/components/menu.html' %}
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                {% include 'base/components/header.html' %}
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between g-3">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">{% trans 'Create Fixed Asset' %}</h3>
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item"><a href="{% url 'public:index' %}">{% trans 'Home Page' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Assets' %}</a></li>
+                                                <li class="breadcrumb-item"><a>{% trans 'Fixed' %}</a></li>
+                                                <li class="breadcrumb-item active">{% trans 'Create Fixed Asset' %}</li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                    <div class="nk-block-head-content">
+                                        <div class="toggle-wrap nk-block-tools-toggle">
+                                            <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                               data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                            <div class="toggle-expand-content" data-content="pageMenu">
+                                                <ul class="nk-block-tools g-3">
+                                                    <li class="nk-block-tools-opt">
+                                                        <div class="drodown">
+                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-primary"
+                                                               data-bs-toggle="dropdown"><em
+                                                                    class="icon ni ni-plus"></em></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <ul class="link-list-opt no-bdr">
+                                                                    <li>
+                                                                        <a href="#"><span>{% trans 'Import' %}</span></a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .nk-block-head-content -->
+                                </div>
+                                <!-- .nk-block-between -->
+                            </div>
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block nk-block-lg">
+                                    <div class="card">
+                                        <div class="card-inner">
+                                            <div class="card-head">
+                                                <h5 class="card-title">{% trans 'Asset Information' %}</h5>
+                                            </div>
+                                            <form action="{% url 'accounting:assets_fixed__create' %}" class="form-validate is-alter"
+                                                  method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="row g-4">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="name">
+                                                                {% trans 'Name' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" class="form-control" name="name"
+                                                                       placeholder="{% trans 'Name' %}"
+                                                                       id="name" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="acquisition_date">
+                                                                {% trans 'Acquisition Date' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" name="acquisition_date" id="acquisition_date" required
+                                                                       class="form-control date-picker-alt"
+                                                                       placeholder="{% trans 'Acquisition Date' %}" readonly>
+                                                            </div>
+                                                            <div class="form-note">{% trans 'Date Format' %}
+                                                                <code>
+                                                                    {% trans 'Year-Month-Day' %}
+                                                                </code>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="cost">
+                                                                {% trans 'Cost' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" class="form-control form-number" name="cost"
+                                                                       placeholder="{% trans 'Cost' %}"
+                                                                       id="cost" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="useful_life">
+                                                                {% trans 'Useful Life' %}
+                                                                ({% trans 'By Month' %})
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="number" class="form-control" name="useful_life"
+                                                                       placeholder="{% trans 'Useful Life' %}"
+                                                                       id="useful_life" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="asset_account">
+                                                                {% trans 'Assets Account' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <select id="asset_account" name="asset_account"
+                                                                        class="form-select js-select2" data-search="on"
+                                                                        tabindex="-1" aria-hidden="true">
+                                                                    <option value="" disabled selected></option>
+                                                                    {% for account in accounts %}
+                                                                        <option value="{{ account.id }}">{{ account }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="depreciation_expense_account">
+                                                                {% trans 'Depreciation Expense Account' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <select id="depreciation_expense_account" name="depreciation_expense_account"
+                                                                        class="form-select js-select2" data-search="on"
+                                                                        tabindex="-1" aria-hidden="true">
+                                                                    <option value="" disabled selected></option>
+                                                                    {% for account in accounts %}
+                                                                        <option value="{{ account.id }}">{{ account }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="accumulated_depreciation_account">
+                                                                {% trans 'Accumulated Depreciation Account' %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <select id="accumulated_depreciation_account" name="accumulated_depreciation_account"
+                                                                        class="form-select js-select2" data-search="on"
+                                                                        tabindex="-1" aria-hidden="true">
+                                                                    <option value="" disabled selected></option>
+                                                                    {% for account in accounts %}
+                                                                        <option value="{{ account.id }}">{{ account }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="description">{% trans 'Description' %}</label>
+                                                            <div class="form-control-wrap">
+                                                                <textarea class="form-control" name="description" id="description" placeholder="{% trans 'Description' %}"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 text-left">
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-lg btn-primary">
+                                                                {% trans 'Create' %}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- .components-preview -->
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                {% include 'base/components/footer.html' %}
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+{% endblock %}
