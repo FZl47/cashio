@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('file', models.FileField(upload_to='petty_cash_docs/')),
                 ('title', models.CharField(blank=True, max_length=150)),
-                ('transaction', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='documents', to='accounting.pettycashtransaction')),
+                ('transaction', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='document', to='accounting.pettycashtransaction')),
             ],
             options={
                 'ordering': ('-id',),

@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models.functions import Concat
+from django.db.models import Q, Value, CharField
 
 from apps.core.views import (CreateViewMixin, ListViewMixin, DetailViewMixin,
                              DeleteViewMixin, UpdateViewMixin)
@@ -63,7 +65,8 @@ class UserCreate(PermissionMixin, CreateViewMixin, TemplateView):
 
     def additional_data(self):
         return {
-            'is_active': True
+            'is_active': True,
+            'role': 'common_user'
         }
 
 
@@ -75,11 +78,30 @@ class UserList(PermissionMixin, ListViewMixin, TemplateView):
         return self.list(request)
 
     def get_queryset(self):
-        return User.objects.filter(is_superuser=False)
+        qs = User.objects.filter(is_superuser=False).annotate(
+            full_name=Concat('first_name', Value(' '), 'last_name', output_field=CharField()))
+        qs = self.filter(qs)
+        return qs
+
+    def filter(self, qs):
+        params = self.request.GET
+
+        sort_by = params.get('sort_by')
+        if sort_by == 'latest':
+            qs = qs.order_by('-id')
+        else:
+            qs = qs.order_by('id')
+
+        search = params.get('search')
+        if search:
+            lookup = Q(full_name__icontains=search) | Q(email__icontains=search)
+            qs = qs.filter(lookup)
+
+        return qs
 
 
 class UserUpdate(PermissionMixin, View, UpdateViewMixin):
-    permissions = ('account.change_user',)
+    permissions = ('account.change_user', 'auth.view_permission')
     form = forms.UserUpdateForm
 
     def post(self, request, *args, **kwargs):

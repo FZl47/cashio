@@ -1,73 +1,63 @@
 {% extends 'base/base_template.html' %}
-{% load static %}
-{% load i18n %}
+{% load static i18n %}
 
 {% block Title %}
-    {% trans 'List of System Users' %}
+    {% trans "Documents List" %}
 {% endblock %}
 
 {% block BodyClass %}
     has-rtl nk-body bg-white npc-default has-aside
 {% endblock %}
 
-
 {% block Content %}
     <div class="nk-app-root">
-        <!-- main @s -->
         <div class="nk-main">
-            <!-- wrap @s -->
             <div class="nk-wrap">
-                <!-- main header @s -->
                 {% include 'base/components/header.html' %}
-                <!-- main header @e -->
-                <!-- content @s -->
+
                 <div class="nk-content">
                     <div class="container wide-xl">
                         <div class="nk-content-inner">
-                            <!-- sidebar @s -->
                             {% include 'base/components/menu.html' %}
-                            <!-- sidebar @e -->
+
                             <div class="nk-content-body">
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between g-3">
                                         <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title"> {% trans 'List of Users' %}</h3>
-                                            <nav>
-                                                <ul class="breadcrumb breadcrumb-arrow">
-                                                    <li class="breadcrumb-item"><a
-                                                            href="{% url 'public:index' %}">{% trans 'Home Page' %}</a>
-                                                    </li>
-                                                    <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
-                                                    <li class="breadcrumb-item active">{% trans 'List of Users' %}</li>
-                                                </ul>
-                                            </nav>
+                                            <h3 class="nk-block-title page-title">{% trans "Documents" %}</h3>
                                             <div class="nk-block-des text-soft">
-                                                <p>{% blocktrans with total=pagination.paginator.count %}You have a total of {{ total }} users.{% endblocktrans %}</p>
+                                                <p>{% blocktrans with total=pagination.paginator.count %}There are
+                                                    {{ total }} documents in total.{% endblocktrans %}</p>
                                             </div>
                                         </div>
-
-                                        <!-- .nk-block-head-content -->
                                         <div class="nk-block-head-content">
                                             <div class="toggle-wrap nk-block-tools-toggle">
                                                 <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
-                                                   data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                                   data-target="pageMenu">
+                                                    <em class="icon ni ni-menu-alt-r"></em>
+                                                </a>
                                                 <div class="toggle-expand-content" data-content="pageMenu">
                                                     <ul class="nk-block-tools g-3">
                                                         <li>
-                                                            <a href="#" class="btn btn-white btn-dim btn-outline-light"><em
-                                                                    class="icon ni ni-download-cloud"></em><span>{% trans 'Export' %}</span></a>
+                                                            <a href="#" class="btn btn-white btn-outline-light">
+                                                                <em class="icon ni ni-download-cloud"></em><span>{% trans "Export" %}</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nk-block-tools-opt">
+                                                            <a href="{% url 'accounting:document__create' %}"
+                                                               class="btn btn-primary">
+                                                                <em class="icon ni ni-plus"></em><span>{% trans "Upload Document" %}</span>
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- .nk-block-head-content -->
                                     </div>
-                                    <!-- .nk-block-between -->
                                 </div>
 
                                 <div class="nk-block">
-                                    <div class="card card-stretch">
+                                    <div class="card card-bordered card-stretch">
                                         <div class="card-inner-group">
                                             {% with qs=request.GET %}
                                                 <div class="card-inner position-relative card-tools-toggle">
@@ -96,11 +86,21 @@
                                                                                         <div class="form-group">
                                                                                             <label class="overline-title overline-title-alt">{% trans "Sort By" %}</label>
                                                                                             <select class="form-select js-select2 select-by-filter"
-                                                                                                    name="sort_by"
-                                                                                                    tabindex="-1"
-                                                                                                    aria-hidden="true">
+                                                                                                    name="sort_by">
                                                                                                 <option value="latest">{% trans "Latest" %}</option>
                                                                                                 <option value="oldest">{% trans "Oldest" %}</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="overline-title overline-title-alt">{% trans "Status" %}</label>
+                                                                                            <select class="form-select js-select2 select-by-filter"
+                                                                                                    name="status">
+                                                                                                <option value="all">{% trans "All" %}</option>
+                                                                                                <option value="approved">{% trans "Approved" %}</option>
+                                                                                                <option value="pending">{% trans "Pending" %}</option>
+                                                                                                <option value="rejected">{% trans "Rejected" %}</option>
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
@@ -115,7 +115,7 @@
                                                                         </div>
                                                                         <div class="dropdown-foot between">
                                                                             <a class="clickable"
-                                                                               href="{% url 'account:user__list' %}">{% trans "Reset Filter" %}</a>
+                                                                               href="{% url 'accounting:document__list' %}">{% trans "Reset Filter" %}</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -141,7 +141,7 @@
                                                                         class="icon ni ni-arrow-left"></em></a>
                                                                 <input type="text" name="search"
                                                                        class="form-control border-transparent form-focus-none"
-                                                                       placeholder="{% trans "Quick Search by Fullname or Email" %}"
+                                                                       placeholder="{% trans "Quick Search by Title or Description" %}"
                                                                        value="{{ qs.search }}">
                                                                 <button class="search-submit btn btn-icon"><em
                                                                         class="icon ni ni-search"></em></button>
@@ -150,91 +150,104 @@
                                                     </div>
                                                 </div>
                                             {% endwith %}
-                                            <!-- .card-inner -->
-                                            <div class="card-inner p-0">
-                                                <div class="nk-tb-list nk-tb-tnx">
-                                                    <div class="nk-tb-item nk-tb-head text-center">
-                                                        <div class="nk-tb-col"><span>{% trans 'Name' %}</span></div>
-                                                        <div class="nk-tb-col"><span>{% trans 'Email' %}</span>
-                                                        </div>
+
+                                            <div class="card-inner p-0 text-center">
+                                                <div class="nk-tb-list nk-tb-ulist is-compact">
+                                                    <div class="nk-tb-item nk-tb-head">
+                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "ID" %}</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Title" %}</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Uploaded By" %}</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Created At" %}</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Status" %}</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Approvals" %}</span></div>
                                                         <div class="nk-tb-col nk-tb-col-tools"></div>
                                                     </div>
-                                                    {% for user in data %}
-                                                        <!-- .nk-tb-item -->
-                                                        <div class="nk-tb-item text-center">
+
+                                                    {% for document in data %}
+                                                        <div class="nk-tb-item">
                                                             <div class="nk-tb-col">
-                                                                <a href="{{ user.get_absolute_url }}">
-                                                                    <div class="nk-tnx-type-text">
-                                                                        <span>{{ user.get_full_name|truncatechars:30 }}</span>
-                                                                    </div>
-                                                                </a>
+                                                                <span>
+                                                                    <a href="{{ document.get_absolute_url }}">{{ document.id }}</a>
+                                                                </span>
                                                             </div>
                                                             <div class="nk-tb-col">
-                                                                <span>{{ user.email }}</span>
+                                                                <span class="tb-lead">
+                                                                    <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                                                                </span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span>
+                                                                    {{ document.uploaded_by.get_full_name|default:document.uploaded_by.username }}
+                                                                </span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="datetime-convert">{{ document.get_created_at }}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                {% if document.status_label == 'approved' %}
+                                                                    <span class="tb-status text-success">{% trans "Approved" %}</span>
+                                                                {% elif document.status_label == 'rejected' %}
+                                                                    <span class="tb-status text-danger">{% trans "Rejected" %}</span>
+                                                                {% elif document.status_label == 'no_approval_needed' %}
+                                                                    <span class="tb-status text-info">{% trans "No Approval Needed" %}</span>
+                                                                {% else %}
+                                                                    <span class="tb-status text-warning">{% trans "Pending" %}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                {% if document.required_approvers.exists %}
+                                                                    <span class="badge badge-dim bg-success fs-13px">
+                                                                        {{ document.approved_statuses.count }} / {{ document.required_approvers.count }}
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span>-</span>
+                                                                {% endif %}
                                                             </div>
                                                             <div class="nk-tb-col nk-tb-col-tools">
-                                                                <ul class="nk-tb-actions gx-2">
-                                                                    <li class="nk-tb-action-hidden">
-                                                                        <a href="{{ user.get_absolute_url }}"
-                                                                           class="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
-                                                                           aria-label="{% trans 'Detail' %}"
-                                                                           data-bs-original-title="{% trans 'Detail' %}"><em
-                                                                                class="icon ni ni-eye"></em></a>
-                                                                    </li>
+                                                                <ul class="nk-tb-actions gx-1">
                                                                     <li>
-                                                                        <div class="dropdown">
-                                                                            <a href="#"
-                                                                               class="dropdown-toggle bg-white btn btn-sm btn-outline-light btn-icon"
-                                                                               data-bs-toggle="dropdown"
-                                                                               aria-expanded="false"><em
-                                                                                    class="icon ni ni-more-h"></em></a>
-                                                                            <div class="dropdown-menu dropdown-menu-end"
-                                                                                 style="">
-                                                                                <ul class="link-list-opt">
-                                                                                    <li>
-                                                                                        <a href="{{ user.get_absolute_url }}"><em
-                                                                                                class="icon ni ni-eye"></em><span>{% trans 'View Detail' %}</span></a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
+                                                                        <a href="{{ document.get_absolute_url }}"
+                                                                           class="btn btn-icon btn-trigger"
+                                                                           data-bs-toggle="tooltip"
+                                                                           data-bs-placement="bottom"
+                                                                           title="{% trans 'View Details' %}">
+                                                                            <em class="icon ni ni-eye"></em>
+                                                                        </a>
                                                                     </li>
+                                                                    {% if document.file %}
+                                                                    <li>
+                                                                        <a href="{{ document.file.url }}" target="_blank"
+                                                                           class="btn btn-icon btn-trigger"
+                                                                           data-bs-toggle="tooltip"
+                                                                           data-bs-placement="bottom"
+                                                                           title="{% trans 'Download File' %}">
+                                                                            <em class="icon ni ni-download"></em>
+                                                                        </a>
+                                                                    </li>
+                                                                    {% endif %}
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <!-- .nk-tb-item -->
                                                     {% empty %}
                                                         <div class="nk-tb-item">
-                                                            <div class="nk-tb-col">
-                                                                <div class="container-not-found-base">
-                                                                    <p>{% trans 'Nothing Found' %}</p>
-                                                                </div>
+                                                            <div class="nk-tb-col text-center" colspan="7">
+                                                                <span>{% trans "No documents found." %}</span>
                                                             </div>
                                                         </div>
                                                     {% endfor %}
                                                 </div>
-                                                <!-- .nk-tb-list -->
                                             </div>
-                                            <!-- .card-inner -->
                                             {% include 'base/components/list-pagination.html' %}
-                                            <!-- .card-inner -->
                                         </div>
-                                        <!-- .card-inner-group -->
                                     </div>
-                                    <!-- .card -->
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- content @e -->
-                <!-- footer @s -->
+
                 {% include 'base/components/footer.html' %}
-                <!-- footer @e -->
             </div>
-            <!-- wrap @e -->
         </div>
-        <!-- main @e -->
     </div>
 {% endblock %}

@@ -57,6 +57,18 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
+    @property
+    def is_admin(self):
+        return True if self.role == 'admin' or self.is_superuser else False
+
+    @property
+    def is_common_user(self):
+        return True if self.role == 'common_user' else False
+
+    @property
+    def holder(self):
+        return self.pettycashholder
+
     def get_absolute_url(self):
         return reverse_lazy('account:user__detail', args=(self.id,))
 

@@ -3,340 +3,233 @@
 {% load i18n %}
 
 {% block Title %}
-    {% trans 'Detail' %}
+    {% trans 'User Detail' %}
     {{ object.get_full_name }}
 {% endblock %}
 
 {% block BodyClass %}
-    has-rtl nk-body ui-rounder has-sidebar no-touch nk-nio-theme
+    has-rtl nk-body bg-white npc-default has-aside
 {% endblock %}
 
 {% block Content %}
     <div class="nk-app-root">
         <!-- main @s -->
         <div class="nk-main">
-            <!-- sidebar @s -->
-            {% include 'base/components/menu.html' %}
-            <!-- sidebar @e -->
+
             <!-- wrap @s -->
             <div class="nk-wrap">
                 <!-- main header @s -->
                 {% include 'base/components/header.html' %}
                 <!-- main header @e -->
                 <!-- content @s -->
-                <div class="nk-content nk-content-fluid">
-                    <div class="container-xl wide-xl">
-                        <div class="nk-content-body">
-                            <div class="nk-block-head nk-block-head-sm">
-                                <div class="nk-block-between g-3">
-                                    <div class="nk-block-head-content">
-                                        <h3 class="nk-block-title page-title">
-                                            {% trans 'Detail' %}
-                                            <b>{{ object.get_full_name }}</b>
-                                        </h3>
-                                        <nav>
-                                            <ul class="breadcrumb breadcrumb-arrow">
-                                                <li class="breadcrumb-item"><a
-                                                        href="{% url 'public:index' %}">{% trans 'Home Page' %}</a></li>
-                                                <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
-                                                <li class="breadcrumb-item"><a>{% trans 'System Users' %}</a></li>
-                                                <li class="breadcrumb-item">
-                                                    <a href="{% url 'account:user__list' %}">
-                                                        {% trans 'List of System Users' %}
-                                                    </a></li>
-                                                <li class="breadcrumb-item"><a>{{ object.get_full_name }}</a></li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                    <!-- .nk-block-head-content -->
-                                    <div class="nk-block-head-content d-flex justify-content-between gx-1">
-                                        <div class="dropdown">
-                                            <button
-                                                    class="btn btn-outline-light bg-white d-none d-sm-inline-flex dropdown-toggle"
-                                                    data-bs-toggle="dropdown">
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+                            <!-- sidebar @s -->
+                            {% include 'base/components/menu.html' %}
+                            <!-- sidebar @e -->
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">
+                                                {% trans 'Detail' %}
+                                                <b>{{ object.get_full_name }}</b>
+                                            </h3>
+                                            <nav>
+                                                <ul class="breadcrumb breadcrumb-arrow">
+                                                    <li class="breadcrumb-item"><a
+                                                            href="{% url 'public:index' %}">{% trans 'Home Page' %}</a>
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
+                                                    <li class="breadcrumb-item">
+                                                        <a href="{% url 'account:user__list' %}">
+                                                            {% trans 'List of Users' %}
+                                                        </a></li>
+                                                    <li class="breadcrumb-item"><a>{{ object.get_full_name }}</a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <!-- .nk-block-head-content -->
+                                        <div class="nk-block-head-content d-flex justify-content-between gx-1">
+                                            <div class="dropdown">
+                                                <button
+                                                        class="btn btn-outline-light bg-white d-none d-sm-inline-flex dropdown-toggle"
+                                                        data-bs-toggle="dropdown">
                                                      <span>
                                                         {% trans 'Action' %}
                                                     </span>
-                                                <em class="icon ni ni-setting"></em>
-                                            </button>
-                                            <button
-                                                    class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none dropdown-toggle"
-                                                    data-bs-toggle="dropdown">
-                                                <em class="icon ni ni-setting">
-                                                </em>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <ul class="link-list-opt">
-                                                    <li data-bs-toggle="modal"
-                                                        data-bs-target="#modal-update-permissions-object">
-                                                        <a class="d-flex justify-content-between text-primary">
-                                                            <span>{% trans 'Permissions' %}</span>
-                                                            <em class="icon ni ni-account-setting"></em>
-                                                        </a>
+                                                    <em class="icon ni ni-setting"></em>
+                                                </button>
+                                                <button
+                                                        class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none dropdown-toggle"
+                                                        data-bs-toggle="dropdown">
+                                                    <em class="icon ni ni-setting">
+                                                    </em>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <ul class="link-list-opt">
+                                                        {% if  perms.account.change_user and perms.auth.view_permission %}
+                                                            <li data-bs-toggle="modal"
+                                                                data-bs-target="#modal-update-permissions-object">
+                                                                <a class="d-flex justify-content-between text-primary">
+                                                                    <span>{% trans 'Permissions' %}</span>
+                                                                    <em class="icon ni ni-account-setting"></em>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                        {% if perms.account.change_user %}
+                                                            <li data-bs-toggle="modal"
+                                                                data-bs-target="#modal-update-object">
+                                                                <a class="d-flex justify-content-between text-info">
+                                                                    <span>{% trans 'Edit' %}</span>
+                                                                    <em class="icon ni ni-pen2"></em>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+
+                                                        {% if perms.account.delete_user %}
+                                                            <li data-bs-toggle="modal"
+                                                                data-bs-target="#modal-delete-object">
+                                                                <a class="d-flex justify-content-between text-danger">
+                                                                    <span>{% trans 'Delete' %}</span>
+                                                                    <em class="icon ni ni-trash-empty"></em>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- .nk-block-head-content -->
+                                    </div>
+                                    <!-- .nk-block-between -->
+                                </div>
+                                <div class="nk-block">
+                                    <div class="row gy-5">
+                                        <div class="col-lg-12">
+                                            <div class="nk-block-head">
+                                                <div class="nk-block-head-content">
+                                                    <h5 class="nk-block-title title">{% trans 'Basic Information' %}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <ul class="data-list is-compact">
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans 'Full Name' %}</div>
+                                                            <div class="data-value">{{ object.get_full_name }}</div>
+                                                        </div>
                                                     </li>
-                                                    <li data-bs-toggle="modal"
-                                                        data-bs-target="#modal-update-object">
-                                                        <a class="d-flex justify-content-between text-info">
-                                                            <span>{% trans 'Edit' %}</span>
-                                                            <em class="icon ni ni-pen2"></em>
-                                                        </a>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans 'Email' %}</div>
+                                                            <div class="data-value">
+                                                                <span class="badge badge-dim badge-sm bg-info">{{ object.email }}</span>
+                                                            </div>
+                                                        </div>
                                                     </li>
-                                                    <li data-bs-toggle="modal"
-                                                        data-bs-target="#modal-delete-object">
-                                                        <a class="d-flex justify-content-between text-danger">
-                                                            <span>{% trans 'Delete' %}</span>
-                                                            <em class="icon ni ni-trash-empty"></em>
-                                                        </a>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans 'Role' %}</div>
+                                                            <div class="data-value">
+                                                                <span>{{ object.get_role_display }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans 'Active Status' %}</div>
+                                                            <div class="data-value">
+                                                                {% if object.is_active %}
+                                                                    <div class="text-success">
+                                                                        <span>{% trans 'Is Active' %}</span>
+                                                                        <em class="icon text-success ni ni-check-c"></em>
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="text-danger">
+                                                                        <span>{% trans 'Not Active' %}</span>
+                                                                        <em class="icon text-danger ni ni-cross-c"></em>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans 'Created at' %}</div>
+                                                            <div class="data-value datetime-convert">
+                                                                {{ object.get_created_at|default:'-' }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans 'Updated at' %}</div>
+                                                            <div class="data-value datetime-convert">
+                                                                {{ object.get_updated_at|default:'-' }}
+                                                            </div>
+                                                        </div>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
+                                        <!-- .col -->
+                                        <div class="col-12">
+                                            <div class="nk-block-head">
+                                                <div class="nk-block-head-content d-flex justify-content-between">
+                                                    <h5 class="nk-block-title title">{% trans 'Login Activities' %}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="nk-block">
+                                                <div class="card card-stretch">
+                                                    <div class="card-inner-group">
+                                                        <!-- .card-inner -->
+                                                        <div class="card-inner p-2">
+                                                            <div class="nk-tb-list nk-tb-tnx">
+                                                                <div class="nk-tb-item nk-tb-head text-center">
+                                                                    <div class="nk-tb-col"><span>{% trans 'IP' %}</span>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span>{% trans 'Agent' %}</span></div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span>{% trans 'Time' %}</span></div>
+                                                                </div>
+                                                                {% for activity in object.get_login_activities|slice:':20' %}
+                                                                    <!-- .nk-tb-item -->
+                                                                    <div class="nk-tb-item text-center">
+                                                                        <div class="nk-tb-col">
+                                                                            <span class="badge bg-secondary badge-sm fs-15px">{{ activity.ip }}</span>
+                                                                        </div>
+                                                                        <div class="nk-tb-col fs-11px">
+                                                                            {{ activity.agent }}
+                                                                        </div>
+                                                                        <div class="nk-tb-col datetime-convert">
+                                                                            {{ activity.get_created_at }}
+                                                                        </div>
+                                                                    </div>
+                                                                {% empty %}
+                                                                    <div class="container-not-found-base">
+                                                                        <p>{% trans 'Nothing Found' %}</p>
+                                                                    </div>
+                                                                    <!-- .nk-tb-item -->
+                                                                {% endfor %}
+                                                            </div>
+                                                            <!-- .nk-tb-list -->
+                                                        </div>
+                                                        <!-- .card-inner -->
+                                                    </div>
+                                                    <!-- .card-inner-group -->
+                                                </div>
+                                                <!-- .card -->
+                                            </div>
+                                        </div>
+                                        <!-- .col -->
                                     </div>
-                                    <!-- .nk-block-head-content -->
+                                    <!-- .row -->
                                 </div>
-                                <!-- .nk-block-between -->
+                                <!-- .components-preview -->
                             </div>
-                            <div class="nk-block">
-                                <div class="row gy-5">
-                                    <div class="col-lg-12">
-                                        <div class="nk-block-head">
-                                            <div class="nk-block-head-content">
-                                                <h5 class="nk-block-title title">{% trans 'Basic Information' %}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <ul class="data-list is-compact">
-                                                <li class="data-item">
-                                                    <div class="data-col">
-                                                        <div class="data-label">{% trans 'Full Name' %}</div>
-                                                        <div class="data-value">{{ object.get_full_name }}</div>
-                                                    </div>
-                                                </li>
-                                                <li class="data-item">
-                                                    <div class="data-col">
-                                                        <div class="data-label">{% trans 'Email' %}</div>
-                                                        <div class="data-value">
-                                                            <span class="badge badge-dim badge-sm bg-info">{{ object.email }}</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="data-item">
-                                                    <div class="data-col">
-                                                        <div class="data-label">{% trans 'Active Status' %}</div>
-                                                        <div class="data-value">
-                                                            {% if object.is_active %}
-                                                                <div class="text-success">
-                                                                    <span>{% trans 'Is Active' %}</span>
-                                                                    <em class="icon text-success ni ni-check-c"></em>
-                                                                </div>
-                                                            {% else %}
-                                                                <div class="text-danger">
-                                                                    <span>{% trans 'Not Active' %}</span>
-                                                                    <em class="icon text-danger ni ni-cross-c"></em>
-                                                                </div>
-                                                            {% endif %}
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="data-item">
-                                                    <div class="data-col">
-                                                        <div class="data-label">{% trans 'Created at' %}</div>
-                                                        <div class="data-value datetime-convert">
-                                                            {{ object.get_created_at|default:'-' }}
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="data-item">
-                                                    <div class="data-col">
-                                                        <div class="data-label">{% trans 'Updated at' %}</div>
-                                                        <div class="data-value datetime-convert">
-                                                            {{ object.get_updated_at|default:'-' }}
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- .col -->
-                                    <div class="col-12 col-lg-5">
-                                        <div class="nk-block-head">
-                                            <div class="nk-block-head-content d-flex justify-content-between">
-                                                <h5 class="nk-block-title title">{% trans 'Inventory Transactions' %}</h5>
-                                                <a href="#" class="fs-15px mt-1">
-                                                    {% trans 'View All' %}
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="nk-block">
-                                            <div class="card card-stretch">
-                                                <div class="card-inner-group">
-                                                    <!-- .card-inner -->
-                                                    <div class="card-inner p-2">
-                                                        <div class="nk-tb-list nk-tb-tnx">
-                                                            <div class="nk-tb-item nk-tb-head text-center">
-                                                                <div class="nk-tb-col"><span>{% trans 'Name' %}</span>
-                                                                </div>
-                                                                <div class="nk-tb-col">
-                                                                    <span>{% trans 'Type' %}</span></div>
-                                                                <div class="nk-tb-col">
-                                                                    <span>{% trans 'Date' %}</span></div>
-                                                            </div>
-                                                            {% for transaction in object.get_inventory_transactions|slice:':20' %}
-                                                                <!-- .nk-tb-item -->
-                                                                <div class="nk-tb-item text-center">
-                                                                    <div class="nk-tb-col">
-                                                                        <a href="{{ transaction.get_absolute_url }}"><span>
-                                                                            {{ transaction.name }}
-                                                                        </span></a>
-                                                                    </div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span class="badge bg-info">
-                                                                            {{ transaction.get_transaction_type_label }}
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span class="datetime-convert">
-                                                                            {{ transaction.get_created_at }}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            {% empty %}
-                                                                <div class="container-not-found-base">
-                                                                    <p>{% trans 'Nothing Found' %}</p>
-                                                                </div>
-                                                                <!-- .nk-tb-item -->
-                                                            {% endfor %}
-                                                        </div>
-                                                        <!-- .nk-tb-list -->
-                                                    </div>
-                                                    <!-- .card-inner -->
-                                                </div>
-                                                <!-- .card-inner-group -->
-                                            </div>
-                                            <!-- .card -->
-                                        </div>
-                                    </div>
-                                    <!-- .col -->
-                                    <div class="col-12 col-lg-7">
-                                        <div class="nk-block-head">
-                                            <div class="nk-block-head-content d-flex justify-content-between">
-                                                <h5 class="nk-block-title title">{% trans 'Journals' %}</h5>
-                                                <a href="#" class="fs-15px mt-1">
-                                                    {% trans 'View All' %}
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="nk-block">
-                                            <div class="card card-stretch">
-                                                <div class="card-inner-group">
-                                                    <!-- .card-inner -->
-                                                    <div class="card-inner p-2">
-                                                        <div class="nk-tb-list nk-tb-tnx">
-                                                            <div class="nk-tb-item nk-tb-head text-center">
-                                                                <div class="nk-tb-col"><span>{% trans 'Name' %}</span>
-                                                                </div>
-                                                                <div class="nk-tb-col">
-                                                                    <span>{% trans 'Balance Status' %}</span></div>
-                                                                <div class="nk-tb-col">
-                                                                    <span>{% trans 'Number of Lines' %}</span></div>
-                                                                <div class="nk-tb-col">
-                                                                    <span>{% trans 'Date' %}</span></div>
-                                                            </div>
-                                                            {% for journal in object.get_journals|slice:':20' %}
-                                                                <!-- .nk-tb-item -->
-                                                                <div class="nk-tb-item text-center">
-                                                                    <div class="nk-tb-col">
-                                                                        <a href="{{ journal.get_absolute_url }}"><span>
-                                                                            {{ journal.name }}
-                                                                        </span></a>
-                                                                    </div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span class="badge bg-secondary">
-                                                                            {{ journal.net_balance.type }}
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span>
-                                                                            {{ journal.get_lines.count }}
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span>
-                                                                            {{ journal.get_date }}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            {% empty %}
-                                                                <div class="container-not-found-base">
-                                                                    <p>{% trans 'Nothing Found' %}</p>
-                                                                </div>
-                                                                <!-- .nk-tb-item -->
-                                                            {% endfor %}
-                                                        </div>
-                                                        <!-- .nk-tb-list -->
-                                                    </div>
-                                                    <!-- .card-inner -->
-                                                </div>
-                                                <!-- .card-inner-group -->
-                                            </div>
-                                            <!-- .card -->
-                                        </div>
-                                    </div>
-                                    <!-- .col -->
-                                    <div class="col-12">
-                                        <div class="nk-block-head">
-                                            <div class="nk-block-head-content d-flex justify-content-between">
-                                                <h5 class="nk-block-title title">{% trans 'Login Activities' %}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="nk-block">
-                                            <div class="card card-stretch">
-                                                <div class="card-inner-group">
-                                                    <!-- .card-inner -->
-                                                    <div class="card-inner p-2">
-                                                        <div class="nk-tb-list nk-tb-tnx">
-                                                            <div class="nk-tb-item nk-tb-head text-center">
-                                                                <div class="nk-tb-col"><span>{% trans 'IP' %}</span>
-                                                                </div>
-                                                                <div class="nk-tb-col">
-                                                                    <span>{% trans 'Agent' %}</span></div>
-                                                                <div class="nk-tb-col">
-                                                                    <span>{% trans 'Time' %}</span></div>
-                                                            </div>
-                                                            {% for activity in object.get_login_activities|slice:':20' %}
-                                                                <!-- .nk-tb-item -->
-                                                                <div class="nk-tb-item text-center">
-                                                                    <div class="nk-tb-col">
-                                                                        <span class="badge bg-secondary badge-sm fs-15px">{{ activity.ip }}</span>
-                                                                    </div>
-                                                                    <div class="nk-tb-col fs-11px">
-                                                                        {{ activity.agent }}
-                                                                    </div>
-                                                                    <div class="nk-tb-col datetime-convert">
-                                                                        {{ activity.get_created_at }}
-                                                                    </div>
-                                                                </div>
-                                                            {% empty %}
-                                                                <div class="container-not-found-base">
-                                                                    <p>{% trans 'Nothing Found' %}</p>
-                                                                </div>
-                                                                <!-- .nk-tb-item -->
-                                                            {% endfor %}
-                                                        </div>
-                                                        <!-- .nk-tb-list -->
-                                                    </div>
-                                                    <!-- .card-inner -->
-                                                </div>
-                                                <!-- .card-inner-group -->
-                                            </div>
-                                            <!-- .card -->
-                                        </div>
-                                    </div>
-                                    <!-- .col -->
-                                </div>
-                                <!-- .row -->
-                            </div>
-                            <!-- .components-preview -->
                         </div>
                     </div>
                 </div>
@@ -423,7 +316,9 @@
                                             {% trans 'Active Status' %}
                                         </label>
                                         <div class="form-control-wrap">
-                                            <select name="is_active" id="is_active" class="form-select js-select2 select-by-value" value="{{ object.is_active }}">
+                                            <select name="is_active" id="is_active"
+                                                    class="form-select js-select2 select-by-value"
+                                                    value="{{ object.is_active }}">
                                                 <option value="false">{% trans 'Inactive' %}</option>
                                                 <option value="true">{% trans 'Active' %}</option>
                                             </select>

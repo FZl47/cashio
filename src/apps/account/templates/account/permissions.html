@@ -15,139 +15,144 @@
     <div class="nk-app-root">
         <!-- main @s -->
         <div class="nk-main">
-            <!-- sidebar @s -->
-            {% include 'base/components/menu.html' %}
-            <!-- sidebar @e -->
             <!-- wrap @s -->
             <div class="nk-wrap">
                 <!-- main header @s -->
                 {% include 'base/components/header.html' %}
                 <!-- main header @e -->
                 <!-- content @s -->
-                <div class="nk-content nk-content-fluid">
-                    <div class="container-xl wide-xl">
-                        <div class="nk-content-body">
-                            <div class="nk-block-head nk-block-head-sm">
-                                <div class="nk-block-between g-3">
-                                    <div class="nk-block-head-content">
-                                        <h3 class="nk-block-title page-title"> {% trans 'Manage Auth Groups' %}</h3>
-                                        <nav>
-                                            <ul class="breadcrumb breadcrumb-arrow">
-                                                <li class="breadcrumb-item"><a
-                                                        href="{% url 'public:index' %}">{% trans 'Home Page' %}</a></li>
-                                                <li class="breadcrumb-item"><a>{% trans 'Account' %}</a></li>
-                                                <li class="breadcrumb-item"><a>{% trans 'System Users' %}</a></li>
-                                                <li class="breadcrumb-item active">{% trans 'Manage Groups' %}</li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                    <!-- .nk-block-head-content -->
-                                    <div class="nk-block-head-content">
-                                        <div class="toggle-wrap nk-block-tools-toggle">
-                                            <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
-                                               data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
-                                            <div class="toggle-expand-content" data-content="pageMenu">
-                                                <ul class="nk-block-tools g-3">
-                                                    <li>
-                                                        <a href="#" class="btn btn-white btn-dim btn-outline-light"><em
-                                                                class="icon ni ni-download-cloud"></em><span>{% trans 'Export' %}</span></a>
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+                            <!-- sidebar @s -->
+                            {% include 'base/components/menu.html' %}
+                            <!-- sidebar @e -->
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title"> {% trans 'Manage Auth Groups' %}</h3>
+                                            <nav>
+                                                <ul class="breadcrumb breadcrumb-arrow">
+                                                    <li class="breadcrumb-item"><a
+                                                            href="{% url 'public:index' %}">{% trans 'Home Page' %}</a>
                                                     </li>
+                                                    <li class="breadcrumb-item"><a>{% trans 'Account' %}</a></li>
+                                                    <li class="breadcrumb-item"><a>{% trans 'System Users' %}</a></li>
+                                                    <li class="breadcrumb-item active">{% trans 'Manage Groups' %}</li>
                                                 </ul>
+                                            </nav>
+                                        </div>
+                                        <!-- .nk-block-head-content -->
+                                        <div class="nk-block-head-content">
+                                            <div class="toggle-wrap nk-block-tools-toggle">
+                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                                   data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                                <div class="toggle-expand-content" data-content="pageMenu">
+                                                    <ul class="nk-block-tools g-3">
+                                                        <li>
+                                                            <a href="#" class="btn btn-white btn-dim btn-outline-light"><em
+                                                                    class="icon ni ni-download-cloud"></em><span>{% trans 'Export' %}</span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- .nk-block-head-content -->
                                     </div>
-                                    <!-- .nk-block-head-content -->
+                                    <!-- .nk-block-between -->
                                 </div>
-                                <!-- .nk-block-between -->
+                                {% with qs=request.GET %}
+                                    <div class="nk-block">
+                                        <div class="card card-stretch">
+                                            <div class="card-inner-group">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group">
+                                                        <div class="card-title">
+                                                            <h5 class="title">
+                                                                {% trans 'Manage Groups' %}
+                                                                <span class="fs-15px">({{ groups.count }})</span>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="card-tools me-n1">
+                                                            <ul class="btn-toolbar gx-1">
+                                                                <li>
+                                                                    <button class="btn btn-primary"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#modal-create-object">
+                                                                        {% trans 'Create Group' %}
+                                                                        <em class="ni ni-plus"></em>
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                            <!-- .btn-toolbar -->
+                                                        </div>
+                                                    </div>
+                                                    <!-- .card-title-group -->
+                                                </div>
+                                                <!-- .card-inner -->
+                                                <div class="card-inner p-0">
+                                                    <div class="nk-tb-list nk-tb-tnx">
+                                                        <div class="nk-tb-item nk-tb-head text-center">
+                                                            <div class="nk-tb-col"><span>{% trans 'Name' %}</span></div>
+                                                            <div class="nk-tb-col">
+                                                                <span>{% trans 'Perms Number' %}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col"><span>{% trans 'Action' %}</span>
+                                                            </div>
+
+                                                        </div>
+                                                        {% for group in groups %}
+                                                            <!-- .nk-tb-item -->
+                                                            <div class="nk-tb-item text-center">
+                                                                <div class="nk-tb-col">
+                                                                    <div class="nk-tnx-type-text">
+                                                                        <span>{{ group.name|truncatechars:80 }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="nk-tb-col">
+                                                                    <div class="nk-tnx-type-text">
+                                                                        <span>{{ group.permissions.count }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="nk-tb-col">
+                                                                    <button class="btn btn-outline-info m-1 fs-11px"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#modal-manage-group-{{ group.id }}">
+                                                                        <spanw>{% trans 'Manage' %}</spanw>
+                                                                        <em class="ni ni-eye"></em>
+                                                                    </button>
+
+
+                                                                    <button class="btn btn-outline-danger fs-11px"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#modal-delete-group-{{ group.id }}">
+                                                                        <span>{% trans 'Delete' %}</span>
+                                                                        <em class="ni ni-trash"></em>
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- .nk-tb-item -->
+                                                        {% empty %}
+                                                            <div class="nk-tb-item">
+                                                                <div class="nk-tb-col">
+                                                                    <div class="container-not-found-base">
+                                                                        <p>{% trans 'Nothing Found' %}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <!-- .nk-tb-list -->
+                                                </div>
+                                            </div>
+                                            <!-- .card-inner-group -->
+                                        </div>
+                                        <!-- .card -->
+                                    </div>
+                                {% endwith %}
                             </div>
-                            {% with qs=request.GET %}
-                                <div class="nk-block">
-                                    <div class="card card-stretch">
-                                        <div class="card-inner-group">
-                                            <div class="card-inner">
-                                                <div class="card-title-group">
-                                                    <div class="card-title">
-                                                        <h5 class="title">
-                                                            {% trans 'Manage Groups' %}
-                                                            <span class="fs-15px">({{ groups.count }})</span>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="card-tools me-n1">
-                                                        <ul class="btn-toolbar gx-1">
-                                                            <li>
-                                                                <button class="btn btn-primary" data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-create-object">
-                                                                    {% trans 'Create Group' %}
-                                                                    <em class="ni ni-plus"></em>
-                                                                </button>
-                                                            </li>
-                                                        </ul>
-                                                        <!-- .btn-toolbar -->
-                                                    </div>
-                                                </div>
-                                                <!-- .card-title-group -->
-                                            </div>
-                                            <!-- .card-inner -->
-                                            <div class="card-inner p-0">
-                                                <div class="nk-tb-list nk-tb-tnx">
-                                                    <div class="nk-tb-item nk-tb-head text-center">
-                                                        <div class="nk-tb-col"><span>{% trans 'Name' %}</span></div>
-                                                        <div class="nk-tb-col"><span>{% trans 'Perms Number' %}</span>
-                                                        </div>
-                                                        <div class="nk-tb-col"><span>{% trans 'Action' %}</span>
-                                                        </div>
-
-                                                    </div>
-                                                    {% for group in groups %}
-                                                        <!-- .nk-tb-item -->
-                                                        <div class="nk-tb-item text-center">
-                                                            <div class="nk-tb-col">
-                                                                <div class="nk-tnx-type-text">
-                                                                    <span>{{ group.name|truncatechars:80 }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="nk-tb-col">
-                                                                <div class="nk-tnx-type-text">
-                                                                    <span>{{ group.permissions.count }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="nk-tb-col">
-                                                                <button class="btn btn-outline-info m-1 fs-11px"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-manage-group-{{ group.id }}">
-                                                                    <spanw>{% trans 'Manage' %}</spanw>
-                                                                    <em class="ni ni-eye"></em>
-                                                                </button>
-
-
-                                                                <button class="btn btn-outline-danger fs-11px"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#modal-delete-group-{{ group.id }}">
-                                                                    <span>{% trans 'Delete' %}</span>
-                                                                    <em class="ni ni-trash"></em>
-                                                                </button>
-                                                            </div>
-
-                                                        </div>
-                                                        <!-- .nk-tb-item -->
-                                                    {% empty %}
-                                                        <div class="nk-tb-item">
-                                                            <div class="nk-tb-col">
-                                                                <div class="container-not-found-base">
-                                                                    <p>{% trans 'Nothing Found' %}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                                <!-- .nk-tb-list -->
-                                            </div>
-                                        </div>
-                                        <!-- .card-inner-group -->
-                                    </div>
-                                    <!-- .card -->
-                                </div>
-                            {% endwith %}
                         </div>
                     </div>
                 </div>
@@ -270,25 +275,27 @@
             <div class="modal fade" tabindex="-1" id="modal-delete-group-{{ group.id }}">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                    <div class="modal-body modal-body-lg text-center">
-                        <div class="nk-modal">
-                            <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash-empty bg-danger"></em>
-                            <h4 class="nk-modal-title">{% trans 'Delete Auth Group' %}</h4>
-                            <div class="nk-modal-text">
-                                <p class="bg-outline-danger">
-                                    {% trans 'Are you sure you want to delete the auth group ?' %}
-                                    <b>{{ group.name }}</b>
-                                    {% trans 'By deleting the auth group, all related items will be removed, and there will be no possibility of recovery.' %}
-                                </p>
-                            </div>
-                            <div class="nk-modal-action mt-5">
-                                <a class="btn btn-lg btn-mw btn-light m-1" data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
-                                <a href="{% url 'account:permission_group__delete' pk=group.id %}" class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete!' %}</a>
+                        <div class="modal-body modal-body-lg text-center">
+                            <div class="nk-modal">
+                                <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-trash-empty bg-danger"></em>
+                                <h4 class="nk-modal-title">{% trans 'Delete Auth Group' %}</h4>
+                                <div class="nk-modal-text">
+                                    <p class="bg-outline-danger">
+                                        {% trans 'Are you sure you want to delete the auth group ?' %}
+                                        <b>{{ group.name }}</b>
+                                        {% trans 'By deleting the auth group, all related items will be removed, and there will be no possibility of recovery.' %}
+                                    </p>
+                                </div>
+                                <div class="nk-modal-action mt-5">
+                                    <a class="btn btn-lg btn-mw btn-light m-1"
+                                       data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
+                                    <a href="{% url 'account:permission_group__delete' pk=group.id %}"
+                                       class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete!' %}</a>
+                                </div>
                             </div>
                         </div>
+                        <!-- .modal-body -->
                     </div>
-                    <!-- .modal-body -->
-                </div>
                 </div>
             </div>
         {% endfor %}

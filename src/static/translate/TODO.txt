@@ -1,0 +1,1 @@
+Change static structure to dynamic and use langs files instead hard message in main.js

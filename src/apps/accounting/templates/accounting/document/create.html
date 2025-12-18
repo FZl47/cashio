@@ -1,0 +1,138 @@
+{% extends 'base/base_template.html' %}
+{% load static i18n %}
+
+{% block Title %}
+    {% trans 'Upload Document' %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body bg-white npc-default has-aside
+{% endblock %}
+
+{% block Content %}
+<div class="nk-app-root">
+    <div class="nk-main">
+        <div class="nk-wrap">
+            {% include 'base/components/header.html' %}
+
+            <div class="nk-content">
+                <div class="container wide-xl">
+                    <div class="nk-content-inner">
+                        {% include 'base/components/menu.html' %}
+
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between g-3">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">{% trans 'Upload Document' %}</h3>
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item">
+                                                    <a href="{% url 'public:index' %}">{% trans 'Home Page' %}</a>
+                                                </li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="{% url 'accounting:document__list' %}">{% trans 'Documents' %}</a>
+                                                </li>
+                                                <li class="breadcrumb-item active">{% trans 'Upload Document' %}</li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nk-block">
+                                <div class="card">
+                                    <div class="card-inner">
+                                        <div class="card-head">
+                                            <h5 class="card-title">{% trans 'Document Information' %}</h5>
+                                        </div>
+
+                                        <form action="" method="post" enctype="multipart/form-data" class="form-validate is-alter">
+                                            {% csrf_token %}
+                                            <div class="row g-4">
+
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="title">
+                                                            {% trans 'Title' %}
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <input type="text" name="title" id="title" class="form-control"
+                                                                   placeholder="{% trans 'e.g. Invoice #123, Contract, Receipt...' %}" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="file">
+                                                            {% trans 'File' %}
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <div class="form-file">
+                                                                <input type="file" name="file" id="file" class="form-file-input" required>
+                                                                <label class="form-file-label" for="file">
+                                                                    {% trans 'Choose file' %}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <small class="form-text text-muted">
+                                                            {% trans 'Supported formats: PDF, JPG, PNG, DOCX, XLSX, etc.' %}
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="required_approvers">
+                                                            {% trans 'Required Approvers' %}
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <select name="required_approvers" id="required_approvers"
+                                                                    class="form-control form-select js-select2" multiple data-search="on">
+                                                                {% for user in users %}
+                                                                    <option value="{{ user.id }}">{{ user.get_full_name|default:user.username }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <small class="form-text text-muted">
+                                                            {% trans 'Select users who must approve this document. Leave empty for no approval required.' %}
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="description">
+                                                            {% trans 'Description' %}
+                                                        </label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea name="description" id="description" class="form-control" rows="5"
+                                                                      placeholder="{% trans 'Optional description or notes' %}"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 text-end">
+                                                    <button type="submit" class="btn btn-lg btn-primary">
+                                                        {% trans 'Upload Document' %}
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'base/components/footer.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

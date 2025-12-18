@@ -1,0 +1,360 @@
+{% extends 'base/base_template.html' %}
+{% load static i18n %}
+
+{% block Title %}
+    {% trans "Document Detail" %} - {{ object }}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body bg-white npc-default has-aside
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <div class="nk-main">
+            <div class="nk-wrap">
+                {% include 'base/components/header.html' %}
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+                            {% include 'base/components/menu.html' %}
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">
+                                                {% trans "Document Detail" %}
+                                                <b>{{ object.title }}</b>
+                                            </h3>
+                                            <nav>
+                                                <ul class="breadcrumb breadcrumb-arrow">
+                                                    <li class="breadcrumb-item"><a
+                                                            href="{% url 'public:index' %}">{% trans "Home Page" %}</a>
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a
+                                                            href="{% url 'accounting:document__list' %}">{% trans "Documents" %}</a>
+                                                    </li>
+                                                    <li class="breadcrumb-item active">{{ object.title }}</li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <div class="nk-block-head-content d-flex justify-content-between gx-1">
+                                            <div class="dropdown">
+                                                <button class="btn btn-outline-light bg-white d-none d-sm-inline-flex dropdown-toggle"
+                                                        data-bs-toggle="dropdown">
+                                                    <span>{% trans "Actions" %}</span>
+                                                    <em class="icon ni ni-setting"></em>
+                                                </button>
+                                                <button class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none dropdown-toggle"
+                                                        data-bs-toggle="dropdown">
+                                                    <em class="icon ni ni-setting"></em>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <ul class="link-list-opt">
+                                                        {% if object.status_label == 'pending' and perms.accounting.add_documentstatus and request.user in object.required_approvers.all %}
+                                                            <li data-bs-toggle="modal"
+                                                                data-bs-target="#modal-create-status">
+                                                                <a class="d-flex justify-content-between text-success">
+                                                                    <span>{% trans "Create Status" %}</span>
+                                                                    <em class="icon ni ni-check-round-cut"></em>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+
+                                                        {% if perms.accounting.change_document and object.status_label != 'approved' %}
+                                                            <li data-bs-toggle="modal"
+                                                                data-bs-target="#modal-edit-document">
+                                                                <a class="d-flex justify-content-between text-info">
+                                                                    <span>{% trans "Edit" %}</span>
+                                                                    <em class="icon ni ni-pen2"></em>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nk-block">
+                                    <div class="row gy-5">
+                                        <div class="col-12">
+                                            <div class="nk-block-head">
+                                                <div class="nk-block-head-content">
+                                                    <h5 class="nk-block-title title">{% trans "Basic Information" %}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <ul class="data-list is-compact">
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Title" %}</div>
+                                                            <div class="data-value">{{ object.title }}</div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Uploaded By" %}</div>
+                                                            <div class="data-value">
+                                                                <a href="{{ object.uploaded_by.get_absolute_url }}">
+                                                                    {{ object.uploaded_by.get_full_name|default:object.uploaded_by.username }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Created At" %}</div>
+                                                            <div class="data-value">
+                                                                <span class="datetime-convert">
+                                                                    {{ object.created_at|date:"Y-m-d H:i" }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "File" %}</div>
+                                                            <div class="data-value">
+                                                                {% if object.file %}
+                                                                    <a href="{{ object.file.url }}" target="_blank" download="download">
+                                                                        <em class="icon ni ni-download fs-20px"></em>
+                                                                    </a>
+                                                                    <a href="{{ object.file.url }}" target="_blank">
+                                                                        <em class="icon ni ni-eye fs-20px m-1"></em>
+                                                                    </a>
+                                                                {% else %}
+                                                                    -
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Description" %}</div>
+                                                            <div class="data-value">
+                                                                <pre>{{ object.description|default:"-" }}</pre>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Required Approvers" %}</div>
+                                                            <div class="data-value">
+                                                                {% if object.required_approvers.exists %}
+                                                                    {% for approver in object.required_approvers.all %}
+                                                                        <span class="badge fs-13px bg-primary">
+                                                                            {{ approver.get_full_name|default:approver.username }}
+                                                                        </span>
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    {% trans "No approval required" %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="nk-block-head d-flex justify-content-between align-items-center">
+                                                <div class="nk-block-head-content">
+                                                    <h5 class="nk-block-title title">
+                                                        {% trans "Statuses" %}
+                                                        {% if object.status_label == 'approved' %}
+                                                            <span class="text-success p-1">
+                                                                (<span>{% trans "Approved" %}</span>
+                                                                <em class="icon ni ni-check-circle"></em>)
+                                                            </span>
+                                                        {% elif object.status_label == 'rejected' %}
+                                                            <span class="text-danger p-1">
+                                                                (<span>{% trans "Rejected" %}</span>
+                                                                <em class="icon ni ni-cross-circle"></em>)
+                                                            </span>
+                                                        {% elif object.status_label == 'no_approval_needed' %}
+                                                            <span class="text-info p-1">
+                                                                (<span>{% trans "No Approval Needed" %}</span>
+                                                                <em class="icon ni ni-info"></em>)
+                                                            </span>
+                                                        {% else %}
+                                                            <span class="text-warning p-1">
+                                                                (<span>{% trans "Pending" %}</span>
+                                                                <em class="icon ni ni-clock"></em>)
+                                                            </span>
+                                                        {% endif %}
+                                                    </h5>
+                                                </div>
+                                                {% if object.status_label == 'pending' and perms.accounting.add_documentstatus and request.user in object.required_approvers.all %}
+                                                    <button class="btn btn-outline-success" data-bs-toggle="modal"
+                                                            data-bs-target="#modal-create-status">
+                                                        <span>{% trans "Create Status" %}</span>
+                                                        <em class="icon ni ni-check-round-cut"></em>
+                                                    </button>
+                                                {% endif %}
+                                            </div>
+                                            <div class="nk-block">
+                                                <div class="card card-stretch">
+                                                    <div class="card-inner-group">
+                                                        <div class="card-inner p-4">
+                                                            <div class="nk-tb-list nk-tb-tnx">
+                                                                <div class="nk-tb-item nk-tb-head text-center">
+                                                                    <div class="nk-tb-col">
+                                                                        <span>{% trans "Approver" %}</span></div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span>{% trans "Status" %}</span></div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span>{% trans "Note" %}</span></div>
+                                                                    <div class="nk-tb-col">
+                                                                        <span>{% trans "Created At" %}</span></div>
+                                                                </div>
+                                                                {% for status in object.statuses %}
+                                                                    <div class="nk-tb-item text-center">
+                                                                        <div class="nk-tb-col">
+                                                                            <a href="{{ status.created_by.get_absolute_url }}">
+                                                                                {{ status.created_by.get_full_name|default:status.created_by.username }}
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="nk-tb-col">
+                                                                            {% if status.status == 'approved' %}
+                                                                                <span class="badge badge-dim bg-success">{% trans "Approved" %}</span>
+                                                                            {% elif status.status == 'rejected' %}
+                                                                                <span class="badge badge-dim bg-danger">{% trans "Rejected" %}</span>
+                                                                            {% else %}
+                                                                                <span class="badge badge-dim bg-warning">{% trans "Pending" %}</span>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        <div class="nk-tb-col" data-bs-toggle="tooltip"
+                                                                             data-bs-placement="bottom"
+                                                                             data-bs-original-title="{{ status.note|default:"—" }}">
+                                                                            {{ status.note|truncatechars:20|default:"-" }}
+                                                                        </div>
+                                                                        <div class="nk-tb-col">
+                                                                            <span class="datetime-convert font-80">
+                                                                                {{ status.created_at|date:"Y-m-d H:i" }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                {% empty %}
+                                                                    <div class="nk-tb-item text-center">
+                                                                        <div class="nk-tb-col">{% trans "No status recorded yet." %}</div>
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% include 'base/components/footer.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-create-status" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{% trans "Create Status" %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'accounting:document_status__create' %}" method="post"
+                      class="form-validate is-alter">
+                    {% csrf_token %}
+                    <input type="hidden" name="document" value="{{ object.id }}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-label" for="status">{% trans "Status" %}</label>
+                            <select name="status" id="status" class="form-control form-select" required>
+                                <option value="approved">{% trans "Approved" %}</option>
+                                <option value="rejected">{% trans "Rejected" %}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="note">{% trans "Note" %}</label>
+                            <textarea name="note" id="note" class="form-control"
+                                      placeholder="{% trans 'Optional note' %}" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Create" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-edit-document" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{% trans "Edit Document" %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'accounting:document__update' object.id %}" method="post"
+                      enctype="multipart/form-data" class="form-validate is-alter">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="title">{% trans "Title" %}</label>
+                                    <input type="text" name="title" id="title" class="form-control"
+                                           value="{{ object.title }}" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label">{% trans "File" %}</label>
+                                    <div class="form-file">
+                                        <input type="file" name="file" class="form-file-input">
+                                        <label class="form-file-label">{% trans "Choose new file (optional)" %}</label>
+                                    </div>
+                                    {% if object.file %}
+                                        <small class="form-text text-muted">Current file: <a href="{{ object.file.url }}" target="_blank">{{ object.file.name }}</a></small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="required_approvers">{% trans "Required Approvers" %}</label>
+                                    <select name="required_approvers" id="required_approvers"
+                                            class="form-control form-select js-select2" multiple data-search="on">
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}" {% if user in object.required_approvers.all %}selected{% endif %}>
+                                                {{ user.get_full_name|default:user.username }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="description">{% trans "Description" %}</label>
+                                    <textarea name="description" id="description" class="form-control" rows="3">{{ object.description }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

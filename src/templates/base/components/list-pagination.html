@@ -3,25 +3,66 @@
 <div class="card-inner">
     <ul class="pagination justify-content-center justify-content-md-start">
         {% if pagination.has_previous %}
-            <li class="page-item"><a class="page-link add-params-to-href"
-                                     href="?{{ page_name|default:'page' }}=1">{% trans 'First' %}</a></li>
-            <li class="page-item"><a class="page-link add-params-to-href"
-                                     href="?{{ page_name|default:'page' }}={{ pagination.previous_page_number }}">{% trans 'Previous' %}</a>
+            <li class="page-item">
+                <a class="page-link add-params-to-href"
+                   href="?page={{ pagination.previous_page_number }}">{% trans "Previous" %}</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">{% trans "Previous" %}</span>
             </li>
         {% endif %}
 
-        <span class="current page-link">
-            {% trans 'Page' %} {{ pagination.number }} {% trans 'of' %} {{ pagination.paginator.num_pages }}.
-        </span>
+        {% with pagination.paginator.num_pages as total_pages %}
+            {% with pagination.number as current_page %}
+
+                <li class="page-item {% if current_page == 1 %}active{% endif %}">
+                    <a class="page-link add-params-to-href" href="?page=1">1</a>
+                </li>
+
+                {% if current_page > 4 %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+
+                {% for num in pagination.paginator.page_range %}
+                    {% if num > 1 and num < total_pages %}
+                        {% if num >= current_page|add:-2 and num <= current_page|add:2 %}
+                            <li class="page-item {% if current_page == num %}active{% endif %}">
+                                <a class="page-link add-params-to-href"
+                                   href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if current_page < total_pages|add:-3 %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+
+                {% if total_pages > 1 %}
+                    <li class="page-item {% if current_page == total_pages %}active{% endif %}">
+                        <a class="page-link add-params-to-href"
+                           href="?page={{ total_pages }}">{{ total_pages }}</a>
+                    </li>
+                {% endif %}
+
+            {% endwith %}
+        {% endwith %}
 
         {% if pagination.has_next %}
-            <li class="page-item"><a class="page-link add-params-to-href"
-                                     href="?{{ page_name|default:'page' }}={{ pagination.next_page_number }}">{% trans 'Next' %}</a>
+            <li class="page-item">
+                <a class="page-link add-params-to-href"
+                   href="?page={{ pagination.next_page_number }}">{% trans "Next" %}</a>
             </li>
-            <li class="page-item"><a class="page-link add-params-to-href"
-                                     href="?{{ page_name|default:'page' }}={{ pagination.paginator.num_pages }}">{% trans 'Last' %}</a>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">{% trans "Next" %}</span>
             </li>
         {% endif %}
-
     </ul>
+
 </div>

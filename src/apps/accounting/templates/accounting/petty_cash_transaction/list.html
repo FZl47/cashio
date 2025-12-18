@@ -3,71 +3,62 @@
 {% load i18n %}
 
 {% block Title %}
-    {% trans 'List of System Users' %}
+    {% trans "Petty Cash Transactions" %}
 {% endblock %}
 
 {% block BodyClass %}
     has-rtl nk-body bg-white npc-default has-aside
 {% endblock %}
 
-
 {% block Content %}
     <div class="nk-app-root">
-        <!-- main @s -->
         <div class="nk-main">
-            <!-- wrap @s -->
             <div class="nk-wrap">
-                <!-- main header @s -->
                 {% include 'base/components/header.html' %}
-                <!-- main header @e -->
-                <!-- content @s -->
+
                 <div class="nk-content">
                     <div class="container wide-xl">
                         <div class="nk-content-inner">
-                            <!-- sidebar @s -->
                             {% include 'base/components/menu.html' %}
-                            <!-- sidebar @e -->
+
                             <div class="nk-content-body">
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between g-3">
                                         <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title"> {% trans 'List of Users' %}</h3>
-                                            <nav>
-                                                <ul class="breadcrumb breadcrumb-arrow">
-                                                    <li class="breadcrumb-item"><a
-                                                            href="{% url 'public:index' %}">{% trans 'Home Page' %}</a>
-                                                    </li>
-                                                    <li class="breadcrumb-item"><a>{% trans 'Users' %}</a></li>
-                                                    <li class="breadcrumb-item active">{% trans 'List of Users' %}</li>
-                                                </ul>
-                                            </nav>
+                                            <h3 class="nk-block-title page-title">{% trans "Petty Cash Transactions" %}</h3>
                                             <div class="nk-block-des text-soft">
-                                                <p>{% blocktrans with total=pagination.paginator.count %}You have a total of {{ total }} users.{% endblocktrans %}</p>
+                                                <p>{% blocktrans with total=pagination.paginator.count %}There are
+                                                    {{ total }} transactions in total.{% endblocktrans %}</p>
                                             </div>
                                         </div>
-
-                                        <!-- .nk-block-head-content -->
                                         <div class="nk-block-head-content">
                                             <div class="toggle-wrap nk-block-tools-toggle">
                                                 <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
-                                                   data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
+                                                   data-target="pageMenu">
+                                                    <em class="icon ni ni-menu-alt-r"></em>
+                                                </a>
                                                 <div class="toggle-expand-content" data-content="pageMenu">
                                                     <ul class="nk-block-tools g-3">
                                                         <li>
-                                                            <a href="#" class="btn btn-white btn-dim btn-outline-light"><em
-                                                                    class="icon ni ni-download-cloud"></em><span>{% trans 'Export' %}</span></a>
+                                                            <a href="#" class="btn btn-white btn-outline-light">
+                                                                <em class="icon ni ni-download-cloud"></em><span>{% trans "Export" %}</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nk-block-tools-opt">
+                                                            <a href="{% url 'accounting:petty_cash_transaction__create' %}"
+                                                               class="btn btn-primary">
+                                                                <em class="icon ni ni-plus"></em><span>{% trans "Add Transaction" %}</span>
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- .nk-block-head-content -->
                                     </div>
-                                    <!-- .nk-block-between -->
                                 </div>
 
                                 <div class="nk-block">
-                                    <div class="card card-stretch">
+                                    <div class="card card-bordered card-stretch">
                                         <div class="card-inner-group">
                                             {% with qs=request.GET %}
                                                 <div class="card-inner position-relative card-tools-toggle">
@@ -104,6 +95,21 @@
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="overline-title overline-title-alt">{% trans "Fund" %}</label>
+                                                                                            <select class="form-select js-select2 select-by-filter"
+                                                                                                    name="fund"
+                                                                                                    data-search="on"
+                                                                                                    tabindex="-1"
+                                                                                                    aria-hidden="true">
+                                                                                                <option value="">{% trans "All" %}</option>
+                                                                                                {% for fund in petty_cash_funds %}
+                                                                                                    <option value="{{ fund.id }}">{{ fund.title }}</option>
+                                                                                                {% endfor %}
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
                                                                                     <div class="col-12 text-left">
                                                                                         <div class="form-group">
                                                                                             <button type="submit"
@@ -115,7 +121,7 @@
                                                                         </div>
                                                                         <div class="dropdown-foot between">
                                                                             <a class="clickable"
-                                                                               href="{% url 'account:user__list' %}">{% trans "Reset Filter" %}</a>
+                                                                               href="{% url 'accounting:petty_cash_transaction__list' %}">{% trans "Reset Filter" %}</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -141,7 +147,7 @@
                                                                         class="icon ni ni-arrow-left"></em></a>
                                                                 <input type="text" name="search"
                                                                        class="form-control border-transparent form-focus-none"
-                                                                       placeholder="{% trans "Quick Search by Fullname or Email" %}"
+                                                                       placeholder="{% trans "Quick Search by Reference or Date" %}"
                                                                        value="{{ qs.search }}">
                                                                 <button class="search-submit btn btn-icon"><em
                                                                         class="icon ni ni-search"></em></button>
@@ -150,91 +156,103 @@
                                                     </div>
                                                 </div>
                                             {% endwith %}
-                                            <!-- .card-inner -->
-                                            <div class="card-inner p-0">
-                                                <div class="nk-tb-list nk-tb-tnx">
-                                                    <div class="nk-tb-item nk-tb-head text-center">
-                                                        <div class="nk-tb-col"><span>{% trans 'Name' %}</span></div>
-                                                        <div class="nk-tb-col"><span>{% trans 'Email' %}</span>
-                                                        </div>
+
+                                            <div class="card-inner p-0 text-center">
+                                                <div class="nk-tb-list nk-tb-ulist is-compact">
+                                                    <div class="nk-tb-item nk-tb-head">
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "ID" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Date" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Fund" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Holder" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Type" %}</span></div>
+                                                        <div class="nk-tb-col text-end"><span
+                                                                class="sub-text">{% trans "Amount" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Reference" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Documents" %}</span></div>
                                                         <div class="nk-tb-col nk-tb-col-tools"></div>
                                                     </div>
-                                                    {% for user in data %}
-                                                        <!-- .nk-tb-item -->
-                                                        <div class="nk-tb-item text-center">
+
+                                                    {% for transaction in data %}
+                                                        <div class="nk-tb-item">
                                                             <div class="nk-tb-col">
-                                                                <a href="{{ user.get_absolute_url }}">
-                                                                    <div class="nk-tnx-type-text">
-                                                                        <span>{{ user.get_full_name|truncatechars:30 }}</span>
-                                                                    </div>
-                                                                </a>
+                                                        <span>
+                                                            <a href="{{ transaction.get_absolute_url }}">{{ transaction.id }}</a>
+                                                        </span>
                                                             </div>
                                                             <div class="nk-tb-col">
-                                                                <span>{{ user.email }}</span>
+                                                                <span>{{ transaction.date|default:'-' }}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span>{{ transaction.fund.title }}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                        <span>
+                                                            <a href="{{ transaction.holder.get_absolute_url }}">
+                                                                {{ transaction.holder.user.get_full_name|default:transaction.holder.user.username }}
+                                                            </a>
+                                                        </span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                {% if transaction.transaction_type == 'income' %}
+                                                                    <span class="tb-status text-success">{% trans "Income" %}</span>
+                                                                {% else %}
+                                                                    <span class="tb-status text-danger">{% trans "Expense" %}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="nk-tb-col text-end">
+                                                                {% if transaction.transaction_type == 'income' %}
+                                                                    <span class="text-success price-el">+{{ transaction.amount }}</span>
+                                                                {% else %}
+                                                                    <span class="text-danger price-el">-{{ transaction.amount }}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span>{{ transaction.reference_number|default:"-" }}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="badge badge-dim fs-13px bg-info">{{ transaction.documents.count }}</span>
                                                             </div>
                                                             <div class="nk-tb-col nk-tb-col-tools">
-                                                                <ul class="nk-tb-actions gx-2">
-                                                                    <li class="nk-tb-action-hidden">
-                                                                        <a href="{{ user.get_absolute_url }}"
-                                                                           class="bg-white btn btn-sm btn-outline-light btn-icon btn-tooltip"
-                                                                           aria-label="{% trans 'Detail' %}"
-                                                                           data-bs-original-title="{% trans 'Detail' %}"><em
-                                                                                class="icon ni ni-eye"></em></a>
-                                                                    </li>
+                                                                <ul class="nk-tb-actions gx-1">
                                                                     <li>
-                                                                        <div class="dropdown">
-                                                                            <a href="#"
-                                                                               class="dropdown-toggle bg-white btn btn-sm btn-outline-light btn-icon"
-                                                                               data-bs-toggle="dropdown"
-                                                                               aria-expanded="false"><em
-                                                                                    class="icon ni ni-more-h"></em></a>
-                                                                            <div class="dropdown-menu dropdown-menu-end"
-                                                                                 style="">
-                                                                                <ul class="link-list-opt">
-                                                                                    <li>
-                                                                                        <a href="{{ user.get_absolute_url }}"><em
-                                                                                                class="icon ni ni-eye"></em><span>{% trans 'View Detail' %}</span></a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
+                                                                        <a href="{{ transaction.get_absolute_url }}"
+                                                                           class="btn btn-icon btn-trigger"
+                                                                           data-bs-toggle="tooltip"
+                                                                           data-bs-placement="bottom"
+                                                                           title="{% trans 'View Details' %}">
+                                                                            <em class="icon ni ni-eye"></em>
+                                                                        </a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        <!-- .nk-tb-item -->
                                                     {% empty %}
                                                         <div class="nk-tb-item">
-                                                            <div class="nk-tb-col">
-                                                                <div class="container-not-found-base">
-                                                                    <p>{% trans 'Nothing Found' %}</p>
-                                                                </div>
+                                                            <div class="nk-tb-col text-center" colspan="8">
+                                                                <span>{% trans "No transactions found." %}</span>
                                                             </div>
                                                         </div>
                                                     {% endfor %}
                                                 </div>
-                                                <!-- .nk-tb-list -->
                                             </div>
-                                            <!-- .card-inner -->
                                             {% include 'base/components/list-pagination.html' %}
-                                            <!-- .card-inner -->
                                         </div>
-                                        <!-- .card-inner-group -->
                                     </div>
-                                    <!-- .card -->
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- content @e -->
-                <!-- footer @s -->
+
                 {% include 'base/components/footer.html' %}
-                <!-- footer @e -->
             </div>
-            <!-- wrap @e -->
         </div>
-        <!-- main @e -->
     </div>
 {% endblock %}
