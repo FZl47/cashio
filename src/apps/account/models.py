@@ -11,7 +11,8 @@ from apps.accounting.models import PettyCashHolder
 
 class CustomUserManager(BaseUserManager):
 
-    def _create_holder_for_user(self, user):
+    @staticmethod
+    def create_holder_for_user(user):
         return PettyCashHolder.objects.create(user=user)
 
     def create_user(self, email, password=None, **extra_fields):
@@ -21,10 +22,6 @@ class CustomUserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-
-        if user.role == 'common_user':
-            self._create_holder_for_user(user)
-
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
@@ -59,6 +56,12 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            CustomUserManager.create_holder_for_user(self)
 
     @property
     def profile_is_completed(self):
