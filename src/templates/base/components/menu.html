@@ -3,13 +3,7 @@
 
 <div class="nk-aside" data-content="sidebarMenu" data-content="sideNav" data-toggle-overlay="true"
      data-toggle-screen="lg" data-toggle-body="true">
-    <div class="nk-sidebar-element nk-sidebar-head">
-        <div class="nk-menu-trigger me-n2">
-            <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em
-                    class="icon ni ni-arrow-left"></em></a>
-        </div>
-    </div>
-    <div class="nk-sidebar-element">
+    <div class="nk-sidebar-element pt-2">
         <div class="nk-sidebar-content">
             <div class="nk-sidebar-menu" data-simplebar>
                 <ul class="nk-menu">
@@ -18,6 +12,39 @@
                         <h6 class="overline-title text-primary-alt">{% trans 'Menu and Sections' %}</h6>
                     </li>
                     <!-- .nk-menu-heading -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-wallet"></em></span>
+                            <span class="nk-menu-text">{% trans 'Petty Cash Funds' %}</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+
+                            {% if perms.accounting.add_pettycashfund %}
+                                <li class="nk-menu-item">
+                                    <a href="{% url 'accounting:petty_cash_fund__create' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">{% trans 'Create Fund' %}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if perms.accounting.view_pettycashfund %}
+                                <li class="nk-menu-item">
+                                    <a href="{% url 'accounting:petty_cash_fund__list' %}" class="nk-menu-link">
+                                        <span class="nk-menu-text">{% trans 'Fund List' %}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {#                            {% if perms.accounting.view_pettycashholder %}#}
+                            {#                                <li class="nk-menu-item">#}
+                            {#                                    <a href="{% url 'accounting:petty_cash_holder__list' %}" class="nk-menu-link">#}
+                            {#                                        <span class="nk-menu-text">{% trans 'Fund Holders' %}</span>#}
+                            {#                                    </a>#}
+                            {#                                </li>#}
+                            {#                            {% endif %}#}
+
+                        </ul>
+                    </li>
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb"></em></span>
@@ -62,15 +89,6 @@
                                     </a>
                                 </li>
                             {% endif %}
-
-                            {% if perms.accounting.add_documentstatus %}
-                                <li class="nk-menu-item">
-                                    <a href="#"
-                                       class="nk-menu-link">
-                                        <span class="nk-menu-text">{% trans 'Pending Approvals' %}</span>
-                                    </a>
-                                </li>
-                            {% endif %}
                         </ul>
                     </li>
                     <li class="nk-menu-item has-sub">
@@ -111,8 +129,16 @@
                     </li>
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="{% url 'account:logout' %}" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>
+                        <a href="{% url 'account:user_profile' %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-info"></em></span>
+                            <span class="nk-menu-text">{% trans 'Personal Profile' %}</span>
+                        </a>
+                    </li>
+                    <!-- .nk-menu-item -->
+                    <li class="nk-menu-item" style="background: rgba(255,182,185,0.1);border-radius: 5px">
+                        <a href="{% url 'account:logout' %}" class="nk-menu-link" style="color: #ff4845">
+                            <span class="nk-menu-icon"><em class="icon ni ni-signout"
+                                                           style="color: #ff4845"></em></span>
                             <span class="nk-menu-text">{% trans 'Logout' %}</span>
                         </a>
                     </li>

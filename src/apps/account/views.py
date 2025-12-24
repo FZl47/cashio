@@ -181,3 +181,16 @@ class PermissionGroupDelete(PermissionMixin, DeleteViewMixin, View):
 
     def get_instance(self, pk):
         return get_object_or_404(Group, id=pk)
+
+
+class Profile(PermissionMixin, UpdateViewMixin, TemplateView):
+    permissions = ('account.change_user',)
+    template_name = 'account/profile.html'
+    form = forms.UserProfileUpdateForm
+    redirect_url = reverse_lazy('public:index')
+
+    def post(self, request):
+        return self.update(request)
+
+    def get_instance(self):
+        return self.request.user

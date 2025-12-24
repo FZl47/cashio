@@ -14,7 +14,7 @@ def update_fund_balance(sender, instance, **kwargs):
             fund.balance += instance.amount
         else:
             if fund.balance < instance.amount:
-                return None  # Not enough balance in the fund
+                return None  # Not enough balance in the petty_cash_fund
             fund.balance -= instance.amount
 
         fund.save()

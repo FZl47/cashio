@@ -5,8 +5,7 @@
     <div class="container-xl wide-xl">
         <div class="nk-header-wrap">
             <div class="nk-menu-trigger d-xl-none ms-n1 me-3">
-                <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em
-                        class="icon ni ni-menu"></em></a>
+                <a href="#" class="toggle nk-quick-nav-icon me-n1" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
             </div>
             <div class="nk-header-brand d-xl-none">
                 <a href="{% url 'public:index' %}" class="logo-link">
@@ -110,7 +109,7 @@
                                         <span class="language-name">English</span>
                                     </a>
                                 </li>
-                                <li>
+                                <li class="d-none">
                                     <a href="{% url 'public:set_lang' lang='it' %}" class="language-item">
                                         <img src="{% static 'images/public/lang/it.png' %}" alt="Italiano"
                                              class="language-flag"/>
@@ -149,12 +148,8 @@
                             <div class="dropdown-inner">
                                 <ul class="link-list">
                                     <li>
-                                        <a href="#"><em
+                                        <a href="{% url 'account:user_profile' %}"><em
                                                 class="icon ni ni-user-alt"></em><span>{% trans 'View Profile' %}</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><em
-                                                class="icon ni ni-activity-alt"></em><span>{% trans 'Login Activity' %}</span></a>
                                     </li>
                                     <li>
                                         <a class="dark-switch" href="#"><em

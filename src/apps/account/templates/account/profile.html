@@ -1,0 +1,163 @@
+{% extends 'base/base_template.html' %}
+{% load static i18n %}
+
+{% block Title %}
+    {% trans "Complete Profile" %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body bg-white npc-default has-aside
+{% endblock %}
+
+
+{% block Content %}
+    <div class="nk-app-root profile-locked">
+        <div class="nk-main">
+            <div class="nk-wrap">
+
+                {% include 'base/components/header.html' %}
+
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+
+                            {% include 'base/components/menu.html' %}
+
+                            <div class="nk-content-body">
+
+                                {% if user.profile_is_completed %}
+                                    <!-- Page Head -->
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">
+                                                    {% trans "Your Profile" %}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <!-- Page Head -->
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">
+                                                    {% trans "Complete Your Profile" %}
+                                                </h3>
+                                                <div class="nk-block-des text-soft">
+                                                    <p>{% trans "Navigation is disabled until your profile is completed." %}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Alert -->
+                                    <div class="alert alert-warning">
+                                        {% trans "Please complete your profile to enable full access to the system" %}
+                                    </div>
+                                {% endif %}
+
+                                <!-- Form Card -->
+                                <div class="nk-block nk-block-lg">
+                                    <div class="card">
+                                        <div class="card-inner">
+                                            <div class="card-head">
+                                                <h5 class="card-title">
+                                                    {% trans "Profile Information" %}
+                                                </h5>
+                                            </div>
+
+                                            <form method="post" enctype="multipart/form-data"
+                                                  class="form-validate is-alter">
+                                                {% csrf_token %}
+
+                                                <div class="row g-4">
+
+                                                    <!-- First Name -->
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                {% trans "First Name" %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" name="first_name"
+                                                                       value="{{ user.first_name|default:'' }}"
+                                                                       class="form-control" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Last Name -->
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                {% trans "Last Name" %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" name="last_name"
+                                                                       value="{{ user.last_name|default:'' }}"
+                                                                       class="form-control" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Email -->
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                {% trans "Email" %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="email" name="email"
+                                                                       value="{{ user.email|default:'' }}"
+                                                                       class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Mobile -->
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                {% trans "Mobile Number" %}
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" name="phonenumber"
+                                                                       value="{{ user.phonenumber|default:'' }}"
+                                                                       class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Submit -->
+                                                    <div class="col-12 text-left">
+                                                        <div class="form-group">
+                                                            <button type="submit"
+                                                                    class="btn btn-lg btn-primary">
+                                                                {% trans "Save Profile" %}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% include 'base/components/footer.html' %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

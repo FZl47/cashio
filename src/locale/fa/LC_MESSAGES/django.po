@@ -1,0 +1,2007 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-24 11:49+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\apps\account\admin.py:59
+msgid "Personal info"
+msgstr "اطلاعات شخصی"
+
+#: .\apps\account\admin.py:66
+msgid "Role & Permissions"
+msgstr "نقش و مجوزها"
+
+#: .\apps\account\admin.py:76
+msgid "Important dates"
+msgstr "تاریخ‌های مهم"
+
+#: .\apps\account\models.py:19
+msgid "The Email field must be set"
+msgstr "فیلد ایمیل باید تنظیم شود"
+
+#: .\apps\account\models.py:36
+msgid "Superuser must have is_staff=True."
+msgstr "کاربر مدیرکل باید مقدار is_staff=True داشته باشد."
+
+#: .\apps\account\models.py:38
+msgid "Superuser must have is_superuser=True."
+msgstr "کاربر مدیرکل باید مقدار is_superuser=True داشته باشد."
+
+#: .\apps\account\models.py:45
+msgid "Admin_user"
+msgstr "کاربر مدیر"
+
+#: .\apps\account\models.py:46
+msgid "Common User"
+msgstr "کاربر عادی"
+
+#: .\apps\account\models.py:49
+msgid "No name"
+msgstr "بدون نام"
+
+#: .\apps\account\models.py:51
+msgid "email address"
+msgstr "آدرس ایمیل"
+
+#: .\apps\account\models.py:52
+msgid "phonenumber"
+msgstr "شماره تلفن"
+
+#: .\apps\account\templates\account\login.html:7
+#: .\apps\account\templates\account\login.html:35
+#: .\apps\account\templates\account\login.html:73
+msgid "Login"
+msgstr "ورود"
+
+#: .\apps\account\templates\account\login.html:37
+msgid "Access the dashboard using your email and password."
+msgstr "با استفاده از ایمیل و رمز عبور خود به داشبورد دسترسی پیدا کنید."
+
+#: .\apps\account\templates\account\login.html:46
+#: .\apps\account\templates\account\login.html:51
+msgid "Username or email"
+msgstr "نام کاربری یا ایمیل"
+
+#: .\apps\account\templates\account\login.html:56
+#: .\apps\account\templates\account\login.html:68
+#: .\apps\account\templates\account\user\create.html:106
+#: .\apps\account\templates\account\user\create.html:113
+msgid "Password"
+msgstr "رمز عبور"
+
+#: .\apps\account\templates\account\login.html:58
+msgid "Forgot your password ?"
+msgstr "رمز عبور خود را فراموش کرده‌اید؟"
+
+#: .\apps\account\templates\account\login.html:77
+msgid "Or"
+msgstr "یا"
+
+#: .\apps\account\templates\account\login.html:80
+msgid "Login with OTP"
+msgstr "ورود با رمز یک‌بارمصرف"
+
+#: .\apps\account\templates\account\permissions.html:6
+#: .\apps\account\templates\account\permissions.html:42
+#: .\apps\account\templates\account\permissions.html:73
+msgid "Manage Groups"
+msgstr "مدیریت گروه‌ها"
+
+#: .\apps\account\templates\account\permissions.html:34
+msgid "Manage Auth Groups"
+msgstr "مدیریت گروه‌های احراز هویت"
+
+#: .\apps\account\templates\account\permissions.html:38
+#: .\apps\account\templates\account\user\create.html:35
+#: .\apps\account\templates\account\user\detail.html:42
+#: .\apps\account\templates\account\user\list.html:38
+#: .\apps\accounting\templates\accounting\document\create.html:31
+#: .\apps\accounting\templates\accounting\document\detail.html:32
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:34
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:32
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:34
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:32
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:124
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:34
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:40
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:37
+#: .\apps\public\templates\public\index.html:6
+#: .\templates\base\components\footer.html:8
+#: .\templates\base\components\menu.html:127
+msgid "Home Page"
+msgstr "صفحه اصلی"
+
+#: .\apps\account\templates\account\permissions.html:40
+msgid "Account"
+msgstr "حساب کاربری"
+
+#: .\apps\account\templates\account\permissions.html:41
+msgid "System Users"
+msgstr "کاربران سیستم"
+
+#: .\apps\account\templates\account\permissions.html:55
+#: .\apps\account\templates\account\user\list.html:58
+#: .\apps\accounting\templates\accounting\document\list.html:43
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:44
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:53
+msgid "Export"
+msgstr "خروجی گرفتن"
+
+#: .\apps\account\templates\account\permissions.html:83
+#: .\apps\account\templates\account\permissions.html:175
+msgid "Create Group"
+msgstr "ایجاد گروه"
+
+#: .\apps\account\templates\account\permissions.html:97
+#: .\apps\account\templates\account\permissions.html:183
+#: .\apps\account\templates\account\permissions.html:186
+#: .\apps\account\templates\account\permissions.html:236
+#: .\apps\account\templates\account\permissions.html:239
+#: .\apps\account\templates\account\user\list.html:157
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:788
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:791
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:415
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:418
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:175
+#: .\apps\public\templates\public\settings.html:61
+#: .\apps\public\templates\public\settings.html:152
+#: .\apps\public\templates\public\settings.html:720
+#: .\apps\public\templates\public\settings.html:722
+#: .\apps\public\templates\public\settings.html:778
+#: .\apps\public\templates\public\settings.html:780
+msgid "Name"
+msgstr "نام"
+
+#: .\apps\account\templates\account\permissions.html:99
+msgid "Perms Number"
+msgstr "تعداد مجوزها"
+
+#: .\apps\account\templates\account\permissions.html:101
+#: .\apps\account\templates\account\user\detail.html:60
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:142
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:442
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:58
+#: .\apps\public\templates\public\settings.html:328
+msgid "Action"
+msgstr "عملیات"
+
+#: .\apps\account\templates\account\permissions.html:122
+msgid "Manage"
+msgstr "مدیریت"
+
+#: .\apps\account\templates\account\permissions.html:130
+#: .\apps\account\templates\account\user\detail.html:95
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:173
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:89
+msgid "Delete"
+msgstr "حذف"
+
+#: .\apps\account\templates\account\permissions.html:141
+#: .\apps\account\templates\account\user\detail.html:213
+#: .\apps\account\templates\account\user\list.html:210
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:478
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:249
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:314
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:231
+#: .\apps\public\templates\public\settings.html:391
+#: .\apps\public\templates\public\settings.html:472
+msgid "Nothing Found"
+msgstr "چیزی یافت نشد"
+
+#: .\apps\account\templates\account\permissions.html:171
+#: .\apps\account\templates\account\permissions.html:224
+#: .\apps\account\templates\account\user\detail.html:275
+#: .\apps\account\templates\account\user\detail.html:362
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:512
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:564
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:775
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:865
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:402
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:489
+msgid "Close"
+msgstr "بستن"
+
+#: .\apps\account\templates\account\permissions.html:193
+#: .\apps\account\templates\account\permissions.html:247
+#: .\apps\account\templates\account\user\detail.html:76
+#: .\apps\account\templates\account\user\detail.html:376
+#: .\apps\public\templates\public\settings.html:852
+#: .\templates\base\components\menu.html:116
+msgid "Permissions"
+msgstr "مجوزها"
+
+#: .\apps\account\templates\account\permissions.html:209
+#: .\apps\account\templates\account\user\create.html:136
+#: .\apps\accounting\templates\accounting\document\detail.html:290
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:389
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:185
+#: .\apps\public\templates\public\settings.html:806
+#: .\apps\public\templates\public\settings.html:869
+#: .\apps\public\templates\public\settings.html:943
+msgid "Create"
+msgstr "ایجاد"
+
+#: .\apps\account\templates\account\permissions.html:228
+msgid "Update/Manage Group"
+msgstr "به‌روزرسانی/مدیریت گروه"
+
+#: .\apps\account\templates\account\permissions.html:264
+#: .\apps\account\templates\account\user\detail.html:348
+#: .\apps\accounting\templates\accounting\document\detail.html:352
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:479
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:849
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:476
+#: .\apps\public\templates\public\settings.html:742
+msgid "Update"
+msgstr "به‌روزرسانی"
+
+#: .\apps\account\templates\account\permissions.html:281
+msgid "Delete Auth Group"
+msgstr "حذف گروه احراز هویت"
+
+#: .\apps\account\templates\account\permissions.html:284
+msgid "Are you sure you want to delete the auth group ?"
+msgstr "آیا مطمئن هستید که می‌خواهید گروه احراز هویت را حذف کنید؟"
+
+#: .\apps\account\templates\account\permissions.html:286
+msgid ""
+"By deleting the auth group, all related items will be removed, and there "
+"will be no possibility of recovery."
+msgstr ""
+"با حذف گروه احراز هویت، تمام موارد مرتبط حذف خواهند شد و امکان بازیابی وجود نخواهد داشت."
+
+#: .\apps\account\templates\account\permissions.html:291
+#: .\apps\account\templates\account\user\detail.html:262
+#: .\apps\accounting\templates\accounting\document\detail.html:289
+#: .\apps\accounting\templates\accounting\document\detail.html:351
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:474
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:388
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:478
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:515
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:762
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:389
+#: .\apps\public\templates\public\settings.html:747
+#: .\apps\public\templates\public\settings.html:811
+#: .\apps\public\templates\public\settings.html:874
+#: .\apps\public\templates\public\settings.html:948
+msgid "Cancel"
+msgstr "انصراف"
+
+#: .\apps\account\templates\account\permissions.html:293
+msgid "Yes, Delete!"
+msgstr "بله، حذف کن!"
+
+#: .\apps\account\templates\account\profile.html:5
+msgid "Complete Profile"
+msgstr "تکمیل پروفایل"
+
+#: .\apps\account\templates\account\profile.html:34
+msgid "Your Profile"
+msgstr "پروفایل شما"
+
+#: .\apps\account\templates\account\profile.html:45
+msgid "Complete Your Profile"
+msgstr "پروفایل خود را تکمیل کنید"
+
+#: .\apps\account\templates\account\profile.html:48
+msgid "Navigation is disabled until your profile is completed."
+msgstr "ناوبری تا تکمیل پروفایل غیرفعال است."
+
+#: .\apps\account\templates\account\profile.html:56
+msgid "Please complete your profile to enable full access to the system"
+msgstr "لطفاً پروفایل خود را تکمیل کنید تا دسترسی کامل به سیستم فعال شود"
+
+#: .\apps\account\templates\account\profile.html:66
+msgid "Profile Information"
+msgstr "اطلاعات پروفایل"
+
+#: .\apps\account\templates\account\profile.html:80
+#: .\apps\account\templates\account\user\create.html:60
+#: .\apps\account\templates\account\user\create.html:66
+#: .\apps\account\templates\account\user\detail.html:289
+#: .\apps\account\templates\account\user\detail.html:295
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:86
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:92
+msgid "First Name"
+msgstr "نام"
+
+#: .\apps\account\templates\account\profile.html:95
+#: .\apps\account\templates\account\user\create.html:74
+#: .\apps\account\templates\account\user\create.html:80
+#: .\apps\account\templates\account\user\detail.html:303
+#: .\apps\account\templates\account\user\detail.html:308
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:100
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:105
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: .\apps\account\templates\account\profile.html:110
+#: .\apps\account\templates\account\user\create.html:88
+#: .\apps\account\templates\account\user\detail.html:126
+#: .\apps\account\templates\account\user\detail.html:331
+#: .\apps\account\templates\account\user\list.html:158
+msgid "Email"
+msgstr "ایمیل"
+
+#: .\apps\account\templates\account\profile.html:125
+msgid "Mobile Number"
+msgstr "شماره موبایل"
+
+#: .\apps\account\templates\account\profile.html:141
+msgid "Save Profile"
+msgstr "ذخیره پروفایل"
+
+#: .\apps\account\templates\account\user\create.html:6
+msgid "Create System User"
+msgstr "ایجاد کاربر سیستم"
+
+#: .\apps\account\templates\account\user\create.html:31
+#: .\apps\account\templates\account\user\create.html:38
+#: .\templates\base\components\menu.html:103
+msgid "Create User"
+msgstr "ایجاد کاربر"
+
+#: .\apps\account\templates\account\user\create.html:37
+#: .\apps\account\templates\account\user\detail.html:44
+#: .\apps\account\templates\account\user\list.html:40
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:125
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:35
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:41
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:38
+#: .\templates\base\components\menu.html:97
+msgid "Users"
+msgstr "کاربران"
+
+#: .\apps\account\templates\account\user\create.html:51
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:77
+msgid "User Information"
+msgstr "اطلاعات کاربر"
+
+#: .\apps\account\templates\account\user\create.html:94
+#: .\apps\account\templates\account\user\detail.html:336
+msgid "Email(username)"
+msgstr "ایمیل (نام کاربری)"
+
+#: .\apps\account\templates\account\user\create.html:99
+#: .\apps\account\templates\account\user\detail.html:341
+msgid "Please note that the email must be unique"
+msgstr "لطفاً توجه کنید که ایمیل باید منحصربه‌فرد باشد"
+
+#: .\apps\account\templates\account\user\create.html:121
+#: .\apps\account\templates\account\user\create.html:128
+msgid "Password Confirm"
+msgstr "تأیید رمز عبور"
+
+#: .\apps\account\templates\account\user\detail.html:6
+msgid "User Detail"
+msgstr "جزئیات کاربر"
+
+#: .\apps\account\templates\account\user\detail.html:36
+#: .\apps\account\templates\account\user\list.html:180
+#: .\apps\account\templates\account\user\list.html:181
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:6
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:6
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:201
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:202
+msgid "Detail"
+msgstr "جزئیات"
+
+#: .\apps\account\templates\account\user\detail.html:47
+#: .\apps\account\templates\account\user\list.html:34
+#: .\apps\account\templates\account\user\list.html:41
+#: .\templates\base\components\menu.html:109
+msgid "List of Users"
+msgstr "لیست کاربران"
+
+#: .\apps\account\templates\account\user\detail.html:85
+#: .\apps\account\templates\account\user\detail.html:279
+#: .\apps\accounting\templates\accounting\document\detail.html:68
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:68
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:166
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:779
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:82
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:406
+msgid "Edit"
+msgstr "ویرایش"
+
+#: .\apps\account\templates\account\user\detail.html:113
+#: .\apps\accounting\templates\accounting\document\detail.html:85
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:264
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:96
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:128
+msgid "Basic Information"
+msgstr "اطلاعات پایه"
+
+#: .\apps\account\templates\account\user\detail.html:120
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:135
+msgid "Full Name"
+msgstr "نام کامل"
+
+#: .\apps\account\templates\account\user\detail.html:134
+msgid "Role"
+msgstr "نقش"
+
+#: .\apps\account\templates\account\user\detail.html:142
+#: .\apps\account\templates\account\user\detail.html:316
+msgid "Active Status"
+msgstr "وضعیت فعال"
+
+#: .\apps\account\templates\account\user\detail.html:146
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:201
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:235
+msgid "Is Active"
+msgstr "فعال است"
+
+#: .\apps\account\templates\account\user\detail.html:151
+msgid "Not Active"
+msgstr "غیرفعال"
+
+#: .\apps\account\templates\account\user\detail.html:160
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:305
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:367
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:439
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:164
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:210
+msgid "Created at"
+msgstr "ایجاد شده در"
+
+#: .\apps\account\templates\account\user\detail.html:168
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:313
+msgid "Updated at"
+msgstr "به‌روزرسانی شده در"
+
+#: .\apps\account\templates\account\user\detail.html:181
+msgid "Login Activities"
+msgstr "فعالیت‌های ورود"
+
+#: .\apps\account\templates\account\user\detail.html:191
+msgid "IP"
+msgstr "آی‌پی"
+
+#: .\apps\account\templates\account\user\detail.html:194
+msgid "Agent"
+msgstr "عامل"
+
+#: .\apps\account\templates\account\user\detail.html:196
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:203
+msgid "Time"
+msgstr "زمان"
+
+#: .\apps\account\templates\account\user\detail.html:251
+msgid "Delete User"
+msgstr "حذف کاربر"
+
+#: .\apps\account\templates\account\user\detail.html:264
+msgid "Yes, Delete User"
+msgstr "بله، کاربر را حذف کن"
+
+#: .\apps\account\templates\account\user\detail.html:322
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:101
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:216
+msgid "Inactive"
+msgstr "غیرفعال"
+
+#: .\apps\account\templates\account\user\detail.html:323
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:291
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:453
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:100
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:214
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:830
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:457
+#: .\apps\public\templates\public\settings.html:359
+#: .\apps\public\templates\public\settings.html:628
+msgid "Active"
+msgstr "فعال"
+
+#: .\apps\account\templates\account\user\detail.html:366
+msgid "Manage User Permissions"
+msgstr "مدیریت مجوزهای کاربر"
+
+#: .\apps\account\templates\account\user\detail.html:392
+msgid "Submit"
+msgstr "ارسال"
+
+#: .\apps\account\templates\account\user\list.html:6
+msgid "List of System Users"
+msgstr "لیست کاربران سیستم"
+
+#: .\apps\account\templates\account\user\list.html:45
+#, python-format
+msgid "You have a total of %(total)s users."
+msgstr "در مجموع %(total)s کاربر دارید."
+
+#: .\apps\account\templates\account\user\list.html:88
+#: .\apps\accounting\templates\accounting\document\list.html:78
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:69
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:79
+msgid "Advanced Filter"
+msgstr "فیلتر پیشرفته"
+
+#: .\apps\account\templates\account\user\list.html:97
+#: .\apps\accounting\templates\accounting\document\list.html:87
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:82
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:88
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:100
+msgid "Sort By"
+msgstr "مرتب‌سازی بر اساس"
+
+#: .\apps\account\templates\account\user\list.html:102
+#: .\apps\accounting\templates\accounting\document\list.html:90
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:86
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:93
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:106
+msgid "Latest"
+msgstr "جدیدترین"
+
+#: .\apps\account\templates\account\user\list.html:103
+#: .\apps\accounting\templates\accounting\document\list.html:91
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:87
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:94
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:109
+msgid "Oldest"
+msgstr "قدیمی‌ترین"
+
+#: .\apps\account\templates\account\user\list.html:110
+#: .\apps\accounting\templates\accounting\document\list.html:110
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:109
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:116
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:91
+msgid "Filter"
+msgstr "فیلتر"
+
+#: .\apps\account\templates\account\user\list.html:118
+#: .\apps\accounting\templates\accounting\document\list.html:118
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:118
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:124
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:128
+msgid "Reset Filter"
+msgstr "بازنشانی فیلتر"
+
+#: .\apps\account\templates\account\user\list.html:144
+msgid "Quick Search by Fullname or Email"
+msgstr "جستجوی سریع بر اساس نام کامل یا ایمیل"
+
+#: .\apps\account\templates\account\user\list.html:196
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:217
+msgid "View Detail"
+msgstr "مشاهده جزئیات"
+
+#: .\apps\account\views.py:37
+msgid "User not found"
+msgstr "کاربر یافت نشد"
+
+#: .\apps\account\views.py:47
+msgid "Welcome"
+msgstr "خوش آمدید"
+
+#: .\apps\accounting\forms.py:14
+msgid "Attach Files"
+msgstr "پیوست فایل‌ها"
+
+#: .\apps\accounting\models.py:15
+msgid "Small"
+msgstr "کوچک"
+
+#: .\apps\accounting\models.py:16
+msgid "Medium"
+msgstr "متوسط"
+
+#: .\apps\accounting\models.py:17
+msgid "Large"
+msgstr "بزرگ"
+
+#: .\apps\accounting\models.py:61
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:404
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:111
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:136
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:441
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:201
+msgid "Expense"
+msgstr "هزینه"
+
+#: .\apps\accounting\models.py:62
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:126
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:402
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:506
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:110
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:134
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:439
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:199
+msgid "Income"
+msgstr "درآمد"
+
+#: .\apps\accounting\models.py:97 .\apps\accounting\models.py:178
+msgid "Created Automatically by System"
+msgstr "به‌طور خودکار توسط سیستم ایجاد شده"
+
+#: .\apps\accounting\models.py:142 .\apps\accounting\models.py:211
+#: .\apps\accounting\templates\accounting\document\detail.html:183
+#: .\apps\accounting\templates\accounting\document\detail.html:225
+#: .\apps\accounting\templates\accounting\document\list.html:102
+#: .\apps\accounting\templates\accounting\document\list.html:194
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:243
+msgid "Pending"
+msgstr "در انتظار"
+
+#: .\apps\accounting\models.py:143 .\apps\accounting\models.py:213
+#: .\apps\accounting\templates\accounting\document\detail.html:173
+#: .\apps\accounting\templates\accounting\document\detail.html:223
+#: .\apps\accounting\templates\accounting\document\detail.html:278
+#: .\apps\accounting\templates\accounting\document\list.html:103
+#: .\apps\accounting\templates\accounting\document\list.html:190
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:241
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:377
+msgid "Rejected"
+msgstr "رد شده"
+
+#: .\apps\accounting\models.py:144 .\apps\accounting\models.py:212
+#: .\apps\accounting\templates\accounting\document\detail.html:168
+#: .\apps\accounting\templates\accounting\document\detail.html:221
+#: .\apps\accounting\templates\accounting\document\detail.html:277
+#: .\apps\accounting\templates\accounting\document\list.html:101
+#: .\apps\accounting\templates\accounting\document\list.html:188
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:196
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:239
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:376
+msgid "Approved"
+msgstr "تأیید شده"
+
+#: .\apps\accounting\models.py:162
+msgid "If selected, these users must approve the document."
+msgstr "اگر انتخاب شود، این کاربران باید سند را تأیید کنند."
+
+#: .\apps\accounting\templates\accounting\document\create.html:5
+#: .\apps\accounting\templates\accounting\document\create.html:27
+#: .\apps\accounting\templates\accounting\document\create.html:36
+#: .\apps\accounting\templates\accounting\document\create.html:120
+#: .\apps\accounting\templates\accounting\document\list.html:49
+#: .\templates\base\components\menu.html:80
+msgid "Upload Document"
+msgstr "آپلود سند"
+
+#: .\apps\accounting\templates\accounting\document\create.html:34
+#: .\apps\accounting\templates\accounting\document\detail.html:35
+#: .\apps\accounting\templates\accounting\document\list.html:27
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:176
+#: .\templates\base\components\menu.html:74
+msgid "Documents"
+msgstr "اسناد"
+
+#: .\apps\accounting\templates\accounting\document\create.html:47
+msgid "Document Information"
+msgstr "اطلاعات سند"
+
+#: .\apps\accounting\templates\accounting\document\create.html:57
+#: .\apps\accounting\templates\accounting\document\detail.html:92
+#: .\apps\accounting\templates\accounting\document\detail.html:311
+#: .\apps\accounting\templates\accounting\document\list.html:158
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:67
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:444
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:169
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:292
+msgid "Title"
+msgstr "عنوان"
+
+#: .\apps\accounting\templates\accounting\document\create.html:62
+msgid "e.g. Invoice #123, Contract, Receipt..."
+msgstr "مثال: فاکتور شماره ۱۲۳، قرارداد، رسید..."
+
+#: .\apps\accounting\templates\accounting\document\create.html:70
+#: .\apps\accounting\templates\accounting\document\detail.html:118
+#: .\apps\accounting\templates\accounting\document\detail.html:318
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:505
+msgid "File"
+msgstr "فایل"
+
+#: .\apps\accounting\templates\accounting\document\create.html:77
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:508
+msgid "Choose file"
+msgstr "انتخاب فایل"
+
+#: .\apps\accounting\templates\accounting\document\create.html:82
+msgid "Supported formats: PDF, JPG, PNG, DOCX, XLSX, etc."
+msgstr "فرمت‌های پشتیبانی‌شده: PDF، JPG، PNG، DOCX، XLSX و غیره"
+
+#: .\apps\accounting\templates\accounting\document\create.html:90
+#: .\apps\accounting\templates\accounting\document\detail.html:143
+#: .\apps\accounting\templates\accounting\document\detail.html:330
+msgid "Required Approvers"
+msgstr "تأییدکنندگان مورد نیاز"
+
+#: .\apps\accounting\templates\accounting\document\create.html:101
+msgid ""
+"Select users who must approve this document. Leave empty for no approval "
+"required."
+msgstr "کاربرانی که باید این سند را تأیید کنند انتخاب کنید. برای عدم نیاز به تأیید، خالی بگذارید."
+
+#: .\apps\accounting\templates\accounting\document\create.html:109
+#: .\apps\accounting\templates\accounting\document\detail.html:135
+#: .\apps\accounting\templates\accounting\document\detail.html:343
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:186
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:192
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:179
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:469
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:838
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:842
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:465
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:469
+msgid "Description"
+msgstr "توضیحات"
+
+#: .\apps\accounting\templates\accounting\document\create.html:113
+msgid "Optional description or notes"
+msgstr "توضیحات یا یادداشت اختیاری"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:5
+#: .\apps\accounting\templates\accounting\document\detail.html:26
+msgid "Document Detail"
+msgstr "جزئیات سند"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:45
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:46
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:45
+msgid "Actions"
+msgstr "عملیات"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:58
+#: .\apps\accounting\templates\accounting\document\detail.html:192
+#: .\apps\accounting\templates\accounting\document\detail.html:266
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:58
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:210
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:365
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:101
+msgid "Create Status"
+msgstr "وضعیت ایجاد"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:98
+#: .\apps\accounting\templates\accounting\document\list.html:159
+msgid "Uploaded By"
+msgstr "آپلود شده توسط"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:108
+#: .\apps\accounting\templates\accounting\document\detail.html:210
+#: .\apps\accounting\templates\accounting\document\list.html:160
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:169
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:228
+msgid "Created At"
+msgstr "ایجاد شده در"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:152
+msgid "No approval required"
+msgstr "نیاز به تأیید ندارد"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:165
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:193
+msgid "Statuses"
+msgstr "وضعیت‌ها"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:178
+#: .\apps\accounting\templates\accounting\document\list.html:192
+msgid "No Approval Needed"
+msgstr "نیاز به تأیید ندارد"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:204
+msgid "Approver"
+msgstr "تأییدکننده"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:206
+#: .\apps\accounting\templates\accounting\document\detail.html:275
+#: .\apps\accounting\templates\accounting\document\list.html:97
+#: .\apps\accounting\templates\accounting\document\list.html:161
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:287
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:95
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:177
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:224
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:374
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:197
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:825
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:882
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:208
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:452
+#: .\apps\public\templates\public\settings.html:325
+msgid "Status"
+msgstr "وضعیت"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:208
+#: .\apps\accounting\templates\accounting\document\detail.html:282
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:226
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:381
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:338
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:708
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:712
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:172
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:176
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:180
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:638
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:642
+msgid "Note"
+msgstr "یادداشت"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:241
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:259
+msgid "No status recorded yet."
+msgstr "هنوز وضعیتی ثبت نشده است."
+
+#: .\apps\accounting\templates\accounting\document\detail.html:284
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:383
+msgid "Optional note"
+msgstr "یادداشت اختیاری"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:301
+msgid "Edit Document"
+msgstr "ویرایش سند"
+
+#: .\apps\accounting\templates\accounting\document\detail.html:321
+msgid "Choose new file (optional)"
+msgstr "انتخاب فایل جدید (اختیاری)"
+
+#: .\apps\accounting\templates\accounting\document\list.html:5
+msgid "Documents List"
+msgstr "لیست اسناد"
+
+#: .\apps\accounting\templates\accounting\document\list.html:29
+#, python-format
+msgid ""
+"There are\n"
+"                                                    %(total)s documents in "
+"total."
+msgstr ""
+"در مجموع\n"
+"                                                    %(total)s سند وجود دارد."
+
+#: .\apps\accounting\templates\accounting\document\list.html:100
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:99
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:106
+msgid "All"
+msgstr "همه"
+
+#: .\apps\accounting\templates\accounting\document\list.html:144
+msgid "Quick Search by Title or Description"
+msgstr "جستجوی سریع بر اساس عنوان یا توضیحات"
+
+#: .\apps\accounting\templates\accounting\document\list.html:157
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:380
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:167
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:164
+msgid "ID"
+msgstr "شناسه"
+
+#: .\apps\accounting\templates\accounting\document\list.html:162
+msgid "Approvals"
+msgstr "تأییدها"
+
+#: .\apps\accounting\templates\accounting\document\list.html:213
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:232
+msgid "View Details"
+msgstr "مشاهده جزئیات"
+
+#: .\apps\accounting\templates\accounting\document\list.html:223
+msgid "Download File"
+msgstr "دانلود فایل"
+
+#: .\apps\accounting\templates\accounting\document\list.html:234
+msgid "No documents found."
+msgstr "سندی یافت نشد."
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:5
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:28
+msgid "Create Petty Cash Fund"
+msgstr "ایجاد صندوق تنخواه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:39
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:5
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:27
+#: .\templates\base\components\menu.html:18
+msgid "Petty Cash Funds"
+msgstr "صندوق‌های تنخواه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:43
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:140
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:41
+#: .\templates\base\components\menu.html:25
+msgid "Create Fund"
+msgstr "ایجاد صندوق"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:56
+msgid "Fund Information"
+msgstr "اطلاعات صندوق"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:75
+msgid "e.g. Office Petty Cash, Branch A Fund"
+msgstr "مثال: تنخواه دفتر، صندوق شعبه الف"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:84
+msgid "Initial Balance"
+msgstr "موجودی اولیه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:100
+msgid "Fund Holders"
+msgstr "دارندگان صندوق"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:118
+msgid "Select users responsible for this petty cash fund."
+msgstr "کاربران مسئول این صندوق تنخواه را انتخاب کنید."
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\create.html:132
+msgid "Active Fund"
+msgstr "صندوق فعال"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:56
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:439
+msgid "Edit Fund"
+msgstr "ویرایش صندوق"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:74
+msgid "Current Balance"
+msgstr "موجودی فعلی"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:89
+msgid "Total Income"
+msgstr "مجموع درآمد"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:104
+msgid "Total Expense"
+msgstr "مجموع هزینه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:127
+msgid "Income Amount in The Last 30 Days."
+msgstr "مبلغ درآمد در ۳۰ روز گذشته."
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:133
+msgid "Total Income Amount"
+msgstr "مجموع مبلغ درآمد"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:162
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:231
+#: .\apps\public\templates\public\index.html:90
+msgid "This Month"
+msgstr "این ماه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:187
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:243
+#: .\apps\public\templates\public\index.html:107
+msgid "This Week"
+msgstr "این هفته"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:207
+msgid "Expenses"
+msgstr "هزینه‌ها"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:208
+msgid "Expense Amount in the Last 30 Days."
+msgstr "مبلغ هزینه در ۳۰ روز گذشته."
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:214
+msgid "Total Expense Amount"
+msgstr "مجموع مبلغ هزینه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:271
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:103
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:100
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:166
+msgid "Fund"
+msgstr "صندوق"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:279
+msgid "Transactions Number"
+msgstr "تعداد تراکنش‌ها"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:296
+msgid " Inactive"
+msgstr " غیرفعال"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:331
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:462
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:173
+msgid "Holders"
+msgstr "دارندگان"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:336
+msgid "User"
+msgstr "کاربر"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:339
+msgid "Transactions Count"
+msgstr "تعداد تراکنش‌ها"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:355
+msgid "No holders found."
+msgstr "دارنده‌ای یافت نشد."
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:369
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:175
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:36
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:35
+#: .\templates\base\components\menu.html:51
+msgid "Transactions"
+msgstr "تراکنش‌ها"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:373
+#: .\templates\base\components\header.html:85
+msgid "View All"
+msgstr "مشاهده همه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:382
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:79
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:111
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:422
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:168
+msgid "Holder"
+msgstr "دارنده"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:384
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:170
+msgid "Type"
+msgstr "نوع"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:386
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:120
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:126
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:143
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:447
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:172
+msgid "Amount"
+msgstr "مبلغ"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:411
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:242
+msgid "No transactions found."
+msgstr "تراکنشی یافت نشد."
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:448
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:171
+msgid "Balance"
+msgstr "موجودی"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:456
+msgid "Yes"
+msgstr "بله"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:458
+msgid "No"
+msgstr "خیر"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:475
+msgid "Save"
+msgstr "ذخیره"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:488
+msgid "Jan"
+msgstr "ژانویه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:488
+msgid "Feb"
+msgstr "فوریه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:488
+msgid "Mar"
+msgstr "مارس"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:489
+msgid "Apr"
+msgstr "آوریل"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:489
+msgid "May"
+msgstr "مه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:489
+msgid "Jun"
+msgstr "ژوئن"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:490
+msgid "Jul"
+msgstr "ژوئیه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:490
+msgid "Aug"
+msgstr "اوت"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:490
+msgid "Sep"
+msgstr "سپتامبر"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:491
+msgid "Oct"
+msgstr "اکتبر"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:491
+msgid "Nov"
+msgstr "نوامبر"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:491
+msgid "Dec"
+msgstr "دسامبر"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:571
+msgid "Monthly Expenses"
+msgstr "هزینه‌های ماهانه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:30
+#, python-format
+msgid ""
+"\n"
+"                                                        There are %(total)s "
+"funds in total.\n"
+"                                                    "
+msgstr ""
+"\n"
+"                                                        در مجموع %(total)s صندوق وجود دارد.\n"
+"                                                    "
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:150
+msgid "Quick Search by Title"
+msgstr "جستجوی سریع بر اساس عنوان"
+
+#: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:222
+msgid "No funds found."
+msgstr "صندوقی یافت نشد."
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:5
+msgid "Create PettyCash Transaction"
+msgstr "ایجاد تراکنش تنخواه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:30
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:37
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:200
+#: .\templates\base\components\menu.html:58
+msgid "Create Transaction"
+msgstr "ایجاد تراکنش"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:50
+msgid "Transaction Information"
+msgstr "اطلاعات تراکنش"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:61
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:411
+msgid "Petty Cash Fund"
+msgstr "صندوق تنخواه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:67
+msgid "Select Fund"
+msgstr "انتخاب صندوق"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:87
+msgid "Select Holder"
+msgstr "انتخاب دارنده"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:102
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:131
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:435
+msgid "Transaction Type"
+msgstr "نوع تراکنش"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:109
+msgid "Select Type"
+msgstr "انتخاب نوع"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:135
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:140
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:151
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:455
+msgid "Reference Number"
+msgstr "شماره مرجع"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:149
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:157
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:462
+msgid "Transaction Date"
+msgstr "تاریخ تراکنش"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:154
+#: .\apps\public\templates\public\settings.html:322
+#: .\apps\public\templates\public\settings.html:440
+msgid "Date"
+msgstr "تاریخ"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:156
+msgid "Date format"
+msgstr "فرمت تاریخ"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:157
+msgid "Day-Month-Year"
+msgstr "روز-ماه-سال"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:165
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:718
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:648
+msgid "Attach File"
+msgstr "پیوست فایل"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:173
+msgid "Choose files (you can select multiple)"
+msgstr "انتخاب فایل‌ها (می‌توانید چند فایل انتخاب کنید)"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\create.html:178
+msgid "You can attach receipts, invoices, etc."
+msgstr "می‌توانید رسید، فاکتور و غیره را پیوست کنید."
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:5
+msgid "Petty Cash Transaction Detail"
+msgstr "جزئیات تراکنش تنخواه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:26
+msgid "Transaction Detail"
+msgstr "جزئیات تراکنش"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:78
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:279
+msgid "Add File"
+msgstr "افزودن فایل"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:121
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:222
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:290
+#: .\apps\public\templates\public\settings.html:306
+msgid "Created By"
+msgstr "ایجاد شده توسط"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:201
+msgid "UnConfirmed"
+msgstr "تأییدنشده"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:273
+msgid "Attached Files"
+msgstr "فایل‌های پیوست شده"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:294
+msgid "Uploaded At"
+msgstr "آپلود شده در"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:329
+msgid "Download/View"
+msgstr "دانلود/مشاهده"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:338
+msgid "No file attached"
+msgstr "فایلی پیوست نشده"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:401
+msgid "Edit Transaction"
+msgstr "ویرایش تراکنش"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:491
+msgid "Add Attached File"
+msgstr "افزودن فایل پیوست"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:500
+msgid "Title (Optional)"
+msgstr "عنوان (اختیاری)"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:502
+msgid "e.g. Receipt, Invoice, Photo..."
+msgstr "مثال: رسید، فاکتور، عکس..."
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:510
+msgid "Supported formats: PDF, JPG, PNG, DOC, XLS, etc."
+msgstr "فرمت‌های پشتیبانی‌شده: PDF، JPG، PNG، DOC، XLS و غیره"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:516
+msgid "Upload File"
+msgstr "آپلود فایل"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:6
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:28
+msgid "Petty Cash Transactions"
+msgstr "تراکنش‌های تنخواه"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:30
+#, python-format
+msgid ""
+"There are\n"
+"                                                    %(total)s transactions "
+"in total."
+msgstr ""
+"در مجموع\n"
+"                                                    %(total)s تراکنش وجود دارد."
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:50
+msgid "Add Transaction"
+msgstr "افزودن تراکنش"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:150
+msgid "Quick Search by Reference or Date"
+msgstr "جستجوی سریع بر اساس مرجع یا تاریخ"
+
+#: .\apps\accounting\templates\accounting\petty_cash_transaction\list.html:174
+msgid "Reference"
+msgstr "مرجع"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:118
+msgid "Personnel Contract Detail"
+msgstr "جزئیات قرارداد پرسنل"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:126
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:37
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:42
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:39
+msgid "Personnel Users"
+msgstr "کاربران پرسنل"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:158
+msgid "Create Period Payroll"
+msgstr "ایجاد حقوق دوره‌ای"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:190
+msgid "Contract Information"
+msgstr "اطلاعات قرارداد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:206
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:239
+msgid "Expired"
+msgstr "منقضی شده"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:215
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:526
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:503
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:507
+msgid "Start Date"
+msgstr "تاریخ شروع"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:223
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:537
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:518
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:522
+msgid "End Date"
+msgstr "تاریخ پایان"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:228
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:222
+msgid "Forever"
+msgstr "دائمی"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:235
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:578
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:582
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:665
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:206
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:533
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:536
+msgid "Base Salary"
+msgstr "حقوق پایه"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:246
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:588
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:592
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:670
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:543
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:546
+msgid "Allowance"
+msgstr "حقوق اضافه"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:257
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:554
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:557
+msgid "Insurance Rate"
+msgstr "نرخ بیمه"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:268
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:564
+msgid "Tax Group"
+msgstr "گروه مالیاتی"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:282
+msgid "Payable Account"
+msgstr "حساب پرداختنی"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:296
+msgid "Wage Expense Account"
+msgstr "حساب هزینه حقوق"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:310
+msgid "Insurance Account"
+msgstr "حساب بیمه"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:324
+msgid "Deduction Account"
+msgstr "حساب کسورات"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:346
+msgid "Attached File"
+msgstr "فایل پیوست شده"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:351
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:456
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:312
+msgid "Visit"
+msgstr "مشاهده"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:356
+msgid "Download"
+msgstr "دانلود"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:380
+msgid "Period Payment/Payrolls"
+msgstr "پرداخت‌های دوره‌ای/حقوق"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:398
+msgid "Is Closed"
+msgstr "بسته شده"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:400
+msgid "Is Open"
+msgstr "باز است"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:412
+msgid "Pay"
+msgstr "پرداخت"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:420
+msgid "Update Status"
+msgstr "به‌روزرسانی وضعیت"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:433
+msgid "Net Pay"
+msgstr "خالص پرداختی"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:436
+msgid "Entry"
+msgstr "ثبت"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:516
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:549
+msgid "Create Contract Period Payroll"
+msgstr "ایجاد حقوق دوره قرارداد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:568
+msgid "Create Contract Payroll Item"
+msgstr "ایجاد آیتم حقوق قرارداد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:598
+msgid "Period Payroll"
+msgstr "حقوق دوره‌ای"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:612
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:615
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:675
+msgid "Bonus Pay"
+msgstr "پاداش"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:622
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:625
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:680
+msgid "Overtime Pay"
+msgstr "اضافه‌کاری"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:632
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:635
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:685
+msgid "Tax Cost"
+msgstr "هزینه مالیات"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:642
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:645
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:690
+msgid "Insurance Cost"
+msgstr "هزینه بیمه"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:652
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:655
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:695
+msgid "Deductions Cost"
+msgstr "هزینه کسورات"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:662
+msgid "Calculated Net Pay"
+msgstr "خالص پرداختی محاسبه‌شده"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:724
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:654
+msgid "Select File"
+msgstr "انتخاب فایل"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:733
+msgid "Create Contract Payroll"
+msgstr "ایجاد حقوق قرارداد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:751
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:378
+msgid "Delete Account"
+msgstr "حذف حساب"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:764
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:391
+msgid "Yes, Delete Account"
+msgstr "بله، حساب را حذف کن"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:798
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:801
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:425
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:428
+msgid "Code"
+msgstr "کد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:809
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:436
+msgid "Parent"
+msgstr "والد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:831
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:458
+msgid "Disable"
+msgstr "غیرفعال کردن"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:870
+msgid "Update Status Period Payroll"
+msgstr "به‌روزرسانی وضعیت حقوق دوره‌ای"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:888
+msgid "Open"
+msgstr "باز"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:889
+msgid "Closed"
+msgstr "بسته"
+
+#: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:897
+msgid "Update Period Payroll Status"
+msgstr "به‌روزرسانی وضعیت حقوق دوره‌ای"
+
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:6
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:30
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:39
+msgid "Create Personnel User"
+msgstr "ایجاد کاربر پرسنل"
+
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:58
+msgid "Import"
+msgstr "وارد کردن"
+
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:113
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:119
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:141
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:176
+msgid "National ID"
+msgstr "کد ملی"
+
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:124
+msgid "Please note that the National ID must be unique"
+msgstr "لطفاً توجه کنید که کد ملی باید منحصربه‌فرد باشد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:131
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:135
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:147
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:177
+msgid "Position"
+msgstr "سمت"
+
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:144
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:149
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:155
+msgid "Department"
+msgstr "دپارتمان"
+
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:158
+#: .\apps\accounting\templates\accounting\user\personnel\create.html:163
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:172
+msgid "Contact Info"
+msgstr "اطلاعات تماس"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:34
+msgid "Personnel Detail"
+msgstr "جزئیات پرسنل"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:45
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:6
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:33
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:40
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:71
+msgid "List of Personnel Users"
+msgstr "لیست کاربران پرسنل"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:74
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:493
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:663
+msgid "Create Contract"
+msgstr "ایجاد قرارداد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:124
+msgid "This personnel does not have an active contract"
+msgstr "این پرسنل قرارداد فعالی ندارد"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:193
+msgid "Contracts"
+msgstr "قراردادها"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:267
+msgid "Contacts/Payments Info"
+msgstr "اطلاعات تماس/پرداخت‌ها"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:274
+msgid "Has Active Contract"
+msgstr "دارای قرارداد فعال"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:286
+msgid "Number of Contracts"
+msgstr "تعداد قراردادها"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:292
+msgid "Number of Payments"
+msgstr "تعداد پرداخت‌ها"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:300
+msgid "Number of Period Payments"
+msgstr "تعداد پرداخت‌های دوره‌ای"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:308
+msgid "Last Pay"
+msgstr "آخرین پرداخت"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:322
+msgid "Total Net Payment"
+msgstr "مجموع پرداخت خالص"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:333
+msgid "Avg Base Salary"
+msgstr "میانگین حقوق پایه"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:344
+msgid "First Contract In"
+msgstr "اولین قرارداد در"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:509
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:524
+msgid "Date Format"
+msgstr "فرمت تاریخ"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:511
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:526
+msgid "Year-Month-Day"
+msgstr "سال-ماه-روز"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:579
+msgid "Account Payable"
+msgstr "حساب پرداختنی"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:594
+msgid "Account Wage Expense"
+msgstr "حساب هزینه حقوق"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:609
+msgid "Account Deduction"
+msgstr "حساب کسورات"
+
+#: .\apps\accounting\templates\accounting\user\personnel\detail.html:624
+msgid "Account Insurance Payble"
+msgstr "حساب بیمه پرداختنی"
+
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:118
+msgid "Search"
+msgstr "جستجو"
+
+#: .\apps\accounting\templates\accounting\user\personnel\list.html:160
+msgid "Quick search by name, email"
+msgstr "جستجوی سریع بر اساس نام، ایمیل"
+
+#: .\apps\core\forms\utils.py:12
+msgid "Incorrect Data"
+msgstr "داده نادرست"
+
+#: .\apps\core\utils\validators.py:10
+msgid "Invalid Phonenumber"
+msgstr "شماره تلفن نامعتبر"
+
+#: .\apps\core\views\mixins.py:63 .\apps\core\views\mixins.py:106
+#: .\apps\core\views\mixins.py:220
+msgid "The operation was successful."
+msgstr "عملیات با موفقیت انجام شد."
+
+#: .\apps\public\setup\objects.py:18
+msgid "Review journal step one"
+msgstr "بررسی دفتر روزنامه مرحله اول"
+
+#: .\apps\public\templates\public\index.html:33
+msgid "Dashboard"
+msgstr "داشبورد"
+
+#: .\apps\public\templates\public\index.html:35
+msgid "Welcome to"
+msgstr "خوش آمدید به"
+
+#: .\apps\public\templates\public\index.html:45
+msgid "Reports"
+msgstr "گزارش‌ها"
+
+#: .\apps\public\templates\public\index.html:64
+msgid "Invoice Costs"
+msgstr "هزینه‌های فاکتور"
+
+#: .\apps\public\templates\public\index.html:65
+msgid "Invoice Amount in The Last 30 Days."
+msgstr "مبلغ فاکتور در ۳۰ روز گذشته."
+
+#: .\apps\public\templates\public\index.html:68
+msgid "Total Purchase Amount"
+msgstr "مجموع مبلغ خرید"
+
+#: .\apps\public\templates\public\settings.html:7
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: .\apps\public\templates\public\settings.html:38
+msgid "Company Management"
+msgstr "مدیریت شرکت"
+
+#: .\apps\public\templates\public\settings.html:41
+msgid "You can manage your company here."
+msgstr "می‌توانید شرکت خود را اینجا مدیریت کنید."
+
+#: .\apps\public\templates\public\settings.html:56
+#: .\apps\public\templates\public\settings.html:147
+msgid "Base Information"
+msgstr "اطلاعات پایه"
+
+#: .\apps\public\templates\public\settings.html:73
+#: .\apps\public\templates\public\settings.html:728
+msgid "Scale"
+msgstr "مقیاس"
+
+#: .\apps\public\templates\public\settings.html:86
+msgid "Language/TimeZone"
+msgstr "زبان/منطقه زمانی"
+
+#: .\apps\public\templates\public\settings.html:90
+msgid "Language"
+msgstr "زبان"
+
+#: .\apps\public\templates\public\settings.html:102
+msgid "TimeZone"
+msgstr "منطقه زمانی"
+
+#: .\apps\public\templates\public\settings.html:108
+msgid "Change"
+msgstr "تغییر"
+
+#: .\apps\public\templates\public\settings.html:123
+msgid "Financial Settings"
+msgstr "تنظیمات مالی"
+
+#: .\apps\public\templates\public\settings.html:126
+msgid "You can manage your financial year."
+msgstr "می‌توانید سال مالی خود را مدیریت کنید."
+
+#: .\apps\public\templates\public\settings.html:138
+msgid "Please note that the duration of the fiscal year has ended"
+msgstr "لطفاً توجه کنید که مدت سال مالی به پایان رسیده است"
+
+#: .\apps\public\templates\public\settings.html:164
+#: .\apps\public\templates\public\settings.html:786
+#: .\apps\public\templates\public\settings.html:789
+msgid "Start Time"
+msgstr "زمان شروع"
+
+#: .\apps\public\templates\public\settings.html:176
+#: .\apps\public\templates\public\settings.html:795
+#: .\apps\public\templates\public\settings.html:798
+msgid "End Time"
+msgstr "زمان پایان"
+
+#: .\apps\public\templates\public\settings.html:188
+msgid "Past Years"
+msgstr "سال‌های گذشته"
+
+#: .\apps\public\templates\public\settings.html:243
+#: .\apps\public\templates\public\settings.html:768
+msgid "Create Financial Year"
+msgstr "ایجاد سال مالی"
+
+#: .\apps\public\templates\public\settings.html:258
+msgid "Under Construction"
+msgstr "در حال ساخت"
+
+#: .\apps\public\templates\public\settings.html:265
+#: .\apps\public\templates\public\settings.html:493
+#: .\apps\public\templates\public\settings.html:680
+msgid "Advanced Settings"
+msgstr "تنظیمات پیشرفته"
+
+#: .\apps\public\templates\public\settings.html:268
+msgid "You can manage your currency settings in this place."
+msgstr "می‌توانید تنظیمات ارز خود را در این بخش مدیریت کنید."
+
+#: .\apps\public\templates\public\settings.html:280
+#: .\apps\public\templates\public\settings.html:310
+#: .\apps\public\templates\public\settings.html:428
+#: .\apps\public\templates\public\settings.html:904
+msgid "Base Currency Code"
+msgstr "کد ارز پایه"
+
+#: .\apps\public\templates\public\settings.html:295
+msgid "Manual Exchange Rates"
+msgstr "نرخ‌های ارز دستی"
+
+#: .\apps\public\templates\public\settings.html:299
+msgid ""
+"If you intend to manage the exchange rates yourself, you can do so through "
+"the section below."
+msgstr "اگر قصد دارید نرخ‌های ارز را خودتان مدیریت کنید، می‌توانید از بخش زیر استفاده کنید."
+
+#: .\apps\public\templates\public\settings.html:300
+#: .\apps\public\templates\public\settings.html:901
+msgid ""
+"Please note that by manually activating the currency rate, the automatic "
+"currency rate will be disabled until it is deactivated."
+msgstr "لطفاً توجه کنید که با فعال‌سازی دستی نرخ ارز، نرخ ارز خودکار تا غیرفعال شدن آن غیرفعال خواهد شد."
+
+#: .\apps\public\templates\public\settings.html:314
+#: .\apps\public\templates\public\settings.html:432
+#: .\apps\public\templates\public\settings.html:915
+msgid "Default Currency Code"
+msgstr "کد ارز پیش‌فرض"
+
+#: .\apps\public\templates\public\settings.html:318
+#: .\apps\public\templates\public\settings.html:436
+#: .\apps\public\templates\public\settings.html:932
+#: .\apps\public\templates\public\settings.html:935
+msgid "Rate"
+msgstr "نرخ"
+
+#: .\apps\public\templates\public\settings.html:363
+msgid "InActive"
+msgstr "غیرفعال"
+
+#: .\apps\public\templates\public\settings.html:379
+msgid "Archive"
+msgstr "آرشیو"
+
+#: .\apps\public\templates\public\settings.html:404
+#: .\apps\public\templates\public\settings.html:895
+msgid "Create Manual Exchange Rate"
+msgstr "ایجاد نرخ ارز دستی"
+
+#: .\apps\public\templates\public\settings.html:415
+msgid "Automatically Exchange Rates"
+msgstr "نرخ‌های ارز خودکار"
+
+#: .\apps\public\templates\public\settings.html:424
+msgid "Provider"
+msgstr "ارائه‌دهنده"
+
+#: .\apps\public\templates\public\settings.html:496
+msgid "You can manage your advanced settings"
+msgstr "می‌توانید تنظیمات پیشرفته خود را مدیریت کنید"
+
+#: .\apps\public\templates\public\settings.html:513
+msgid "Journal Status Confirmation"
+msgstr "تأیید وضعیت دفتر روزنامه"
+
+#: .\apps\public\templates\public\settings.html:517
+msgid ""
+"You can manage the number of approvals/rejections of the journal with "
+"special access here."
+msgstr "می‌توانید تعداد تأیید/رد دفتر روزنامه با دسترسی ویژه را اینجا مدیریت کنید."
+
+#: .\apps\public\templates\public\settings.html:526
+msgid "Step"
+msgstr "مرحله"
+
+#: .\apps\public\templates\public\settings.html:564
+msgid "Create Status Confirmation Config"
+msgstr "ایجاد پیکربندی تأیید وضعیت"
+
+#: .\apps\public\templates\public\settings.html:607
+msgid "Edit Profile"
+msgstr "ویرایش پروفایل"
+
+#: .\apps\public\templates\public\settings.html:620
+msgid "Company"
+msgstr "شرکت"
+
+#: .\apps\public\templates\public\settings.html:640
+msgid "Company/General"
+msgstr "شرکت/عمومی"
+
+#: .\apps\public\templates\public\settings.html:647
+msgid "Financial Year"
+msgstr "سال مالی"
+
+#: .\apps\public\templates\public\settings.html:657
+msgid "Accounts"
+msgstr "حساب‌ها"
+
+#: .\apps\public\templates\public\settings.html:664
+msgid "Currency"
+msgstr "ارز"
+
+#: .\apps\public\templates\public\settings.html:673
+msgid "User Permissions"
+msgstr "مجوزهای کاربر"
+
+#: .\apps\public\templates\public\settings.html:712
+msgid "Edit Company"
+msgstr "ویرایش شرکت"
+
+#: .\apps\public\templates\public\settings.html:832
+msgid "Create Journal Status Confirmation Config"
+msgstr "ایجاد پیکربندی تأیید وضعیت دفتر روزنامه"
+
+#: .\apps\public\templates\public\settings.html:843
+#: .\apps\public\templates\public\settings.html:846
+msgid "Number of Step"
+msgstr "تعداد مراحل"
+
+#: .\apps\public\views.py:68
+msgid "Language code is not available"
+msgstr "کد زبان موجود نیست"
+
+#: .\templates\base\base_template.html:71
+msgid "Success"
+msgstr "موفقیت"
+
+#: .\templates\base\base_template.html:71
+msgid "Error"
+msgstr "خطا"
+
+#: .\templates\base\components\footer.html:17
+msgid "All rights reserved."
+msgstr "کلیه حقوق محفوظ است."
+
+#: .\templates\base\components\header.html:60
+msgid "Notifications"
+msgstr "اعلان‌ها"
+
+#: .\templates\base\components\header.html:62
+msgid "Mark All as Read"
+msgstr "همه را خوانده‌شده علامت بزن"
+
+#: .\templates\base\components\header.html:78
+msgid "No New Notifications"
+msgstr "اعلان جدیدی وجود ندارد"
+
+#: .\templates\base\components\header.html:152
+msgid "View Profile"
+msgstr "مشاهده پروفایل"
+
+#: .\templates\base\components\header.html:156
+msgid "Dark mode"
+msgstr "حالت تاریک"
+
+#: .\templates\base\components\header.html:164
+#: .\templates\base\components\menu.html:142
+msgid "Logout"
+msgstr "خروج"
+
+#: .\templates\base\components\list-pagination.html:8
+#: .\templates\base\components\list-pagination.html:12
+msgid "Previous"
+msgstr "قبلی"
+
+#: .\templates\base\components\list-pagination.html:59
+#: .\templates\base\components\list-pagination.html:63
+msgid "Next"
+msgstr "بعدی"
+
+#: .\templates\base\components\menu.html:12
+msgid "Menu and Sections"
+msgstr "منو و بخش‌ها"
+
+#: .\templates\base\components\menu.html:33
+msgid "Fund List"
+msgstr "لیست صندوق‌ها"
+
+#: .\templates\base\components\menu.html:65
+msgid "List Transaction"
+msgstr "لیست تراکنش‌ها"
+
+#: .\templates\base\components\menu.html:88
+msgid "Document List"
+msgstr "لیست اسناد"
+
+#: .\templates\base\components\menu.html:134
+msgid "Personal Profile"
+msgstr "پروفایل شخصی"

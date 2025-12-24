@@ -589,3 +589,20 @@ pre {
     overflow-y: auto;
 }
 
+/* Custom */
+
+.nk-app-root{
+    overflow-x: hidden;
+}
+
+.nk-content-body{
+    z-index: 900;
+}
+
+.card{
+    --bs-card-border-width: 1px!important;
+}
+
+.dark-mode .card{
+    border-color: #203247;
+}

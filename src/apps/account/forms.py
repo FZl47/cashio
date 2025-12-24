@@ -25,6 +25,11 @@ class UserUpdateForm(forms.ModelForm):
         model = models.User
         fields = ('first_name', 'last_name', 'email', 'is_active')
 
+class UserProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ('first_name', 'last_name', 'email', 'phonenumber')
+
 
 class UserPermissionUpdateForm(forms.ModelForm):
     class Meta:

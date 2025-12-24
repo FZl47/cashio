@@ -1,0 +1,630 @@
+{% extends 'base/base_template.html' %}
+{% load static i18n %}
+
+{% block Title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body bg-white npc-default has-aside
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <div class="nk-main">
+            <div class="nk-wrap">
+                {% include 'base/components/header.html' %}
+
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+                            {% include 'base/components/menu.html' %}
+
+                            <div class="nk-content-body">
+
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">{{ object.title }}</h3>
+                                            <nav>
+                                                <ul class="breadcrumb breadcrumb-arrow">
+                                                    <li class="breadcrumb-item"><a
+                                                            href="{% url 'public:index' %}">{% trans 'Home Page' %}</a>
+                                                    </li>
+                                                    <li class="breadcrumb-item"><a
+                                                            href="{% url 'accounting:petty_cash_fund__list' %}">List of
+                                                        Funds</a>
+                                                    </li>
+                                                    <li class="breadcrumb-item active">{{ object.title }}</li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <div class="nk-block-head-content">
+                                            <div class="dropdown">
+                                                <button class="btn btn-outline-light bg-white dropdown-toggle"
+                                                        data-bs-toggle="dropdown">
+                                                    <span>{% trans "Actions" %}</span>
+                                                    <em class="icon ni ni-setting"></em>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <ul class="link-list-opt">
+                                                        {% if perms.accounting.change_pettycashfund %}
+                                                            <li data-bs-toggle="modal"
+                                                                data-bs-target="#modal-edit-fund">
+                                                                <a class="text-info">
+                                                                    <em class="icon ni ni-pen2"></em>
+                                                                    <span>{% trans "Edit Fund" %}</span>
+                                                                </a>
+                                                            </li>
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="nk-block">
+                                    <div class="row g-4">
+
+                                        <div class="col-md-4">
+                                            <div class="card text-white bg-primary">
+                                                <div class="card-header d-flex justify-content-between align-items-center">
+                                                    <h5>{% trans "Current Balance" %}</h5>
+                                                    <em class="icon ni ni-report-profit"
+                                                        style="font-size: 35px;opacity: .3"></em>
+                                                </div>
+                                                <div class="card-inner">
+                                                    <h4 class="card-title">
+                                                        <span class="price-el">{{ object.balance }}</span>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="card text-white bg-success">
+                                                <div class="card-header  d-flex justify-content-between align-items-center">
+                                                    <h5>{% trans "Total Income" %}</h5>
+                                                    <em class="icon ni ni-arrow-up-c"
+                                                        style="font-size: 35px;opacity: .3"></em>
+                                                </div>
+                                                <div class="card-inner">
+                                                    <h5 class="card-title">
+                                                        <span class="price-el">{{ total_income }}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="card text-white bg-danger">
+                                                <div class="card-header  d-flex justify-content-between align-items-center">
+                                                    <h5>{% trans "Total Expense" %}</h5>
+                                                    <em class="icon ni ni-arrow-down-c"
+                                                        style="font-size: 35px;opacity: .3"></em>
+                                                </div>
+                                                <div class="card-inner">
+                                                    <h5 class="card-title">
+                                                        <span class="price-el">{{ total_expense }}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="nk-block">
+                                    <div class="row gy-5">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start mb-2">
+                                                        <div class="card-title">
+                                                            <h6 class="title">{% trans 'Income' %}</h6>
+                                                            <p>{% trans 'Income Amount in The Last 30 Days.' %}</p>
+                                                        </div>
+                                                        <div class="card-tools">
+                                                            <em class="card-hint icon ni ni-help-fill"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="right"
+                                                                title="{% trans 'Total Income Amount' %}">
+                                                            </em>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-xl-wrap">
+                                                        <div class="nk-sale-data-group flex-md g-4"
+                                                             style="min-height: 180px">
+
+                                                            <!-- Monthly Income -->
+                                                            <div class="nk-sale-data">
+                                                                <span class="amount">
+                                                                    <span class="price-el fs-22px">{{ total_income_month }}</span>
+                                                                </span>
+                                                                {% if month_income_percentage >= 0 %}
+                                                                    <span class="change up text-success">
+                                                                        <em class="icon ni ni-arrow-long-up"></em>
+                                                                        %<span class="number-abs">
+                                                                            {{ month_income_percentage|floatformat:2 }}
+                                                                        </span>
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span class="change down text-danger">
+                                                                        <em class="icon ni ni-arrow-long-down"></em>
+                                                                        %<span class="number-abs">
+                                                                            {{ month_income_percentage|floatformat:2 }}
+                                                                        </span>
+                                                                    </span>
+                                                                {% endif %}
+                                                                <span class="sub-title">{% trans 'This Month' %}</span>
+                                                            </div>
+
+                                                            <!-- Weekly Income -->
+                                                            <div class="nk-sale-data">
+                                                                <span class="amount">
+                                                                    <span class="price-el fs-22px">{{ total_income_week }}</span>
+                                                                </span>
+
+                                                                {% if week_income_percentage >= 0 %}
+                                                                    <span class="change up text-success">
+                                                                        <em class="icon ni ni-arrow-long-up"></em>
+                                                                        %<span class="number-abs">
+                                                                            {{ week_income_percentage|floatformat:2 }}
+                                                                        </span>
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span class="change down text-danger">
+                                                                        <em class="icon ni ni-arrow-long-down"></em>
+                                                                        %<span class="number-abs">
+                                                                            {{ week_income_percentage|floatformat:2 }}
+                                                                        </span>
+                                                                    </span>
+                                                                {% endif %}
+
+                                                                <span class="sub-title">{% trans 'This Week' %}</span>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <!-- Chart Placeholder -->
+                                                        <div class="nk-sales-ck sales-revenue">
+                                                            <canvas class="sales-bar-chart"
+                                                                    id="monthlyIncomeChart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            <div class="card card-bordered h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group align-start mb-2">
+                                                        <div class="card-title">
+                                                            <h6 class="title">{% trans 'Expenses' %}</h6>
+                                                            <p>{% trans 'Expense Amount in the Last 30 Days.' %}</p>
+                                                        </div>
+                                                        <div class="card-tools">
+                                                            <em class="card-hint icon ni ni-help-fill"
+                                                                data-bs-toggle="tooltip"
+                                                                data-bs-placement="right"
+                                                                title="{% trans 'Total Expense Amount' %}"></em>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-xl-wrap">
+                                                        <div class="nk-sale-data-group flex-md g-4"
+                                                             style="min-height: 180px">
+
+                                                            <div class="nk-sale-data">
+                                                                <span class="amount">
+                                                                    <span class="price-el fs-22px">{{ total_expense_month }}</span>
+                                                                </span>
+                                                                <span class="change down text-danger">
+                                                                    <em class="icon ni ni-arrow-long-down"></em>
+                                                                    %<span
+                                                                        class="number-abs">{{ month_expense_percentage }}</span>
+                                                                </span>
+                                                                <span class="sub-title">{% trans 'This Month' %}</span>
+                                                            </div>
+
+                                                            <div class="nk-sale-data">
+                                                                <span class="amount">
+                                                                    <span class="price-el fs-22px">{{ total_expense_week }}</span>
+                                                                </span>
+                                                                <span class="change down text-danger">
+                                                                    <em class="icon ni ni-arrow-long-down"></em>
+                                                                    %<span
+                                                                        class="number-abs">{{ week_expense_percentage }}</span>
+                                                                </span>
+                                                                <span class="sub-title">{% trans 'This Week' %}</span>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="nk-sales-ck sales-revenue">
+                                                            <canvas id="expenseMonthlyChart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="nk-block">
+                                    <div class="row gy-5">
+                                        <div class="col-12">
+                                            <div class="nk-block-head">
+                                                <div class="nk-block-head-content">
+                                                    <h5 class="nk-block-title title">{% trans "Basic Information" %}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <ul class="data-list is-compact">
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Fund" %}</div>
+                                                            <div class="data-value">
+                                                                {{ object.title }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Transactions Number" %}</div>
+                                                            <div class="data-value">
+                                                                <span class="badge badge-dim bg-info fs-16px badge-sm">{{ object.get_transactions.count }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Status" %}</div>
+                                                            <div class="data-value">
+                                                                {% if object.is_active %}
+                                                                    <span class="text-success">
+                                                                        {% trans 'Active' %}
+                                                                        <em class="icon ni ni-check-c text-success"></em>
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span class="text-danger">
+                                                                        {% trans ' Inactive' %}
+                                                                        <em class="icon ni ni-cross-c text-danger"></em>
+                                                                    </span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Created at" %}</div>
+                                                            <div class="data-value datetime-convert">
+                                                                {{ object.get_created_at }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Updated at" %}</div>
+                                                            <div class="data-value datetime-convert">
+                                                                {{ object.get_updated_at }}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nk-block">
+                                    <div class="row gy-5">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="card card-bordered">
+                                                <div class="card-inner-group">
+                                                    <div class="card-inner">
+                                                        <h5 class="title">{% trans "Holders" %}</h5>
+                                                    </div>
+                                                    <div class="card-inner p-0">
+                                                        <div class="nk-tb-list nk-tb-ulist is-compact">
+                                                            <div class="nk-tb-item nk-tb-head text-center">
+                                                                <div class="nk-tb-col"><span>{% trans "User" %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans "Transactions Count" %}</span></div>
+                                                            </div>
+
+                                                            {% for holder in object.get_holders %}
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">
+                                                                        <a href="{{ holder.user.get_absolute_url }}">
+                                                                            {{ holder.user.get_full_name|default:holder.user.username }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        {{ holder.pettycashtransaction_set.count }}
+                                                                    </div>
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">{% trans "No holders found." %}</div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="card card-bordered">
+                                                <div class="card-inner-group">
+
+                                                    <div class="card-inner d-flex justify-content-between align-items-center">
+                                                        <h5 class="title">{% trans "Transactions" %}</h5>
+                                                        <a href="{% url 'accounting:petty_cash_transaction__list' %}?filter=true&fund={{ object.id }}"
+                                                           class="fs-14px">
+                                                            <em class="icon ni ni-arrow-long-right"></em>
+                                                            {% trans 'View All' %}
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="card-inner p-0">
+                                                        <div class="nk-tb-list nk-tb-ulist is-compact">
+                                                            <div class="nk-tb-item nk-tb-head text-center">
+                                                                <div class="nk-tb-col"><span>{% trans "ID" %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col"><span>{% trans "Holder" %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col"><span>{% trans "Type" %}</span>
+                                                                </div>
+                                                                <div class="nk-tb-col"><span>{% trans "Amount" %}</span>
+                                                                </div>
+                                                            </div>
+
+                                                            {% for tx in object.get_transactions|slice:':12' %}
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">
+                                                                        <a href="{{ tx.get_absolute_url }}">{{ tx.id }}</a>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        <a href="{{ tx.holder.get_absolute_url }}">
+                                                                            {{ tx.holder.user.get_full_name|default:tx.holder.user.username }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="nk-tb-col">
+                                                                        {% if tx.transaction_type == 'income' %}
+                                                                            <span class="badge badge-dim bg-success">{% trans "Income" %}</span>
+                                                                        {% else %}
+                                                                            <span class="badge badge-dim bg-danger">{% trans "Expense" %}</span>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="nk-tb-col">{{ tx.amount }}</div>
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="nk-tb-item text-center">
+                                                                    <div class="nk-tb-col">{% trans "No transactions found." %}</div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% include 'base/components/footer.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-edit-fund" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post" action="{% url 'accounting:petty_cash_fund__update' object.id %}">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans "Edit Fund" %}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-label">{% trans "Title" %}</label>
+                            <input type="text" name="title" class="form-control" value="{{ object.title }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans "Balance" %}</label>
+                            <input type="number" name="balance" class="form-control" value="{{ object.balance }}"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans "Active" %}</label>
+                            <select name="is_active" class="form-control">
+                                <option value="true"
+                                        {% if object.is_active %}selected{% endif %}>{% trans "Yes" %}</option>
+                                <option value="false"
+                                        {% if not object.is_active %}selected{% endif %}>{% trans "No" %}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans "Holders" %}</label>
+                            <select name="holders" class="form-control js-select2" data-search="on" multiple>
+                                {% for holder in all_holders %}
+                                    <option value="{{ holder.id }}"
+                                            {% if holder in object.get_holders %}selected{% endif %}>
+                                        {{ holder.user.get_full_name|default:holder.user.username }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                        <button class="btn btn-primary">{% trans "Save" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block Script %}
+    <script>
+        let chartMonths = [
+            "{% trans 'Jan' %}", "{% trans 'Feb' %}", "{% trans 'Mar' %}",
+            "{% trans 'Apr' %}", "{% trans 'May' %}", "{% trans 'Jun' %}",
+            "{% trans 'Jul' %}", "{% trans 'Aug' %}", "{% trans 'Sep' %}",
+            "{% trans 'Oct' %}", "{% trans 'Nov' %}", "{% trans 'Dec' %}"
+        ];
+        // Income Chart
+        (function () {
+
+
+            let incomeData = {{ monthly_income|safe }};
+            let ctx = document.getElementById('monthlyIncomeChart');
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartMonths,
+                    datasets: [{
+                        label: "{% trans 'Income' %}",
+                        data: incomeData,
+                        backgroundColor: 'rgba(30, 224, 172, 0.8)',
+                        borderRadius: 6,
+                        barThickness: 18,
+                        maxBarThickness: 22
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1f2b3a',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            padding: 10,
+                            cornerRadius: 6,
+                            callbacks: {
+                                label: function (context) {
+                                    return context.raw.toLocaleString() + '' // Currency Symbol;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#8094ae',
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        })();
+
+        // Expense Chart
+        (function () {
+            const ctx = document.getElementById('expenseMonthlyChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartMonths,
+                    datasets: [{
+                        label: '{% trans "Monthly Expenses" %}',
+                        data: {{ monthly_expense|safe }},
+                        backgroundColor: '#e85347',
+                        borderRadius: 6,
+                        barThickness: 18,
+                        maxBarThickness: 22
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1f2b3a',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            padding: 10,
+                            cornerRadius: 6,
+                            callbacks: {
+                                label: function (context) {
+                                    return context.raw.toLocaleString() + '' // Currency Symbol;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#8094ae',
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        })();
+
+    </script>
+
+
+{% endblock %}

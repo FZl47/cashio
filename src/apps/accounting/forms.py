@@ -23,9 +23,9 @@ class PettyCashTransactionCreateForm(forms.ModelForm):
         amount = cleaned_data.get('amount')
         transaction_type = cleaned_data.get('transaction_type')
 
-        if transaction_type == 'expense':
+        if fund and transaction_type == 'expense':
             if fund.balance < amount:
-                self.add_error('Amount',
+                self.add_error('',
                                f"Not enough balance in fund '{fund.title}' (Current balance: {fund.balance}).")
 
         return cleaned_data
@@ -62,6 +62,7 @@ class DocumentCreateForm(forms.ModelForm):
         model = models.Document
         fields = '__all__'
 
+
 class DocumentUpdateForm(forms.ModelForm):
     class Meta:
         model = models.Document
@@ -71,4 +72,16 @@ class DocumentUpdateForm(forms.ModelForm):
 class DocumentStatusCreateForm(forms.ModelForm):
     class Meta:
         model = models.DocumentStatus
+        fields = '__all__'
+
+
+class PettyCashFundCreateForm(forms.ModelForm):
+    class Meta:
+        model = models.PettyCashFund
+        fields = '__all__'
+
+
+class PettyCashFundUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.PettyCashFund
         fields = '__all__'

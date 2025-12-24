@@ -68,7 +68,16 @@ class SetLang(View):
             messages.error(request, _('Language code is not available'))
             return redirect(self.get_referrer_url())
         activate_lang(lang)
-        return redirect(self.get_referrer_url())
+
+        request.session[settings.LANGUAGE_COOKIE_NAME] = lang
+
+        response = redirect(self.get_referrer_url())
+        response.set_cookie(
+            settings.LANGUAGE_COOKIE_NAME,
+            lang
+        )
+
+        return response
 
 
 class Settings(PermissionMixin, TemplateView):

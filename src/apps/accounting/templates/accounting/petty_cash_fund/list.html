@@ -1,0 +1,243 @@
+{% extends 'base/base_template.html' %}
+{% load static i18n %}
+
+{% block Title %}
+    {% trans "Petty Cash Funds" %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body bg-white npc-default has-aside
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <div class="nk-main">
+            <div class="nk-wrap">
+                {% include 'base/components/header.html' %}
+
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+                            {% include 'base/components/menu.html' %}
+
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">{% trans "Petty Cash Funds" %}</h3>
+                                            <div class="nk-block-des text-soft">
+                                                <p>
+                                                    {% blocktrans with total=pagination.paginator.count %}
+                                                        There are {{ total }} funds in total.
+                                                    {% endblocktrans %}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="nk-block-head-content">
+                                            <a href="{% url 'accounting:petty_cash_fund__create' %}"
+                                               class="btn btn-primary">
+                                                <em class="icon ni ni-plus"></em>
+                                                <span>{% trans "Create Fund" %}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nk-block">
+                                    <div class="card card-bordered card-stretch">
+                                        <div class="card-inner-group">
+
+                                            {% with qs=request.GET %}
+                                                <div class="card-inner position-relative card-tools-toggle">
+                                                    <div class="card-tools me-n1">
+                                                        <ul class="btn-toolbar gx-1">
+                                                            <li>
+                                                                <div class="dropdown">
+                                                                    <a href="#"
+                                                                       class="btn btn-trigger btn-icon dropdown-toggle"
+                                                                       data-bs-toggle="dropdown">
+                                                                        {% if qs.filter %}
+                                                                            <div class="dot dot-primary"></div>
+                                                                        {% endif %}
+                                                                        <em class="icon ni ni-filter-alt"></em>
+                                                                    </a>
+
+                                                                    <div class="filter-wg dropdown-menu dropdown-menu-xl dropdown-menu-end">
+                                                                        <div class="dropdown-head">
+                                                                    <span class="sub-title dropdown-title">
+                                                                        {% trans "Advanced Filter" %}
+                                                                    </span>
+                                                                        </div>
+
+                                                                        <div class="dropdown-body dropdown-body-rg">
+                                                                            <form class="add-params-to-form">
+                                                                                <input type="hidden" name="filter"
+                                                                                       value="true">
+
+                                                                                <div class="row gx-6 gy-4">
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="overline-title overline-title-alt">
+                                                                                                {% trans "Sort By" %}
+                                                                                            </label>
+                                                                                            <select class="form-select js-select2 select-by-filter"
+                                                                                                    name="sort_by">
+                                                                                                <option value="latest">{% trans "Latest" %}</option>
+                                                                                                <option value="oldest">{% trans "Oldest" %}</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="overline-title overline-title-alt">
+                                                                                                {% trans "Status" %}
+                                                                                            </label>
+                                                                                            <select class="form-select js-select2 select-by-filter"
+                                                                                                    name="status">
+                                                                                                <option value="all">{% trans "All" %}</option>
+                                                                                                <option value="active">{% trans "Active" %}</option>
+                                                                                                <option value="inactive">{% trans "Inactive" %}</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-12 text-left">
+                                                                                        <button type="submit"
+                                                                                                class="btn btn-secondary">
+                                                                                            {% trans "Filter" %}
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+
+                                                                        <div class="dropdown-foot between">
+                                                                            <a href="{% url 'accounting:petty_cash_fund__list' %}">
+                                                                                {% trans "Reset Filter" %}
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="#"
+                                                                   class="search-toggle toggle-search btn btn-icon"
+                                                                   data-target="search">
+                                                                    <em class="icon ni ni-search"></em>
+                                                                    {% if qs.search %}
+                                                                        <div class="dot dot-primary"></div>
+                                                                    {% endif %}
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="card-search search-wrap px-3" data-search="search">
+                                                        <div class="search-content">
+                                                            <form class="add-params-to-form">
+                                                                <a href="#"
+                                                                   class="search-back btn btn-icon toggle-search"
+                                                                   data-target="search">
+                                                                    <em class="icon ni ni-arrow-left"></em>
+                                                                </a>
+
+                                                                <input type="text"
+                                                                       name="search"
+                                                                       class="form-control border-transparent form-focus-none"
+                                                                       placeholder="{% trans 'Quick Search by Title' %}"
+                                                                       value="{{ qs.search }}">
+
+                                                                <button class="search-submit btn btn-icon">
+                                                                    <em class="icon ni ni-search"></em>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endwith %}
+
+                                            <div class="card-inner p-0 text-center">
+                                                <div class="nk-tb-list nk-tb-ulist is-compact">
+
+                                                    <div class="nk-tb-item nk-tb-head">
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "ID" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Title" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Balance" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Holders" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Transactions" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Status" %}</span></div>
+                                                    </div>
+
+                                                    {% for fund in data %}
+                                                        <div class="nk-tb-item">
+                                                            <div class="nk-tb-col">
+                                                                <a href="{{ fund.get_absolute_url }}">
+                                                                    {{ fund.id }}
+                                                                </a>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="tb-lead">
+                                                                     <a href="{{ fund.get_absolute_url }}">
+                                                                        {{ fund.title|truncatechars:'20' }}
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                            <div class="nk-tb-col price-el">
+                                                                {{ fund.balance }}
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                {% for holder in fund.get_holders %}
+                                                                    {% if forloop.counter < 4 %}
+                                                                        <a class="badge bg-purple fs-9px"
+                                                                           href="{{ holder.get_absolute_url }}">
+                                                                            {{ holder.user.get_full_name }}
+                                                                        </a>
+                                                                    {% else %}
+                                                                        <span class="fs-17px">...</span>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                <span class="badge badge-dim bg-info fs-14px">{{ fund.get_transactions.count }}</span>
+                                                            </div>
+                                                            <div class="nk-tb-col">
+                                                                {% if fund.is_active %}
+                                                                    <span class="tb-status text-success">{% trans "Active" %}</span>
+                                                                {% else %}
+                                                                    <span class="tb-status text-danger">{% trans "Inactive" %}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% empty %}
+                                                        <div class="nk-tb-item text-center">
+                                                            <span>{% trans "No funds found." %}</span>
+                                                        </div>
+                                                    {% endfor %}
+
+                                                </div>
+                                            </div>
+
+                                            {% include 'base/components/list-pagination.html' %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% include 'base/components/footer.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -30,11 +30,9 @@ INSTALLED_APPS = [
     'apps.notification',
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -42,6 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Custom Middlewares
     'apps.core.auth.middleware.UserIsAuthenticated',
+    'apps.core.auth.middleware.UserProfileIsCompleted',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -96,7 +95,8 @@ LANGUAGES = (
     ('fa', 'Persian'),
 )
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'fa'
+LANGUAGE_COOKIE_NAME = 'django_language'
 
 LOCALE_PATHS = (
     BASE_DIR / 'locale',
@@ -116,5 +116,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'  # Custom user model
 
 LOGIN_URL = reverse_lazy('account:login')
+LOGOUT_URL = reverse_lazy('account:logout')
+
+PROFILE_URL = reverse_lazy('account:user_profile')
 
 EXCEPT_USER_AUTH_URLS = [LOGIN_URL]
+
+EXCEPT_USER_PROFILE_URLS = [LOGIN_URL, PROFILE_URL, LOGOUT_URL]

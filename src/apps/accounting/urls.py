@@ -5,6 +5,12 @@ from . import views
 app_name = 'apps.accounting'
 
 urlpatterns = [
+    # Petty Cash Fund
+    path('petty-cash-funds/list', views.PettyCashFundList.as_view(), name='petty_cash_fund__list'),
+    path('petty-cash-funds/create/', views.PettyCashFundCreate.as_view(), name='petty_cash_fund__create'),
+    path('petty-cash-funds/<int:pk>/', views.PettyCashFundDetail.as_view(), name='petty_cash_fund__detail'),
+    path('petty-cash-funds/<int:pk>/update/', views.PettyCashFundUpdate.as_view(), name='petty_cash_fund__update'),
+
     # Petty Cash Transaction
     path('petty-cash/transaction/attach/create', views.PettyCashTransactionAttachDocCreate.as_view(),
          name='petty_cash_transaction__create_attachment_doc'),

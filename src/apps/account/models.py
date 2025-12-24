@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.db import models
 
 from apps.core.models import BaseModel, BaseModelObjectRelation
+from apps.core.utils.validators import PhonenumberValidator
 from apps.accounting.models import PettyCashHolder
 
 
@@ -48,6 +49,8 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
     first_name = models.CharField("first name", max_length=150, blank=True, default=_('No name'))
     last_name = models.CharField("last name", max_length=150, blank=True, default='')
     email = models.EmailField(_("email address"), unique=True, validators=[AbstractUser.username_validator])
+    phonenumber = models.CharField(_("phonenumber"), null=True, blank=True, max_length=20,
+                                   validators=[PhonenumberValidator()])
     role = models.CharField(max_length=15, choices=ROLE_TYPES, default='common_user')
 
     username = None
@@ -58,8 +61,17 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     @property
+    def profile_is_completed(self):
+        if self.is_superuser:
+            return True
+
+        if self.first_name and self.last_name and self.email and self.phonenumber:
+            return True
+        return False
+
+    @property
     def is_admin(self):
-        return True if self.role == 'admin' or self.is_superuser else False
+        return True if self.role == 'admin_user' or self.is_superuser else False
 
     @property
     def is_common_user(self):

@@ -33,6 +33,15 @@ class PettyCashFund(BaseModel):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse_lazy('accounting:petty_cash_fund__detail', args=(self.id,))
+
+    def get_holders(self):
+        return self.holders.all().select_related('user')
+
+    def get_transactions(self):
+        return self.pettycashtransaction_set.all().select_related('holder__user')
+
 
 class PettyCashHolder(BaseModel):
     user = models.OneToOneField('account.User', on_delete=models.CASCADE)
@@ -43,6 +52,9 @@ class PettyCashHolder(BaseModel):
     @property
     def funds(self):
         return self.petty_cash_funds.all()
+    
+    def get_absolute_url(self):
+        return self.user.get_absolute_url()
 
 
 class PettyCashTransactionType(models.TextChoices):
@@ -101,7 +113,7 @@ class PettyCashTransaction(BaseModel):
         return self.statuses.filter(status='approved').exists()
 
     def files(self):
-        return self.documents.all()
+        return self.document.all()
 
 
 class PettyCashTransactionDocument(BaseModel):

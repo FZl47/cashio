@@ -163,8 +163,6 @@
                                                         <div class="nk-tb-col"><span
                                                                 class="sub-text">{% trans "ID" %}</span></div>
                                                         <div class="nk-tb-col"><span
-                                                                class="sub-text">{% trans "Date" %}</span></div>
-                                                        <div class="nk-tb-col"><span
                                                                 class="sub-text">{% trans "Fund" %}</span></div>
                                                         <div class="nk-tb-col"><span
                                                                 class="sub-text">{% trans "Holder" %}</span></div>
@@ -187,10 +185,7 @@
                                                         </span>
                                                             </div>
                                                             <div class="nk-tb-col">
-                                                                <span>{{ transaction.date|default:'-' }}</span>
-                                                            </div>
-                                                            <div class="nk-tb-col">
-                                                                <span>{{ transaction.fund.title }}</span>
+                                                                <a href="{{ transaction.fund.get_absolute_url }}">{{ transaction.fund.title }}</a>
                                                             </div>
                                                             <div class="nk-tb-col">
                                                         <span>
@@ -208,16 +203,24 @@
                                                             </div>
                                                             <div class="nk-tb-col text-end">
                                                                 {% if transaction.transaction_type == 'income' %}
-                                                                    <span class="text-success price-el">+{{ transaction.amount }}</span>
+                                                                    <div class="text-success">
+                                                                        <span class="price-el">{{ transaction.amount }}</span>
+                                                                        <span>+</span>
+                                                                    </div>
                                                                 {% else %}
-                                                                    <span class="text-danger price-el">-{{ transaction.amount }}</span>
+                                                                    <div class="text-danger">
+                                                                             <span class="price-el">
+                                                                        {{ transaction.amount }}
+                                                                    </span>
+                                                                        <span>-</span>
+                                                                    </div>
                                                                 {% endif %}
                                                             </div>
                                                             <div class="nk-tb-col">
                                                                 <span>{{ transaction.reference_number|default:"-" }}</span>
                                                             </div>
                                                             <div class="nk-tb-col">
-                                                                <span class="badge badge-dim fs-13px bg-info">{{ transaction.documents.count }}</span>
+                                                                <span class="badge badge-dim fs-13px bg-info">{{ transaction.documents.count|default:'0' }}</span>
                                                             </div>
                                                             <div class="nk-tb-col nk-tb-col-tools">
                                                                 <ul class="nk-tb-actions gx-1">

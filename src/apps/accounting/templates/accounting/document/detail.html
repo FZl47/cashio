@@ -341,7 +341,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="form-label" for="description">{% trans "Description" %}</label>
-                                    <textarea name="description" id="description" class="form-control" rows="3">{{ object.description }}</textarea>
+                                    <textarea name="description" id="description" class="form-control" rows="3">{{ object.description|default:'' }}</textarea>
                                 </div>
                             </div>
                         </div>
