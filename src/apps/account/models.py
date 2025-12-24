@@ -78,7 +78,7 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
 
     @property
     def is_common_user(self):
-        return True if self.role == 'common_user' else False
+        return True if not self.is_admin else False
 
     @property
     def holder(self):
