@@ -307,7 +307,7 @@ class PettyCashTransactionList(PermissionMixin, ListViewMixin, TemplateView):
         if user.is_common_user:
             qs = qs.filter(holder__user=user)
         qs = qs.select_related('fund', 'holder__user')
-        qs = self.filter(qs)
+        qs = self.filter(qs).distinct()
         return qs
 
     def filter(self, qs):
@@ -394,7 +394,7 @@ class DocumentList(PermissionMixin, ListViewMixin, TemplateView):
             lookup = Q(uploaded_by=user) | Q(required_approvers__in=[user])
             qs = qs.filter(lookup)
         qs = qs.select_related('uploaded_by').prefetch_related('required_approvers')
-        qs = self.filter(qs)
+        qs = self.filter(qs).distinct()
         return qs
 
     def filter(self, qs):
