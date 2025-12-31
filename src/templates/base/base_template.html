@@ -55,13 +55,10 @@
 
 <script src="{% static 'js/base.js' %}"></script>
 
-
 <script src="{% static 'js/bundle.js' %}"></script>
 <script src="{% static 'js/scripts.js' %}"></script>
 <script src="{% static 'js/charts/gd-default.js' %}"></script>
-<script src="{% static 'js/charts/gd-default.js' %}"></script>
 <script src="{% static 'js/jdate.js' %}"></script>
-
 
 
 <script>
@@ -81,6 +78,17 @@
 
 {% block Js %}
 {% endblock %}
-</body>
 
+<script>
+    // Check tour page btn
+    if (typeof _showTour !== "undefined" && typeof _showTour === "function") {
+        document.querySelector('.btn-tour').classList.remove('d-none')
+        if (!getCookie('tour_initialized')) {
+            _showTour()
+            setCookie('tour_initialized', 'true', 30)
+        }
+    }
+</script>
+
+</body>
 </html>

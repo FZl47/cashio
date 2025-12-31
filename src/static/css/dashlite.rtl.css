@@ -52464,4 +52464,8 @@ em.icon.ni.ni-comments {
   flex-direction: row-reverse;
 }
 
+.driver-popover{
+    direction: rtl;
+}
+
 /*! END @iO */

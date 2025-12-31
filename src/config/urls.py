@@ -9,11 +9,13 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
 
     path('', include('apps.public.urls', namespace='public')),
     path('u/', include('apps.account.urls', namespace='account')),
     path('a/', include('apps.accounting.urls', namespace='accounting')),
-    path('i18n/', include('django.conf.urls.i18n')),
+    path('n/', include('apps.notification.urls', namespace='notification')),
+
 ]
 
 if settings.DEBUG:

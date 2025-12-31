@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.utils import timezone
@@ -8,6 +10,7 @@ from django_jalali.db import models as jmodels
 from datetime import timedelta
 
 from apps.core.models import BaseModel
+from apps.notification.utils import NotificationModelMixin
 
 
 class Company(BaseModel):
@@ -24,14 +27,20 @@ class Company(BaseModel):
         return self.name
 
 
-class PettyCashFund(BaseModel):
+class PettyCashFund(NotificationModelMixin, BaseModel):
     title = models.CharField(max_length=150)
     balance = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     holders = models.ManyToManyField('PettyCashHolder', related_name='petty_cash_funds')
     is_active = models.BooleanField(default=True)
 
+    _notif_title = _('A new Petty Cash Fund has been created.')
+    _notif_type = 'petty_cash_fund_created'
+
     def __str__(self):
         return self.title
+
+    def get_notif_to_users(self):
+        return NotificationModelMixin.admin_users()
 
     def get_absolute_url(self):
         return reverse_lazy('accounting:petty_cash_fund__detail', args=(self.id,))
@@ -52,7 +61,7 @@ class PettyCashHolder(BaseModel):
     @property
     def funds(self):
         return self.petty_cash_funds.all()
-    
+
     def get_absolute_url(self):
         return self.user.get_absolute_url()
 
@@ -76,7 +85,7 @@ class PettyCashTransactionQuerySet(models.QuerySet):
         return self.filter(created_at__gte=start, created_at__lte=now)
 
 
-class PettyCashTransaction(BaseModel):
+class PettyCashTransaction(NotificationModelMixin, BaseModel):
     fund = models.ForeignKey(PettyCashFund, on_delete=models.PROTECT)
     holder = models.ForeignKey(PettyCashHolder, on_delete=models.PROTECT)
     created_by = models.ForeignKey('account.User', on_delete=models.PROTECT)
@@ -85,6 +94,17 @@ class PettyCashTransaction(BaseModel):
     description = models.TextField(blank=True)
     reference_number = models.CharField(max_length=100, blank=True)
     date = jmodels.jDateField(null=True, blank=True)
+
+    _notif_title = _('A new transaction has been created.')
+    _notif_type = 'petty_cash_fund_transaction_created'
+
+    def get_notif_to_users(self):
+        return NotificationModelMixin.admin_users()
+
+    def get_notif_kwargs(self) -> dict:
+        return {
+            'fund_title': self.fund.title
+        }
 
     objects = PettyCashTransactionQuerySet.as_manager()
 
@@ -116,7 +136,7 @@ class PettyCashTransaction(BaseModel):
         return self.document.all()
 
 
-class PettyCashTransactionDocument(BaseModel):
+class PettyCashTransactionDocument(NotificationModelMixin, BaseModel):
     transaction = models.ForeignKey(
         PettyCashTransaction,
         on_delete=models.CASCADE,
@@ -126,6 +146,12 @@ class PettyCashTransactionDocument(BaseModel):
 
     file = models.FileField(upload_to='petty_cash_docs/')
     title = models.CharField(max_length=150, blank=True, null=True)
+
+    _notif_title = _('A new document has been added to the transaction.')
+    _notif_type = 'petty_cash_fund_transaction_doc_created'
+
+    def get_notif_to_users(self) -> Any:
+        return list(NotificationModelMixin.admin_users()).append(self.created_by)
 
     def __str__(self):
         return self.title or self.file.name
@@ -137,7 +163,7 @@ class PettyCashTransactionDocument(BaseModel):
             return None
 
 
-class PettyCashTransactionStatus(BaseModel):
+class PettyCashTransactionStatus(NotificationModelMixin, BaseModel):
     STATUS_TYPES = (
         ('pending', _('Pending')),
         ('rejected', _('Rejected')),
@@ -148,11 +174,17 @@ class PettyCashTransactionStatus(BaseModel):
     note = models.TextField(null=True, blank=True)
     created_by = models.ForeignKey('account.User', on_delete=models.CASCADE)
 
+    _notif_title = _('The transaction status has changed.')
+    _notif_type = 'petty_cash_fund_transaction_status_changed'
+
+    def get_notif_to_users(self) -> Any:
+        return list(NotificationModelMixin.admin_users()).extend([self.created_by, self.transaction.created_by])
+
     def __str__(self):
         return f'{self.get_status_display()} / {self.created_by}'
 
 
-class Document(BaseModel):
+class Document(NotificationModelMixin, BaseModel):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='document/%Y/%m/%d/')
@@ -161,6 +193,12 @@ class Document(BaseModel):
         'account.User', blank=True, related_name='documents_to_approve',
         help_text=_("If selected, these users must approve the document.")
     )
+
+    _notif_title = _('A new document has been submitted that requires your approval.')
+    _notif_type = 'document_has_been_added'
+
+    def get_notif_to_users(self) -> Any:
+        return self.required_approvers.all()
 
     class Meta:
         ordering = ('-id',)
@@ -206,7 +244,7 @@ class Document(BaseModel):
         return reverse_lazy('accounting:document__detail', args=(self.id,))
 
 
-class DocumentStatus(BaseModel):
+class DocumentStatus(NotificationModelMixin, BaseModel):
     STATUS_CHOICES = (
         ('pending', _('Pending')),
         ('approved', _('Approved')),
@@ -217,6 +255,18 @@ class DocumentStatus(BaseModel):
     created_by = models.ForeignKey('account.User', on_delete=models.CASCADE, related_name='document_approvals')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     note = models.TextField(blank=True)
+
+    _notif_type = 'document_status_has_been_changed'
+
+    def get_notif_to_users(self) -> Any:
+        return [self.document.uploaded_by]
+
+    def get_notif_title(self) -> Any:
+        return _('Document %(title)s has been %(status)s by %(user)s') % {
+            'title': self.document.title,
+            'status': self.get_status_display(),
+            'user': self.created_by.get_full_name()
+        }
 
     def __str__(self):
         return f'{self.created_by} - {self.document.title} ({self.get_status_display()})'

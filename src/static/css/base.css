@@ -38,7 +38,6 @@ body {
 
 .container-not-found-base p {
     font-size: 30px;
-    font-family: KalamehBlack;
     color: rgb(229, 122, 122);
 }
 
@@ -579,30 +578,73 @@ pre {
     }
 }
 
-#modal-object-link .tb-odr-info{
+#modal-object-link .tb-odr-info {
     color: inherit;
 }
 
 
-#modal-object-link .card{
+#modal-object-link .card {
     max-height: 400px;
     overflow-y: auto;
 }
 
 /* Custom */
 
-.nk-app-root{
+.nk-app-root {
     overflow-x: hidden;
 }
 
-.nk-content-body{
+.nk-content-body {
     z-index: 900;
 }
 
-.card{
-    --bs-card-border-width: 1px!important;
+.card {
+    --bs-card-border-width: 1px !important;
 }
 
-.dark-mode .card{
+.dark-mode .card {
     border-color: #203247;
 }
+
+.driver-popover {
+    font-family: 'YekanBakhFaNum', sans-serif !important;
+    background: #f19c3b;
+    padding: 20px;
+}
+
+.driver-popover * {
+    font-family: 'YekanBakhFaNum', sans-serif !important;
+}
+
+.driver-popover-footer {
+    direction: ltr;
+}
+
+.driver-popover-title {
+    color: #623805;
+}
+
+.driver-popover-description {
+    color: #fff;
+    line-height: 1.9;
+}
+
+/* Close button displayed on the top right corner */
+.driver-popover-close-btn {
+    color: #ff241c;
+    transform: scale(1.1);
+}
+
+.driver-popover-progress-text {
+    color: #f6f6f6;
+}
+
+.driver-popover-prev-btn {
+    transform: scale(1.2) !important;
+}
+
+.driver-popover-next-btn {
+    transform: scale(1.2) !important;
+}
+
+

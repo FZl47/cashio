@@ -186,7 +186,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-6 statuses-box">
                                             <div class="nk-block-head d-flex justify-content-between align-items-center">
                                                 <div class="nk-block-head-content">
                                                     <h5 class="nk-block-title title">
@@ -205,7 +205,7 @@
                                                     </h5>
                                                 </div>
                                                 {% if not object.is_approved and perms.accounting.add_pettycashtransactionstatus %}
-                                                    <button class="btn btn-outline-success" data-bs-toggle="modal"
+                                                    <button class="btn btn-outline-success btn-create-status" data-bs-toggle="modal"
                                                             data-bs-target="#modal-create-status">
                                                         <span>{% trans "Create Status" %}</span>
                                                         <em class="icon ni ni-check-round-cut"></em>
@@ -267,13 +267,13 @@
                                         </div>
                                     </div>
                                     <div class="row gy-5 mt-2">
-                                        <div class="col-12">
+                                        <div class="col-12 attached-files-box">
                                             <div class="nk-block-head d-flex justify-content-between align-items-center">
                                                 <div class="nk-block-head-content">
                                                     <h5 class="nk-block-title title">{% trans "Attached Files" %}</h5>
                                                 </div>
                                                 {% if perms.accounting.add_pettycashtransactiondocument %}
-                                                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                                    <button class="btn btn-outline-primary btn-attach-file" data-bs-toggle="modal"
                                                             data-bs-target="#modal-add-attachment">
                                                         <em class="icon ni ni-plus"></em>
                                                         <span>{% trans "Add File" %}</span>
@@ -520,6 +520,8 @@
         </div>
     </div>
 
+{% endblock %}
 
-
+{% block Script %}
+    <script src="{% static 'js/tour/transaction__detail.js' %}"></script>
 {% endblock %}

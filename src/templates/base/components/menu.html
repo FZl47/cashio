@@ -121,6 +121,35 @@
                         </ul>
                     </li>
                     <!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon">
+                                <em class="icon ni ni-notify {% if user.get_unread_notifications.count > 0 %}text-warning{% endif %}"></em>
+                            </span>
+                            <span class="nk-menu-text">{% trans 'Notification' %}</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            {% if perms.notification.add_notificationuser %}
+                                <li class="nk-menu-item">
+                                    <a href="{% url 'notification:notification__create' %}" class="nk-menu-link"><span
+                                            class="nk-menu-text">{% trans 'Create Notification User' %}</span></a>
+                                </li>
+                            {% endif %}
+                            {% if perms.notification.view_notificationuser %}
+                                <li class="nk-menu-item">
+                                    <a href="{% url 'notification:notification__list' %}" class="nk-menu-link"><span
+                                            class="nk-menu-text">{% trans 'List of Notifications' %}</span></a>
+                                </li>
+                            {% endif %}
+
+                            <li class="nk-menu-item">
+                                <a href="{% url 'notification:notification_personal__list' %}" class="nk-menu-link"><span
+                                        class="nk-menu-text">{% trans 'List of Personal Notifications' %}</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
                         <a href="{% url 'public:index' %}#" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-home"></em></span>

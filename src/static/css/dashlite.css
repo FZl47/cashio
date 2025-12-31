@@ -52345,5 +52345,8 @@ div.dataTables_wrapper div.dataTables_filter .dark-mode input,
   border-color: #6576ff !important;
 }
 
+.driver-popover{
+    direction: ltr;
+}
 
 /*! END @iO */

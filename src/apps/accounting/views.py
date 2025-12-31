@@ -4,6 +4,7 @@ from django.views.generic import TemplateView, View
 from django.db.models import Q, OuterRef, Subquery, Sum
 from django.db.models.functions import ExtractMonth
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.core.views import CreateViewMixin, ListViewMixin, DetailViewMixin, UpdateViewMixin
 from apps.core.auth.permissions.mixins import PermissionMixin
@@ -38,8 +39,7 @@ class PettyCashFundUpdate(PermissionMixin, UpdateViewMixin, View):
         return self.update(request)
 
 
-class PettyCashFundList(PermissionMixin, ListViewMixin, TemplateView):
-    permissions = ('accounting.view_pettycashfund',)
+class PettyCashFundList(LoginRequiredMixin, ListViewMixin, TemplateView):
     template_name = 'accounting/petty_cash_fund/list.html'
     page_size = 8
 
@@ -56,7 +56,7 @@ class PettyCashFundList(PermissionMixin, ListViewMixin, TemplateView):
     def filter(self, qs):
         params = self.request.GET
 
-        sort_by = params.get('sort_by')
+        sort_by = params.get('sort_by', 'latest')
         if sort_by == 'latest':
             qs = qs.order_by('-id')
         else:
@@ -281,8 +281,7 @@ class PettyCashTransactionCreate(PermissionMixin, CreateViewMixin, TemplateView)
         return self.create(request)
 
 
-class PettyCashTransactionList(PermissionMixin, ListViewMixin, TemplateView):
-    permissions = ('accounting.view_pettycashtransaction',)
+class PettyCashTransactionList(LoginRequiredMixin, ListViewMixin, TemplateView):
     template_name = 'accounting/petty_cash_transaction/list.html'
     page_size = 20
 
@@ -313,7 +312,7 @@ class PettyCashTransactionList(PermissionMixin, ListViewMixin, TemplateView):
     def filter(self, qs):
         params = self.request.GET
 
-        sort_by = params.get('sort_by')
+        sort_by = params.get('sort_by', 'latest')
         if sort_by == 'latest':
             qs = qs.order_by('-id')
         else:
@@ -382,8 +381,7 @@ class DocumentUpdate(PermissionMixin, UpdateViewMixin, View):
         return obj
 
 
-class DocumentList(PermissionMixin, ListViewMixin, TemplateView):
-    permissions = ('accounting.view_document',)
+class DocumentList(LoginRequiredMixin, ListViewMixin, TemplateView):
     template_name = 'accounting/document/list.html'
     page_size = 20
 
@@ -400,7 +398,7 @@ class DocumentList(PermissionMixin, ListViewMixin, TemplateView):
     def filter(self, qs):
         params = self.request.GET
 
-        sort_by = params.get('sort_by')
+        sort_by = params.get('sort_by', 'latest')
         if sort_by == 'latest':
             qs = qs.order_by('-id')
         else:

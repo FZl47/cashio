@@ -480,3 +480,42 @@ document.querySelectorAll('.number-abs').forEach(function (el) {
     }
 });
 
+
+function timeAgo(datetimeStr) {
+
+    const date = new Date(datetimeStr.replace(' ', 'T'));
+    const now = new Date();
+
+    const diffMs = now - date;
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffSeconds < 60) {
+        return translate('seconds ago');
+    }
+    if (diffMinutes < 60) {
+        return diffMinutes + ' ' + translate('minute ago');
+    }
+    if (diffHours < 24) {
+        return diffHours + ' ' + translate('hour ago');
+    }
+    if (diffDays < 30) {
+        return diffDays + ' ' + translate('day ago');
+    }
+
+    const diffMonths = Math.floor(diffDays / 30);
+    if (diffMonths < 12) {
+        return diffMonths + ' ' + translate('month ago');
+    }
+
+    const diffYears = Math.floor(diffDays / 365);
+    return diffYears + ' ' + translate('year ago');
+}
+
+
+document.querySelectorAll('.time-ago').forEach(function (el) {
+    let t = timeAgo(el.innerText)
+    el.innerText = t
+})

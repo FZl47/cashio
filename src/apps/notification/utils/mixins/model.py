@@ -1,14 +1,16 @@
+import inspect
 from typing import Any, Callable, Optional, Union, Iterable
 
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
 from django.db import models
+from django.utils.functional import SimpleLazyObject
 
 from apps.notification import utils
 
 ValueOrCallable = Union[Any, Callable]
 
-User = get_user_model()
+User = SimpleLazyObject(get_user_model)
 
 
 class NotificationModelMixin:
@@ -52,35 +54,35 @@ class NotificationModelMixin:
 
     _notif_create_only_first: bool = True
     _notif_title: ValueOrCallable = None
-    _notif_to_users: ValueOrCallable = None
+    # _notif_to_users: ValueOrCallable = None
     _notif_type: ValueOrCallable = None
     _notif_image: Optional[ValueOrCallable] = None
     _notif_kwargs: Optional[ValueOrCallable] = None
     _notif_description: Optional[ValueOrCallable] = None
     _notif_send_notify: ValueOrCallable = True
 
-    def notif_title(self) -> Any:
+    def _f_notif_title(self) -> Any:
         return self._resolve_notif_value("title")
 
-    def notif_to_users(self) -> Any:
+    def _f_notif_to_users(self) -> Any:
         return self._resolve_notif_value("to_users")
 
-    def notif_type(self) -> Any:
+    def _f_notif_type(self) -> Any:
         return self._resolve_notif_value("type")
 
-    def notif_image(self) -> Any:
+    def _f_notif_image(self) -> Any:
         return self._resolve_notif_value("image")
 
-    def notif_kwargs(self) -> dict:
+    def _f_notif_kwargs(self) -> dict:
         return self._resolve_notif_value("kwargs", {})
 
-    def notif_description(self) -> Any:
+    def _f_notif_description(self) -> Any:
         return self._resolve_notif_value("description")
 
-    def notif_send_notify(self) -> bool:
+    def _f_notif_send_notify(self) -> bool:
         return self._resolve_notif_value("send_notify", True)
 
-    def notif_create_only_first(self) -> bool:
+    def _f_notif_create_only_first(self) -> bool:
         return self._resolve_notif_value("create_only_first", True)
 
     def _resolve_notif_value(self, name: str, default: Any = None) -> Any:
@@ -112,7 +114,7 @@ class NotificationModelMixin:
         self.is_created = self.pk is None
 
         super().save(*args, **kwargs)
-        if self.notif_create_only_first():
+        if self._f_notif_create_only_first():
             if self.is_created:
                 self._create_notification()
         else:
@@ -123,17 +125,17 @@ class NotificationModelMixin:
             Creates a notification based on resolved configuration values.
         """
 
-        to_users = self.notif_to_users()
+        to_users = self._f_notif_to_users()
         if not to_users:
             return None  # No target user
 
         payload = {
-            "title": self.notif_title(),
-            "type_notif": self.notif_type(),
-            "image": self.notif_image(),
-            "description": self.notif_description(),
-            "kwargs_notif": self.notif_kwargs(),
-            "send_notify": self.notif_send_notify(),
+            "title": self._f_notif_title(),
+            "type_notif": self._f_notif_type(),
+            "image": self._f_notif_image(),
+            "description": self._f_notif_description(),
+            "kwargs_notif": self._f_notif_kwargs(),
+            "send_notify": self._f_notif_send_notify(),
         }
 
         for user in to_users:
@@ -157,7 +159,7 @@ class NotificationModelMixin:
         return User.objects.filter(is_active=True, is_superuser=True)
 
     @staticmethod
-    def user_perms(permissions: Iterable[str], ) -> QuerySet[User]:
+    def user_perms(permissions: Iterable[str]) -> QuerySet[User]:
         return (
             User.objects.filter(is_active=True).filter(
                 models.Q(user_permissions__codename__in=permissions) | models.Q(

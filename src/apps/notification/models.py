@@ -1,9 +1,11 @@
 from django.db import models
+from django.urls import reverse_lazy
 
 from jsonfield import JSONField
 
 from apps.core.models import BaseModel
 from apps.core.utils import random_str
+
 
 def upload_notification_src(instance, path):
     frmt = str(path).split('.')[-1]
@@ -26,10 +28,13 @@ class NotificationUser(BaseModel):
     is_visited = models.BooleanField(default=False)
 
     class Meta:
-        ordering = '-created_at',
+        ordering = '-id',
 
     def __str__(self):
         return f'{self.to_user} / {self.title}'
+
+    def get_absolute_url(self):
+        return reverse_lazy('notification:notification__detail', args=(self.id,))
 
     def get_link(self):
         try:

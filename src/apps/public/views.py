@@ -1,10 +1,12 @@
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import activate as activate_lang
+from django.utils import timezone
 from django.views.generic import TemplateView, View
 from django.shortcuts import redirect
 from django.contrib.auth.models import Permission
 from django.contrib.auth import get_user_model
-from django.db.models import Sum
+from django.db.models.functions import TruncMonth, Coalesce
+from django.db.models import Sum, Value, DecimalField, Q
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.conf import settings
@@ -12,7 +14,7 @@ from django.conf import settings
 from apps.core.auth.permissions import PermissionMixin
 from apps.core.views import UpdateViewMixin
 
-from apps.accounting.models import (Company, PettyCashTransaction)
+from apps.accounting.models import (Company, PettyCashTransaction, PettyCashFund, Document)
 
 from . import forms
 
@@ -23,32 +25,115 @@ class Index(TemplateView):
     template_name = 'public/index.html'
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
+
+        documents = Document.objects.all()
+        transactions = PettyCashTransaction.objects.all()
+        funds = PettyCashFund.objects.all()
+
+        users = []
+        if user.is_superuser:
+            users = User.objects.all()
+        elif user.is_admin:
+            users = User.objects.filter(role='common_user')
+
+        if user.is_common_user:
+            documents = documents.filter(Q(uploaded_by=user) | Q(required_approvers__in=[user]))
+            transactions = transactions.filter(Q(created_by=user) | Q(holder__user__in=[user]))
+            funds = funds.filter(holders__user__in=[user])
+
         context = {
-            'users': User.objects.all(),
-            'company': Company.objects.first(),
+            'funds': funds,
+            'users': users,
+            'documents': documents,
+            'transactions': transactions
         }
 
         # Expense(Invoice Cost)
-        total_expense_week = PettyCashTransaction.objects.this_week().filter(transaction_type='expense').aggregate(total=Sum('amount'))['total'] or 0
-        total_expense_month = PettyCashTransaction.objects.this_month().filter(transaction_type='expense').aggregate(total=Sum('amount'))['total'] or 0
-        total_expense = PettyCashTransaction.objects.filter(transaction_type='expense').aggregate(total=Sum('amount'))['total'] or 0
+        total_expense_week = \
+            PettyCashTransaction.objects.this_week().filter(transaction_type='expense').aggregate(total=Sum('amount'))[
+                'total'] or 0
+        total_expense_month = \
+            PettyCashTransaction.objects.this_month().filter(transaction_type='expense').aggregate(total=Sum('amount'))[
+                'total'] or 0
+        total_expense = PettyCashTransaction.objects.filter(transaction_type='expense').aggregate(total=Sum('amount'))[
+                            'total'] or 0
 
         if total_expense > 0:
             # Weekly
             week_ratio = total_expense_week / total_expense
-            week_percentage = week_ratio * 100
+            expense_week_percentage = week_ratio * 100
             # Monthly
             month_ratio = total_expense_month / total_expense
-            month_percentage = month_ratio * 100
+            expense_month_percentage = month_ratio * 100
         else:
-            week_percentage = 0
-            month_percentage = 0
+            expense_week_percentage = 0
+            expense_month_percentage = 0
+
+        monthly_expenses_qs = PettyCashTransaction.objects.filter(transaction_type='expense',
+                                                                  created_at__year=timezone.now().year).annotate(
+            month=TruncMonth('date')).values('month').annotate(
+            total=Coalesce(Sum('amount'), Value(0, output_field=DecimalField()))).order_by(
+            'month').values('month', 'total')
+
+        months_dict = {i: 0 for i in range(1, 13)}
+
+        for item in monthly_expenses_qs:
+            months_dict[item['month'].month] = float(item['total'])
+
+        expense_chart_data = [months_dict[i] for i in range(1, 13)]
+        context.update({
+            'total_expense_week': total_expense_week,
+            'total_expense_month': total_expense_month,
+            'expense_week_percentage': expense_week_percentage,
+            'expense_month_percentage': expense_month_percentage,
+            'expense_chart_data': expense_chart_data
+        })
+
+        # Income
+
+        total_income_week = PettyCashTransaction.objects.this_week().filter(transaction_type='income').aggregate(
+            total=Sum('amount'))['total'] or 0
+
+        total_income_month = PettyCashTransaction.objects.this_month().filter(transaction_type='income').aggregate(
+            total=Sum('amount'))['total'] or 0
+
+        total_income = PettyCashTransaction.objects.filter(transaction_type='income').aggregate(
+            total=Sum('amount'))['total'] or 0
+
+        if total_income > 0:
+            # Weekly
+            week_ratio = total_income_week / total_income
+            income_week_percentage = week_ratio * 100
+            # Monthly
+            month_ratio = total_income_month / total_income
+            income_month_percentage = month_ratio * 100
+        else:
+            income_week_percentage = 0
+            income_month_percentage = 0
+
+        # Monthly income chart
+        monthly_income_qs = PettyCashTransaction.objects.filter(
+            transaction_type='income',
+            created_at__year=timezone.now().year
+        ).annotate(
+            month=TruncMonth('date')
+        ).values('month').annotate(
+            total=Coalesce(Sum('amount'), Value(0, output_field=DecimalField()))
+        ).order_by('month').values('month', 'total')
+
+        months_dict = {i: 0 for i in range(1, 13)}
+        for item in monthly_income_qs:
+            months_dict[item['month'].month] = float(item['total'])
+
+        income_chart_data = [months_dict[i] for i in range(1, 13)]
 
         context.update({
-            'total_expense_week':total_expense_week,
-            'total_expense_month':total_expense_month,
-            'week_percentage': week_percentage,
-            'month_percentage':month_percentage
+            'total_income_week': total_income_week,
+            'total_income_month': total_income_month,
+            'income_week_percentage': income_week_percentage,
+            'income_month_percentage': income_month_percentage,
+            'income_chart_data': income_chart_data
         })
 
         return context

@@ -37,7 +37,7 @@
             <div class="nk-header-tools">
                 <ul class="nk-quick-nav">
                     <li class="dropdown chats-dropdown hide-mb-sm">
-                        <button class="nk-quick-nav-icon btn" onclick="_showTour()">
+                        <button class="nk-quick-nav-icon btn btn-tour d-none" onclick="_showTour()">
                             <div class="icon-status icon-status-na"><em style="font-size: 1.5rem;"
                                                                         class="icon ni ni-help"></em></div>
                         </button>
@@ -58,7 +58,7 @@
                         <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end">
                             <div class="dropdown-head">
                                 <span class="sub-title nk-dropdown-title">{% trans 'Notifications' %}</span>
-                                <a href="#">
+                                <a href="{% url 'notification:seen_all' %}">
                                     {% trans 'Mark All as Read' %}
                                 </a>
                             </div>
@@ -125,6 +125,7 @@
                                 <div class="user-avatar sm">
                                     <em class="icon ni ni-user-alt"></em>
                                 </div>
+                                <div class="user-name dropdown-indicator d-none d-sm-block">{{ user.get_full_name }}</div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-md dropdown-menu-end">
