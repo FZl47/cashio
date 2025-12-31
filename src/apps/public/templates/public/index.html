@@ -592,7 +592,7 @@
                                                                                         <a href="{{ fund.get_absolute_url }}">{% trans "View" %}</a>
                                                                                     </li>
                                                                                     <li>
-                                                                                        <a href="#">{% trans "Transactions" %}</a>
+                                                                                        <a href="{% url 'accounting:petty_cash_transaction__list' %}?filter=true&fund={{ fund.id }}">{% trans "Transactions" %}</a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </div>
