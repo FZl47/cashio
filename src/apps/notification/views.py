@@ -114,11 +114,18 @@ class NotificationDetail(LoginRequiredMixin, DetailViewMixin, TemplateView):
 
     def get_instance(self, **kwargs):
         user = self.request.user
+        should_update_visit = False
         if user.has_perm('notification.view_notificationuser'):
             obj = get_object_or_404(models.NotificationUser, id=self.kwargs['pk'])
+            if obj.to_user == user:
+                should_update_visit = True
         else:
             obj = get_object_or_404(models.NotificationUser, id=self.kwargs['pk'], to_user=user)
+            should_update_visit = True
+
+        if should_update_visit:
             # Update visit status
             obj.is_visited = True
             obj.save(update_fields=['is_visited'])
+
         return obj
