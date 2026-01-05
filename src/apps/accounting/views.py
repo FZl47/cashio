@@ -391,7 +391,7 @@ class DocumentList(LoginRequiredMixin, ListViewMixin, TemplateView):
         qs = models.Document.objects.all()
         user = self.request.user
         if user.is_common_user:
-            lookup = Q(uploaded_by=user) | Q(required_approvers__in=[user])
+            lookup = Q(uploaded_by=user) | Q(required_approvers__user__in=[user])
             qs = qs.filter(lookup)
         qs = qs.select_related('uploaded_by').prefetch_related('required_approvers')
         qs = self.filter(qs).distinct()
