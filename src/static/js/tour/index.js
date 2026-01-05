@@ -33,6 +33,16 @@ function _showTour() {
             }
         },
         {
+            name: 'documents_awaiting_approval',
+            element: '.documents_awaiting_approval',
+            popover: {
+                title: translate('Documents Awaiting Your Approval'),
+                description: translate(
+                    'You can see documents that need your approval and review their details.'
+                )
+            }
+        },
+        {
             name: 'recent_documents',
             element: '.col-lg-6 .nk-activity',
             popover: {

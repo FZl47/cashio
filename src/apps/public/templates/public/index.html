@@ -79,18 +79,18 @@
                                                                 <div class="nk-sale-data-group flex-md g-4">
                                                                     <div class="nk-sale-data">
                                                                         <span class="amount">
-                                                                            <span class="price-el">{{ total_expense_month }}</span>
+                                                                            <span class="price-el">{{ total_expense_month|floatformat:'2' }}</span>
                                                                         </span>
                                                                         <span class="change down text-danger">
                                                                             {% if month_percentage < 0 %}
                                                                                 <span class="change up text-success">
                                                                                 <em class="icon ni ni-arrow-long-up"></em>
-                                                                                %<span class="number-abs">{{ expense_month_percentage }}</span>
+                                                                                %<span class="number-abs">{{ expense_month_percentage|floatformat:'2' }}</span>
                                                                             </span>
                                                                             {% else %}
                                                                                 <span class="change down text-danger">
                                                                                 <em class="icon ni ni-arrow-long-down"></em>
-                                                                                %<span class="number-abs">{{ expense_month_percentage }}</span>
+                                                                                %<span class="number-abs">{{ expense_month_percentage|floatformat:'2' }}</span>
                                                                             </span>
                                                                             {% endif %}
                                                                         </span>
@@ -98,19 +98,19 @@
                                                                     </div>
                                                                     <div class="nk-sale-data">
                                                                         <span class="amount">
-                                                                             <span class="price-el">{{ total_expense_week }}</span>
+                                                                             <span class="price-el">{{ total_expense_week|floatformat:'2' }}</span>
                                                                         </span>
                                                                         {% if week_percentage < 0 %}
                                                                             <span class="change up text-success">
                                                                                 <em class="icon ni ni-arrow-long-up"></em>
                                                                                 %<span
-                                                                                    class="number-abs">{{ expense_week_percentage }}</span>
+                                                                                    class="number-abs">{{ expense_week_percentage|floatformat:'2' }}</span>
                                                                             </span>
                                                                         {% else %}
                                                                             <span class="change down text-danger">
                                                                                 <em class="icon ni ni-arrow-long-down"></em>
                                                                                 %<span
-                                                                                    class="number-abs">{{ expense_week_percentage }}</span>
+                                                                                    class="number-abs">{{ expense_week_percentage|floatformat:'2' }}</span>
                                                                             </span>
                                                                         {% endif %}
                                                                         <span class="sub-title">{% trans 'This Week' %}</span>
@@ -144,23 +144,23 @@
                                                                 <div class="nk-sale-data-group flex-md g-4">
                                                                     <div class="nk-sale-data">
                                                                     <span class="amount">
-                                                                        <span class="price-el">{{ total_income_month }}</span>
+                                                                        <span class="price-el">{{ total_income_month|floatformat:'2' }}</span>
                                                                     </span>
                                                                         <span class="change {% if income_month_percentage >= 0 %}up text-success{% else %}down text-danger{% endif %}">
                                                                         <em class="icon ni {% if income_month_percentage >= 0 %}ni-arrow-long-up{% else %}ni-arrow-long-down{% endif %}"></em>
                                                                         %<span
-                                                                                class="number-abs">{{ income_month_percentage }}</span>
+                                                                                class="number-abs">{{ income_month_percentage|floatformat:'2' }}</span>
                                                                     </span>
                                                                         <span class="sub-title">{% trans 'This Month' %}</span>
                                                                     </div>
                                                                     <div class="nk-sale-data">
                                                                     <span class="amount">
-                                                                         <span class="price-el">{{ total_income_week }}</span>
+                                                                         <span class="price-el">{{ total_income_week|floatformat:'2' }}</span>
                                                                     </span>
                                                                         <span class="change {% if income_week_percentage >= 0 %}up text-success{% else %}down text-danger{% endif %}">
                                                                         <em class="icon ni {% if income_week_percentage >= 0 %}ni-arrow-long-up{% else %}ni-arrow-long-down{% endif %}"></em>
                                                                         %<span
-                                                                                class="number-abs">{{ income_week_percentage }}</span>
+                                                                                class="number-abs">{{ income_week_percentage|floatformat:'2' }}</span>
                                                                     </span>
                                                                         <span class="sub-title">{% trans 'This Week' %}</span>
                                                                     </div>
@@ -262,7 +262,7 @@
 
                                                                     <!-- AMOUNT -->
                                                                     <div class="nk-tb-col">
-                                                                        <span class="tb-sub tb-amount">
+                                                                        <span class="tb-sub tb-amount price-el">
                                                                             {{ tx.amount|floatformat:0 }}
                                                                         </span>
                                                                     </div>
@@ -338,6 +338,128 @@
                                                 <!-- .card -->
                                             </div>
                                             <!-- .col -->
+                                            <div class="col-12">
+                                                <div class="card card-bordered card-full documents_awaiting_approval">
+                                                    <div class="card-inner">
+                                                        <div class="card-title-group">
+                                                            <div class="card-title">
+                                                                <h6 class="title"><span
+                                                                        class="me-2">{% trans 'Documents Awaiting Your Approval' %}</span>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-inner p-0 border-top text-center">
+                                                        <div class="nk-tb-list nk-tb-orders">
+
+                                                            <!-- TABLE HEADER -->
+                                                            <div class="nk-tb-item nk-tb-head">
+                                                                <div class="nk-tb-col"><span>#</span></div>
+                                                                <div class="nk-tb-col">
+                                                                    <span>{% trans "Title" %}</span></div>
+                                                                <div class="nk-tb-col tb-col-sm">
+                                                                    <span>{% trans "Uploaded By" %}</span></div>
+                                                                <div class="nk-tb-col tb-col-sm">
+                                                                    <span>{% trans "File" %}</span></div>
+                                                                <div class="nk-tb-col tb-col-md">
+                                                                    <span>{% trans "Date" %}</span></div>
+                                                                <div class="nk-tb-col"><span>&nbsp;</span></div>
+                                                            </div>
+
+                                                            <!-- TABLE BODY -->
+                                                            {% for document in user.get_documents_requiring_my_approval|slice:':20' %}
+                                                                <div class="nk-tb-item">
+
+                                                                    <!-- ID -->
+                                                                    <div class="nk-tb-col">
+                                                                        <span class="tb-lead">
+                                                                            <a href="{{ document.get_absolute_url }}">#{{ document.id }}</a>
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <!-- TITLE -->
+                                                                    <div class="nk-tb-col">
+                                                                        <div class="tb-sub">
+                                                                            <a href="{{ document.get_absolute_url }}">
+                                                                                <span class="tb-lead">{{ document.title|truncatechars:'20' }}</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- UPLOADED BY -->
+                                                                    <div class="nk-tb-col tb-col-sm">
+                                                                        <div class="tb-sub text-info">
+                                                                            <a href="{{ document.uploaded_by.get_absolute_url }}">
+                                                                                <span>{{ document.uploaded_by.get_full_name|truncatechars:'20' }}</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- FILE -->
+                                                                    <div class="nk-tb-col tb-col-sm">
+                                                                        <div class="tb-sub text-info">
+                                                                            {% if document.file %}
+                                                                                <a href="{{ document.file.url }}"
+                                                                                   class="badge badge-dim bg-info p-1"
+                                                                                   target="_blank"
+                                                                                   download="download">
+                                                                                    <em class="icon ni ni-download fs-20px"></em>
+                                                                                </a>
+                                                                                <a href="{{ document.file.url }}"
+                                                                                   class="badge badge-dim bg-success p-1"
+                                                                                   target="_blank">
+                                                                                    <em class="icon ni ni-eye fs-20px"></em>
+                                                                                </a>
+                                                                            {% else %}
+                                                                                -
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- DATE -->
+                                                                    <div class="nk-tb-col tb-col-md">
+                                                                        <span class="tb-sub datetime-convert">
+                                                                            {{ document.get_created_at }}
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <!-- ACTIONS -->
+                                                                    <div class="nk-tb-col nk-tb-col-action">
+                                                                        <div class="dropdown">
+                                                                            <a class="text-soft dropdown-toggle btn btn-icon btn-trigger"
+                                                                               data-bs-toggle="dropdown">
+                                                                                <em class="icon ni ni-more-h"></em>
+                                                                            </a>
+                                                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                                                                                <ul class="link-list-plain">
+                                                                                    <li>
+                                                                                        <a href="{{ document.get_absolute_url }}">
+                                                                                            {% trans "View" %}
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            {% empty %}
+                                                                <div class="nk-tb-item">
+                                                                    <div class="nk-tb-col">
+                                                                    <span class="tb-sub text-muted">
+                                                                        {% trans "No documents found." %}
+                                                                    </span>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <!-- .card -->
+                                            </div>
+                                            <!-- .col -->
                                             <div class="col-lg-6">
                                                 <div class="card card-bordered card-full">
                                                     <div class="card-inner border-bottom">
@@ -363,12 +485,24 @@
 
                                                         {% for document in documents|slice:':8' %}
                                                             <li class="nk-support-item">
-                                                                <div style="transform: scale(.9)"
-                                                                     class="user-avatar {% if document.status_label == 'approved' %}bg-success{% elif document.status_label == 'rejected' %}bg-danger{% elif document.status_label == 'pending' %}bg-warning{% else %}{% endif %}"></div>
+                                                                <div style="transform: scale(.9);font-size: 21px;padding-left: 1px;padding-bottom: 2px;"
+                                                                     class="user-avatar icon ni
+                                                                    {% if document.status_label == 'approved' %}
+                                                                        bg-success-dim ni-check-thick
+                                                                    {% elif document.status_label == 'rejected' %}
+                                                                        bg-danger-dim ni-cross
+                                                                    {% elif document.status_label == 'pending' %}
+                                                                        bg-warning-dim ni-alert-circle
+                                                                    {% else %}
+
+                                                                    {% endif %}"></div>
                                                                 <div class="nk-support-content">
                                                                     <div class="title">
-                                                                        <a href="{{ document.uploaded_by.get_absolute_url }}">{{ document.uploaded_by.get_full_name|truncatechars:'20' }}</a>
-
+                                                                        <h6>
+                                                                            <a href="{{ document.get_absolute_url }}">
+                                                                                {{ document.title|truncatechars:'50' }}
+                                                                            </a>
+                                                                        </h6>
                                                                         <a href="{{ document.get_absolute_url }}"
                                                                            class="fs-18px">
                                                                             <em class="icon ni ni-eye"></em>
@@ -376,10 +510,8 @@
 
                                                                     </div>
                                                                     <p>
-                                                                        <a href="{{ document.get_absolute_url }}"
-                                                                           class="text-base">
-                                                                            {{ document.title|truncatechars:'50' }}
-                                                                        </a>
+                                                                        <a class="text-base fs-12px"
+                                                                           href="{{ document.uploaded_by.get_absolute_url }}">{{ document.uploaded_by.get_full_name|truncatechars:'20' }}</a>
                                                                     </p>
                                                                     <span class="time time-ago d-block text-end">
                                                                         {{ document.get_created_at }}
@@ -536,7 +668,7 @@
                                                         <div class="nk-tb-list nk-tb-orders">
                                                             <div class="nk-tb-item nk-tb-head">
 
-                                                                <div class="nk-tb-col tb-col-sm">
+                                                                <div class="nk-tb-col">
                                                                     <span>{% trans "Title" %}</span></div>
                                                                 <div class="nk-tb-col tb-col-md">
                                                                     <span>{% trans "Balance" %}</span></div>
@@ -550,7 +682,7 @@
                                                             {% for fund in funds %}
                                                                 <div class="nk-tb-item">
 
-                                                                    <div class="nk-tb-col tb-col-sm">
+                                                                    <div class="nk-tb-col">
                                                                         <span class="tb-lead">
                                                                             <a href="{{ fund.get_absolute_url }}">{{ fund.title|truncatechars:'20' }}</a>
                                                                         </span>
@@ -634,5 +766,6 @@
 
 
 {% block Script %}
+    <script src="{% static 'js/charts/gd-default.js' %}"></script>
     <script src="{% static 'js/tour/index.js' %}"></script>
 {% endblock %}

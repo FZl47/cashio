@@ -647,4 +647,6 @@ pre {
     transform: scale(1.2) !important;
 }
 
-
+.price-el .decimal{
+    opacity: .6;
+}

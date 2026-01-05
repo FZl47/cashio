@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.functions import Concat
 from django.db.models import Q, Value, CharField
 
@@ -163,10 +164,9 @@ class Permissions(PermissionMixin, TemplateView):
     def post(self, request):
         data = request.POST
         group_name = data.get('name')
-        permission_ids = data.get('permissions', [])
+        permission_ids = data.getlist('permissions', [])
 
         group, created = Group.objects.get_or_create(name=group_name)
-
         perms = Permission.objects.filter(id__in=permission_ids)
         group.permissions.set(perms)
         return redirect(self.redirect_url)
@@ -183,8 +183,7 @@ class PermissionGroupDelete(PermissionMixin, DeleteViewMixin, View):
         return get_object_or_404(Group, id=pk)
 
 
-class Profile(PermissionMixin, UpdateViewMixin, TemplateView):
-    permissions = ('account.change_user',)
+class Profile(LoginRequiredMixin, UpdateViewMixin, TemplateView):
     template_name = 'account/profile.html'
     form = forms.UserProfileUpdateForm
     redirect_url = reverse_lazy('public:index')

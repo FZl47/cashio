@@ -1,10 +1,12 @@
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView, View
 from django.db.models import Q, OuterRef, Subquery, Sum
 from django.db.models.functions import ExtractMonth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from apps.core.views import CreateViewMixin, ListViewMixin, DetailViewMixin, UpdateViewMixin
 from apps.core.auth.permissions.mixins import PermissionMixin
@@ -349,7 +351,7 @@ class DocumentCreate(PermissionMixin, CreateViewMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'users': User.objects.filter(is_active=True)
+            'users': User.objects.filter(is_active=True).exclude(id=self.request.user.id)
         })
         return context
 
@@ -429,7 +431,8 @@ class DocumentDetail(PermissionMixin, DetailViewMixin, TemplateView):
 
     def additional_context(self, **kwargs):
         return {
-            'users': User.objects.all()
+            'users': User.objects.all(),
+            'can_create_status': self.obj.can_create_status(self.request.user)
         }
 
     def get_instance(self):

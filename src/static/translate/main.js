@@ -24,6 +24,10 @@ const fa_lang_tour = {
     'Petty Cash Funds': 'صندوق‌های تنخواه',
     'This section lists all petty cash funds with their balance, holders, and status. You can view details or check related transactions.':
         'این بخش تمام صندوق‌های تنخواه را همراه با موجودی، دارندگان و وضعیت نمایش می‌دهد. می‌توانید جزئیات را مشاهده یا تراکنش‌های مرتبط را بررسی کنید.',
+
+    'Documents Awaiting Your Approval': 'اسناد در انتظار تأیید شما',
+    'You can see documents that need your approval and review their details.': 'می‌توانید اسنادی که نیاز به تأیید شما دارند را مشاهده کرده و جزئیات آن‌ها را بررسی کنید.',
+
     // Transaction detail
     'Transaction Detail': 'جزئیات تراکنش',
     'Here you can see the full details of the selected petty cash transaction, including reference number, fund, holder, type, amount, date, and description.':
@@ -122,6 +126,10 @@ const fa_lang = {
     'October': 'مهر',
     'November': 'آبان',
     'December': 'آذر',
+
+    'Approver': 'تایید کننده',
+    'Priority': 'اولویت',
+
 }
 
 

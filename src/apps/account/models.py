@@ -3,10 +3,11 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.urls import reverse_lazy
 from django.db import models
+from django.db.models import Count, Q, OuterRef, Exists
 
 from apps.core.models import BaseModel, BaseModelObjectRelation
 from apps.core.utils.validators import PhonenumberValidator
-from apps.accounting.models import PettyCashHolder
+from apps.accounting.models import PettyCashHolder, Document, DocumentApprover
 
 
 class CustomUserManager(BaseUserManager):
@@ -95,6 +96,19 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
 
     def get_unread_notifications(self):
         return self.get_notifications().filter(is_visited=False)
+
+    def get_documents_requiring_my_approval(self):
+        return Document.objects.filter(required_approvers__user=self).exclude(documentstatus__created_by=self).annotate(
+            approved_before_me=Count(
+                'documentstatus', filter=Q(
+                    documentstatus__status='approved',
+                    documentstatus__created_by__in=DocumentApprover.objects.filter(
+                        document=OuterRef('pk'),
+                        priority__lt=OuterRef('required_approvers__priority')
+                    ).values('user')
+                )
+            )
+        )
 
 
 class UserLoginActivity(BaseModel):

@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse_lazy
+from django.core.validators import MinValueValidator
 
 from django_jalali.db import models as jmodels
 
@@ -184,15 +185,18 @@ class PettyCashTransactionStatus(NotificationModelMixin, BaseModel):
         return f'{self.get_status_display()} / {self.created_by}'
 
 
+class DocumentApprover(BaseModel):
+    priority = models.IntegerField(validators=[MinValueValidator(0)])
+    document = models.ForeignKey('Document', on_delete=models.CASCADE, related_name='required_approvers')
+    user = models.ForeignKey('account.User', on_delete=models.CASCADE,
+                             help_text=_("If selected, these users must approve the document."))
+
+
 class Document(NotificationModelMixin, BaseModel):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to='document/%Y/%m/%d/')
     uploaded_by = models.ForeignKey('account.User', on_delete=models.CASCADE, related_name='uploaded_documents')
-    required_approvers = models.ManyToManyField(
-        'account.User', blank=True, related_name='documents_to_approve',
-        help_text=_("If selected, these users must approve the document.")
-    )
 
     _notif_title = _('A new document has been submitted that requires your approval.')
     _notif_type = 'document_has_been_added'
@@ -242,6 +246,32 @@ class Document(NotificationModelMixin, BaseModel):
 
     def get_absolute_url(self):
         return reverse_lazy('accounting:document__detail', args=(self.id,))
+
+    def pending_required_approvers(self):
+        return self.required_approvers.exclude(
+            user__in=self.statuses.filter(status='approved').values_list('created_by', flat=True))
+
+    def can_create_status(self, user):
+        if self.status_label != 'pending':
+            return False
+
+        if not user.has_perm('accounting.add_documentstatus'):
+            return False
+
+        try:
+            approver = self.required_approvers.get(user=user)
+        except DocumentApprover.MultipleObjectsReturned:
+            approver = self.required_approvers.filter(user=user).order_by('-priority').first()
+        except DocumentApprover.DoesNotExist:
+            return False
+
+        higher_priority_approvers = self.required_approvers.filter(priority__lt=approver.priority).values('user')
+
+        if self.statuses.filter(created_by__in=higher_priority_approvers,
+                                status='approved').count() != higher_priority_approvers.count():
+            return False
+
+        return True
 
 
 class DocumentStatus(NotificationModelMixin, BaseModel):

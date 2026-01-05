@@ -51,7 +51,7 @@
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <ul class="link-list-opt">
-                                                        {% if object.status_label == 'pending' and perms.accounting.add_documentstatus and request.user in object.required_approvers.all %}
+                                                        {% if can_create_status %}
                                                             <li data-bs-toggle="modal"
                                                                 data-bs-target="#modal-create-status">
                                                                 <a class="d-flex justify-content-between text-success">
@@ -61,7 +61,7 @@
                                                             </li>
                                                         {% endif %}
 
-                                                        {% if perms.accounting.change_document and object.status_label != 'approved' %}
+                                                        {% if perms.accounting.change_document and object.status_label != 'approved' and request.user == object.uploaded_by %}
                                                             <li data-bs-toggle="modal"
                                                                 data-bs-target="#modal-edit-document">
                                                                 <a class="d-flex justify-content-between text-info">
@@ -118,7 +118,8 @@
                                                             <div class="data-label">{% trans "File" %}</div>
                                                             <div class="data-value">
                                                                 {% if object.file %}
-                                                                    <a href="{{ object.file.url }}" target="_blank" download="download">
+                                                                    <a href="{{ object.file.url }}" target="_blank"
+                                                                       download="download">
                                                                         <em class="icon ni ni-download fs-20px"></em>
                                                                     </a>
                                                                     <a href="{{ object.file.url }}" target="_blank">
@@ -144,12 +145,38 @@
                                                             <div class="data-value">
                                                                 {% if object.required_approvers.exists %}
                                                                     {% for approver in object.required_approvers.all %}
-                                                                        <span class="badge fs-13px bg-primary">
-                                                                            {{ approver.get_full_name|default:approver.username }}
+                                                                        <a href="{{ approver.user.get_absolute_url }}">
+                                                                        <span class="badge fs-13px bg-primary"
+                                                                              style="margin: auto 3px;">
+                                                                            <span class="badge badge-dim bg-primary fs-15px"
+                                                                                  style="padding:5px 10px;">{{ approver.priority }}</span>
+                                                                            {{ approver.user.get_full_name }}
                                                                         </span>
+                                                                        </a>
                                                                     {% endfor %}
                                                                 {% else %}
                                                                     {% trans "No approval required" %}
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
+                                                            <div class="data-label">{% trans "Pending Approvers" %}</div>
+                                                            <div class="data-value">
+                                                                {% if object.pending_required_approvers.exists %}
+                                                                    {% for approver in object.pending_required_approvers %}
+                                                                        <a href="{{ approver.user.get_absolute_url }}">
+                                                                        <span class="badge fs-13px bg-warning"
+                                                                              style="margin: auto 3px;">
+                                                                            <span class="badge badge-dim bg-warning fs-15px"
+                                                                                  style="padding:5px 10px;">{{ approver.priority }}</span>
+                                                                            {{ approver.user.get_full_name }}
+                                                                        </span>
+                                                                        </a>
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    <em class="icon ni ni-check-c text-success"></em>
                                                                 {% endif %}
                                                             </div>
                                                         </div>
@@ -186,7 +213,7 @@
                                                         {% endif %}
                                                     </h5>
                                                 </div>
-                                                {% if object.status_label == 'pending' and perms.accounting.add_documentstatus and request.user in object.required_approvers.all %}
+                                                {% if can_create_status %}
                                                     <button class="btn btn-outline-success" data-bs-toggle="modal"
                                                             data-bs-target="#modal-create-status">
                                                         <span>{% trans "Create Status" %}</span>
@@ -225,14 +252,15 @@
                                                                                 <span class="badge badge-dim bg-warning">{% trans "Pending" %}</span>
                                                                             {% endif %}
                                                                         </div>
-                                                                        <div class="nk-tb-col" data-bs-toggle="tooltip"
+                                                                        <div class="nk-tb-col"
+                                                                             data-bs-toggle="tooltip"
                                                                              data-bs-placement="bottom"
                                                                              data-bs-original-title="{{ status.note|default:"—" }}">
                                                                             {{ status.note|truncatechars:20|default:"-" }}
                                                                         </div>
                                                                         <div class="nk-tb-col">
                                                                             <span class="datetime-convert font-80">
-                                                                                {{ status.created_at|date:"Y-m-d H:i" }}
+                                                                                {{ status.get_created_at }}
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -253,7 +281,6 @@
                         </div>
                     </div>
                 </div>
-
                 {% include 'base/components/footer.html' %}
             </div>
         </div>
@@ -321,27 +348,16 @@
                                         <label class="form-file-label">{% trans "Choose new file (optional)" %}</label>
                                     </div>
                                     {% if object.file %}
-                                        <small class="form-text text-muted">Current file: <a href="{{ object.file.url }}" target="_blank">{{ object.file.name }}</a></small>
+                                        <small class="form-text text-muted">Current file: <a
+                                                href="{{ object.file.url }}" target="_blank">{{ object.file.name }}</a></small>
                                     {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="required_approvers">{% trans "Required Approvers" %}</label>
-                                    <select name="required_approvers" id="required_approvers"
-                                            class="form-control form-select js-select2" multiple data-search="on">
-                                        {% for user in users %}
-                                            <option value="{{ user.id }}" {% if user in object.required_approvers.all %}selected{% endif %}>
-                                                {{ user.get_full_name|default:user.username }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="form-label" for="description">{% trans "Description" %}</label>
-                                    <textarea name="description" id="description" class="form-control" rows="3">{{ object.description|default:'' }}</textarea>
+                                    <textarea name="description" id="description" class="form-control"
+                                              rows="3">{{ object.description|default:'' }}</textarea>
                                 </div>
                             </div>
                         </div>

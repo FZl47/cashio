@@ -38,7 +38,7 @@ class Index(TemplateView):
             users = User.objects.filter(role='common_user')
 
         if user.is_common_user:
-            documents = documents.filter(Q(uploaded_by=user) | Q(required_approvers__in=[user]))
+            documents = documents.filter(Q(uploaded_by=user) | Q(required_approvers__user__in=[user]))
             transactions = transactions.filter(Q(created_by=user) | Q(holder__user__in=[user]))
             funds = funds.filter(holders__user__in=[user])
 
@@ -149,9 +149,11 @@ class SetLang(View):
         return any(c == lang for c, n in langs)
 
     def get(self, request, lang):
+
         if not self.is_language_available(lang):
             messages.error(request, _('Language code is not available'))
             return redirect(self.get_referrer_url())
+
         activate_lang(lang)
 
         request.session[settings.LANGUAGE_COOKIE_NAME] = lang

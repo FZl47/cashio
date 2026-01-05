@@ -187,14 +187,31 @@ document.querySelectorAll('.price-el').forEach((el) => {
     // TODO: fix numbers with decimal places
     let p = el.innerText
     el.setAttribute('price-val', p)
-    el.innerHTML = numberWithCommas(p)
+    let formatted = p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let n = formatted.split('.')[0]
+    let decimal = formatted.split('.')[1]
+
+    if (decimal) {
+        el.innerHTML = `${n}<span class="decimal">.${decimal}</span>`
+    } else {
+        el.innerHTML = n
+    }
 })
 
 document.querySelectorAll('.num-el').forEach((el) => {
     // TODO: fix numbers with decimal places
     let p = el.innerText
     el.setAttribute('num-val', p)
-    el.innerHTML = p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    let formatted = p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let n = formatted.split('.')[0]
+    let decimal = formatted.split('.')[1]
+    if (decimal) {
+        el.innerHTML = `${n}.<span class="decimal">${decimal}</span>`
+    } else {
+        el.innerHTML = n
+    }
+
 })
 
 function getRandomColor() {
