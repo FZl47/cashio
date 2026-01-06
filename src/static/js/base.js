@@ -536,3 +536,11 @@ document.querySelectorAll('.time-ago').forEach(function (el) {
     let t = timeAgo(el.innerText)
     el.innerText = t
 })
+
+
+// Remove empty menu items
+document.querySelectorAll('.nk-menu-item.has-sub').forEach(function (el){
+    if (el.querySelector('.nk-menu-item') == null){
+        el.remove()
+    }
+})

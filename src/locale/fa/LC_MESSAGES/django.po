@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-06 02:52+0330\n"
+"POT-Creation-Date: 2026-01-06 03:36+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,7 +59,8 @@ msgid "email address"
 msgstr "آدرس ایمیل"
 
 #: .\apps\account\models.py:50
-msgid "phonenumber"
+#: .\apps\account\templates\account\user\detail.html:134
+msgid "Phonenumber"
 msgstr "شماره تلفن"
 
 #: .\apps\account\templates\account\login.html:7
@@ -187,7 +188,7 @@ msgid "Delete"
 msgstr "حذف"
 
 #: .\apps\account\templates\account\permissions.html:141
-#: .\apps\account\templates\account\user\detail.html:213
+#: .\apps\account\templates\account\user\detail.html:221
 #: .\apps\account\templates\account\user\list.html:210
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:478
 #: .\apps\accounting\templates\accounting\user\personnel\detail.html:249
@@ -198,8 +199,8 @@ msgstr "چیزی یافت نشد"
 
 #: .\apps\account\templates\account\permissions.html:171
 #: .\apps\account\templates\account\permissions.html:224
-#: .\apps\account\templates\account\user\detail.html:275
-#: .\apps\account\templates\account\user\detail.html:362
+#: .\apps\account\templates\account\user\detail.html:283
+#: .\apps\account\templates\account\user\detail.html:370
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:512
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:564
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:775
@@ -212,7 +213,7 @@ msgstr "بستن"
 #: .\apps\account\templates\account\permissions.html:193
 #: .\apps\account\templates\account\permissions.html:247
 #: .\apps\account\templates\account\user\detail.html:76
-#: .\apps\account\templates\account\user\detail.html:376
+#: .\apps\account\templates\account\user\detail.html:384
 #: .\templates\base\components\menu.html:116
 msgid "Permissions"
 msgstr "مجوزها"
@@ -231,7 +232,7 @@ msgid "Update/Manage Group"
 msgstr "به‌روزرسانی/مدیریت گروه"
 
 #: .\apps\account\templates\account\permissions.html:264
-#: .\apps\account\templates\account\user\detail.html:348
+#: .\apps\account\templates\account\user\detail.html:356
 #: .\apps\accounting\templates\accounting\document\detail.html:368
 #: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:479
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:849
@@ -256,7 +257,7 @@ msgstr ""
 "نخواهد داشت."
 
 #: .\apps\account\templates\account\permissions.html:291
-#: .\apps\account\templates\account\user\detail.html:262
+#: .\apps\account\templates\account\user\detail.html:270
 #: .\apps\accounting\templates\accounting\document\detail.html:316
 #: .\apps\accounting\templates\accounting\document\detail.html:367
 #: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:474
@@ -299,8 +300,8 @@ msgstr "اطلاعات پروفایل"
 #: .\apps\account\templates\account\profile.html:80
 #: .\apps\account\templates\account\user\create.html:60
 #: .\apps\account\templates\account\user\create.html:66
-#: .\apps\account\templates\account\user\detail.html:289
-#: .\apps\account\templates\account\user\detail.html:295
+#: .\apps\account\templates\account\user\detail.html:297
+#: .\apps\account\templates\account\user\detail.html:303
 #: .\apps\accounting\templates\accounting\user\personnel\create.html:86
 #: .\apps\accounting\templates\accounting\user\personnel\create.html:92
 msgid "First Name"
@@ -309,8 +310,8 @@ msgstr "نام کوچک"
 #: .\apps\account\templates\account\profile.html:95
 #: .\apps\account\templates\account\user\create.html:74
 #: .\apps\account\templates\account\user\create.html:80
-#: .\apps\account\templates\account\user\detail.html:303
-#: .\apps\account\templates\account\user\detail.html:308
+#: .\apps\account\templates\account\user\detail.html:311
+#: .\apps\account\templates\account\user\detail.html:316
 #: .\apps\accounting\templates\accounting\user\personnel\create.html:100
 #: .\apps\accounting\templates\accounting\user\personnel\create.html:105
 msgid "Last Name"
@@ -319,7 +320,7 @@ msgstr "نام خانوادگی"
 #: .\apps\account\templates\account\profile.html:110
 #: .\apps\account\templates\account\user\create.html:88
 #: .\apps\account\templates\account\user\detail.html:126
-#: .\apps\account\templates\account\user\detail.html:331
+#: .\apps\account\templates\account\user\detail.html:339
 #: .\apps\account\templates\account\user\list.html:158
 msgid "Email"
 msgstr "ایمیل"
@@ -360,12 +361,12 @@ msgid "User Information"
 msgstr "اطلاعات کاربر"
 
 #: .\apps\account\templates\account\user\create.html:94
-#: .\apps\account\templates\account\user\detail.html:336
+#: .\apps\account\templates\account\user\detail.html:344
 msgid "Email(username)"
 msgstr "ایمیل (نام کاربری)"
 
 #: .\apps\account\templates\account\user\create.html:99
-#: .\apps\account\templates\account\user\detail.html:341
+#: .\apps\account\templates\account\user\detail.html:349
 msgid "Please note that the email must be unique"
 msgstr "لطفاً توجه کنید که ایمیل باید منحصر به فرد باشد"
 
@@ -396,7 +397,7 @@ msgid "List of Users"
 msgstr "لیست کاربران"
 
 #: .\apps\account\templates\account\user\detail.html:85
-#: .\apps\account\templates\account\user\detail.html:279
+#: .\apps\account\templates\account\user\detail.html:287
 #: .\apps\accounting\templates\accounting\document\detail.html:68
 #: .\apps\accounting\templates\accounting\petty_cash_transaction\detail.html:68
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:166
@@ -420,27 +421,27 @@ msgstr "اطلاعات پایه"
 msgid "Full Name"
 msgstr "نام کامل"
 
-#: .\apps\account\templates\account\user\detail.html:134
+#: .\apps\account\templates\account\user\detail.html:142
 #: .\apps\public\templates\public\index.html:599
 msgid "Role"
 msgstr "نقش"
 
-#: .\apps\account\templates\account\user\detail.html:142
-#: .\apps\account\templates\account\user\detail.html:316
+#: .\apps\account\templates\account\user\detail.html:150
+#: .\apps\account\templates\account\user\detail.html:324
 msgid "Active Status"
 msgstr "وضعیت فعال"
 
-#: .\apps\account\templates\account\user\detail.html:146
+#: .\apps\account\templates\account\user\detail.html:154
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:201
 #: .\apps\accounting\templates\accounting\user\personnel\detail.html:235
 msgid "Is Active"
 msgstr "فعال است"
 
-#: .\apps\account\templates\account\user\detail.html:151
+#: .\apps\account\templates\account\user\detail.html:159
 msgid "Not Active"
 msgstr "غیرفعال"
 
-#: .\apps\account\templates\account\user\detail.html:160
+#: .\apps\account\templates\account\user\detail.html:168
 #: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:305
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:367
 #: .\apps\accounting\templates\accounting\user\personnel\contract\detail.html:439
@@ -449,44 +450,44 @@ msgstr "غیرفعال"
 msgid "Created at"
 msgstr "ایجاد شده در"
 
-#: .\apps\account\templates\account\user\detail.html:168
+#: .\apps\account\templates\account\user\detail.html:176
 #: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:313
 msgid "Updated at"
 msgstr "به‌روزرسانی شده در"
 
-#: .\apps\account\templates\account\user\detail.html:181
+#: .\apps\account\templates\account\user\detail.html:189
 msgid "Login Activities"
 msgstr "فعالیت‌های ورود"
 
-#: .\apps\account\templates\account\user\detail.html:191
+#: .\apps\account\templates\account\user\detail.html:199
 msgid "IP"
 msgstr "آی‌پی"
 
-#: .\apps\account\templates\account\user\detail.html:194
+#: .\apps\account\templates\account\user\detail.html:202
 msgid "Agent"
 msgstr "عامل"
 
-#: .\apps\account\templates\account\user\detail.html:196
+#: .\apps\account\templates\account\user\detail.html:204
 #: .\apps\accounting\templates\accounting\user\personnel\detail.html:203
 msgid "Time"
 msgstr "زمان"
 
-#: .\apps\account\templates\account\user\detail.html:251
+#: .\apps\account\templates\account\user\detail.html:259
 msgid "Delete User"
 msgstr "حذف کاربر"
 
-#: .\apps\account\templates\account\user\detail.html:264
+#: .\apps\account\templates\account\user\detail.html:272
 msgid "Yes, Delete User"
 msgstr "بله، کاربر را حذف کن"
 
-#: .\apps\account\templates\account\user\detail.html:322
+#: .\apps\account\templates\account\user\detail.html:330
 #: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:101
 #: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:216
 #: .\apps\public\templates\public\index.html:710
 msgid "Inactive"
 msgstr "غیرفعال"
 
-#: .\apps\account\templates\account\user\detail.html:323
+#: .\apps\account\templates\account\user\detail.html:331
 #: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:291
 #: .\apps\accounting\templates\accounting\petty_cash_fund\detail.html:453
 #: .\apps\accounting\templates\accounting\petty_cash_fund\list.html:100
@@ -497,11 +498,11 @@ msgstr "غیرفعال"
 msgid "Active"
 msgstr "فعال"
 
-#: .\apps\account\templates\account\user\detail.html:366
+#: .\apps\account\templates\account\user\detail.html:374
 msgid "Manage User Permissions"
 msgstr "مدیریت مجوزهای کاربر"
 
-#: .\apps\account\templates\account\user\detail.html:392
+#: .\apps\account\templates\account\user\detail.html:400
 msgid "Submit"
 msgstr "ارسال"
 
@@ -656,7 +657,7 @@ msgstr "به طور خودکار توسط سیستم ایجاد شده"
 msgid "A new document has been added to the transaction."
 msgstr "یک سند جدید به تراکنش اضافه شده است."
 
-#: .\apps\accounting\models.py:169 .\apps\accounting\models.py:279
+#: .\apps\accounting\models.py:169 .\apps\accounting\models.py:288
 #: .\apps\accounting\templates\accounting\document\detail.html:210
 #: .\apps\accounting\templates\accounting\document\detail.html:252
 #: .\apps\accounting\templates\accounting\document\list.html:102
@@ -666,7 +667,7 @@ msgstr "یک سند جدید به تراکنش اضافه شده است."
 msgid "Pending"
 msgstr "در انتظار"
 
-#: .\apps\accounting\models.py:170 .\apps\accounting\models.py:281
+#: .\apps\accounting\models.py:170 .\apps\accounting\models.py:290
 #: .\apps\accounting\templates\accounting\document\detail.html:200
 #: .\apps\accounting\templates\accounting\document\detail.html:250
 #: .\apps\accounting\templates\accounting\document\detail.html:305
@@ -678,7 +679,7 @@ msgstr "در انتظار"
 msgid "Rejected"
 msgstr "رد شده"
 
-#: .\apps\accounting\models.py:171 .\apps\accounting\models.py:280
+#: .\apps\accounting\models.py:171 .\apps\accounting\models.py:289
 #: .\apps\accounting\templates\accounting\document\detail.html:195
 #: .\apps\accounting\templates\accounting\document\detail.html:248
 #: .\apps\accounting\templates\accounting\document\detail.html:304
@@ -703,7 +704,7 @@ msgstr "اگر انتخاب شود، این کاربران باید سند را 
 msgid "A new document has been submitted that requires your approval."
 msgstr "یک سند جدید ارسال شده که نیاز به تایید شما دارد."
 
-#: .\apps\accounting\models.py:295
+#: .\apps\accounting\models.py:304
 #, python-format
 msgid "Document %(title)s has been %(status)s by %(user)s"
 msgstr "سند %(title)s توسط %(user)s به %(status)s تغییر کرده است"

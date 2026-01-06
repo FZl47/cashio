@@ -47,7 +47,7 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
     first_name = models.CharField("first name", max_length=150, blank=True, default=_('No name'))
     last_name = models.CharField("last name", max_length=150, blank=True, default='')
     email = models.EmailField(_("email address"), unique=True, validators=[AbstractUser.username_validator])
-    phonenumber = models.CharField(_("phonenumber"), null=True, blank=True, max_length=20,
+    phonenumber = models.CharField(_("Phonenumber"), null=True, blank=True, max_length=20,
                                    validators=[PhonenumberValidator()])
     role = models.CharField(max_length=15, choices=ROLE_TYPES, default='common_user')
 

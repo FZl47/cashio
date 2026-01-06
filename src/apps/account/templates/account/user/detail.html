@@ -131,6 +131,14 @@
                                                     </li>
                                                     <li class="data-item">
                                                         <div class="data-col">
+                                                            <div class="data-label">{% trans 'Phonenumber' %}</div>
+                                                            <div class="data-value">
+                                                                <span class="badge badge-dim badge-sm bg-info">{{ object.phonenumber|default:'-' }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="data-item">
+                                                        <div class="data-col">
                                                             <div class="data-label">{% trans 'Role' %}</div>
                                                             <div class="data-value">
                                                                 <span>{{ object.get_role_display }}</span>

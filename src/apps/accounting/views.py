@@ -383,8 +383,9 @@ class DocumentUpdate(PermissionMixin, UpdateViewMixin, View):
         return obj
 
 
-class DocumentList(LoginRequiredMixin, ListViewMixin, TemplateView):
+class DocumentList(PermissionMixin, ListViewMixin, TemplateView):
     template_name = 'accounting/document/list.html'
+    permissions = ('accounting.view_document',)
     page_size = 20
 
     def get_queryset(self):
