@@ -1,0 +1,66 @@
+{% load i18n %}
+<div class="modal fade" tabindex="-1" role="dialog" id="folder-create">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <form method="post" action="{% url 'communication:resource__folder__create' %}">
+                {% csrf_token %}
+                <input type="hidden" name="extension" value="folder">
+            
+                {% if parent_folder %}
+                <input type="hidden" name="parent" value="{{ parent_folder.id }}">
+                {% endif %}
+                <div class="modal-header">
+                    <div class="d-flex justify-content-between align-items-center column-gap-1">
+                        <h5 class="modal-title">{% trans 'Create Folder' %}</h5>
+                        <span class="nk-file-icon-type">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                            <g>
+                                <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5"
+                                      style="fill: #f29611;"></rect>
+                                <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
+                                      style="fill: #ffb32c;"></path>
+                                <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
+                                      style="fill: #f2a222;"></path>
+                            </g>
+                        </svg>
+                    </span>
+                    </div>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">{% trans 'Name' %}</label>
+                        <input type="text" name="name" class="form-control" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">{% trans 'Active Status' %}</label>
+                        <select name="is_active" class="form-control">
+                            <option value="true" selected="">{% trans 'Yes' %}</option>
+                            <option value="false">{% trans 'No' %}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">{% trans 'Share With' %}</label>
+                        <select name="shared_with" required class="form-control js-select2" multiple>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.get_full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">{% trans 'Description' %}</label>
+                        <textarea name="description" class="form-control" cols="30" rows="10"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Cancel' %}</button>
+                    <button class="btn btn-primary">{% trans 'Create' %}</button>
+                </div>
+            </form>
+        </div>
+        <!-- .modal-content -->
+    </div>
+    <!-- .modla-dialog -->
+</div>

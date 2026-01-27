@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.http import Http404
 from django.views.generic import TemplateView, View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -10,7 +11,7 @@ from django.db.models import Q
 
 from apps.core.auth.permissions.mixins import PermissionMixin
 from apps.core.utils import get_space_detail_cached
-from apps.core.views.mixins import CreateViewMixin
+from apps.core.views.mixins import CreateViewMixin, DetailViewMixin, DeleteViewMixin
 
 from . import models, forms
 
@@ -101,6 +102,33 @@ class ResourceFileCreate(PermissionMixin, CreateViewMixin, View):
         return {
             'created_by': self.request.user
         }
+
+
+class ResourceDetail(PermissionMixin, DetailViewMixin,TemplateView):
+    permissions = ('comm.view_resource',)
+    template_name = 'comm/resource/detail.html'
+
+    def get_instance(self):
+        pk = self.kwargs['pk']
+        resource = models.ResourceBase.objects.get_subclass(id=pk)
+        if not resource:
+            raise Http404
+        
+        # Check user permission's
+        user = self.request.user
+
+        if not resource.created_by == user and not resource.shared_with.all().filter(id=user.id).first() and not user.is_superuser:
+            raise Http404
+
+        # Create resource event
+        models.ResourceEvent.objects.create(
+            resource=resource,
+            user=user,
+            action='open'
+        )    
+    
+        return resource
+
 
 
 @method_decorator(csrf_exempt, name='dispatch')

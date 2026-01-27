@@ -2,6 +2,9 @@ import uuid
 
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.urls import reverse_lazy
+
+from mptt.models import MPTTModel, TreeForeignKey
 
 from model_utils.managers import InheritanceManager
 
@@ -35,6 +38,9 @@ class ResourceEvent(BaseModel):
     resource = models.ForeignKey('ResourceBase', on_delete=models.CASCADE)
     action = models.CharField(max_length=50, choices=ACTIONS)
 
+    @property
+    def date(self):
+        return self.created_at.strftime('%m-%d')
 
 class ResourceBase(BaseModel):
     type = None  # ABC
@@ -46,6 +52,13 @@ class ResourceBase(BaseModel):
     is_active = models.BooleanField(default=True)
 
     objects = InheritanceManager()
+
+    def last_opened(self):
+        return self.resourceevent_set.filter(action='open').order_by('-id').first()
+
+    def get_absolute_url(self):
+        return reverse_lazy('communication:resource__detail', args=(self.id,))
+    
 
 
 class FileResource(ResourceBase):
@@ -63,10 +76,20 @@ class FileResource(ResourceBase):
         return files.first().extension
 
 
-class FolderResource(ResourceBase):
+class FolderResource(MPTTModel, ResourceBase):
     type = models.CharField(max_length=7, default='folder')
     file_resources = models.ManyToManyField(FileResource, blank=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
 
     @property
     def extension(self):
         return 'folder'
+
+    def get_resource_files(self):
+        return self.file_resources.all()
+
+    def get_children(self):
+        return super().get_children()
+    
+    def get_parents(self):
+        return super().get_ancestors()
