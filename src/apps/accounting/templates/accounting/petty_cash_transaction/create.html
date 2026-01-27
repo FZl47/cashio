@@ -55,7 +55,7 @@
                                                     {% csrf_token %}
                                                     <div class="row g-4">
 
-                                                        <div class="col-lg-6">
+                                                        <div class="{% if request.user.is_admin %}col-lg-6{% else %}col-lg-12{% endif %}">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="fund">
                                                                     {% trans "Petty Cash Fund" %}
@@ -63,7 +63,8 @@
                                                                 </label>
                                                                 <div class="form-control-wrap">
                                                                     <select name="fund" id="fund"
-                                                                            class="form-control form-select js-select2" data-search="on" required>
+                                                                            class="form-control form-select js-select2"
+                                                                            data-search="on" required>
                                                                         <option value="">{% trans "Select Fund" %}</option>
                                                                         {% for fund in petty_cash_funds %}
                                                                             <option value="{{ fund.id }}">{{ fund.title }}</option>
@@ -72,29 +73,31 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="holder">
-                                                                    {% trans "Holder" %}
-                                                                    <span class="text-danger">*</span>
-                                                                </label>
-                                                                <div class="form-control-wrap">
-                                                                    <select name="holder" id="holder"
-                                                                            class="form-control form-select js-select2" required data-search="on"
-                                                                            {% if not request.user.is_admin %}disabled{% endif %}>
-                                                                        {% if request.user.is_admin %}
-                                                                            <option value="">{% trans "Select Holder" %}</option>
-                                                                            {% for holder in petty_cash_holders %}
-                                                                                <option value="{{ holder.id }}">{{ holder.user.get_full_name|default:holder.user.username }}</option>
-                                                                            {% endfor %}
-                                                                        {% else %}
-                                                                            <option value="{{ holder.id }}">{{ holder.user.get_full_name|default:holder.user.username }}</option>
-                                                                        {% endif %}
-                                                                    </select>
+                                                        {% if request.user.is_admin %}
+                                                            <div class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="holder">
+                                                                        {% trans "Holder" %}
+                                                                        <span class="text-danger">*</span>
+                                                                    </label>
+                                                                    <div class="form-control-wrap">
+                                                                        <select name="holder" id="holder"
+                                                                                class="form-control form-select js-select2"
+                                                                                required data-search="on">
+                                                                            {% if request.user.is_admin %}
+                                                                                <option value="">{% trans "Select Holder" %}</option>
+                                                                                {% for holder in petty_cash_holders %}
+                                                                                    <option value="{{ holder.id }}">{{ holder.user.get_full_name|default:holder.user.username }}</option>
+                                                                                {% endfor %}
+                                                                            {% endif %}
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                            {% else %}
+                                                            <input type="hidden" name="holder" value="{{ request.user.holder.id }}">
+                                                        {% endif %}
+
 
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
@@ -122,7 +125,8 @@
                                                                 </label>
                                                                 <div class="form-control-wrap">
                                                                     <input type="number" step="0.01" min="0"
-                                                                           class="form-control form-number" name="amount"
+                                                                           class="form-control form-number"
+                                                                           name="amount"
                                                                            placeholder="{% trans 'Amount' %}"
                                                                            id="amount" required>
                                                                 </div>

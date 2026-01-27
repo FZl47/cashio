@@ -1,12 +1,10 @@
-from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, View
 from django.db.models import Q, OuterRef, Subquery, Sum
 from django.db.models.functions import ExtractMonth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
 
 from apps.core.views import CreateViewMixin, ListViewMixin, DetailViewMixin, UpdateViewMixin
 from apps.core.auth.permissions.mixins import PermissionMixin

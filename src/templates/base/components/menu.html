@@ -143,12 +143,31 @@
                             {% endif %}
 
                             <li class="nk-menu-item">
-                                <a href="{% url 'notification:notification_personal__list' %}" class="nk-menu-link"><span
+                                <a href="{% url 'notification:notification_personal__list' %}"
+                                   class="nk-menu-link"><span
                                         class="nk-menu-text">{% trans 'List of Personal Notifications' %}</span></a>
                             </li>
 
                         </ul>
                     </li>
+                    {% if perms.comm.view_resourcebase %}
+                        <!-- .nk-menu-item -->
+                        <li class="nk-menu-item">
+                            <a href="{% url 'communication:index' %}#" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-share"></em></span>
+                                <span class="nk-menu-text">{% trans 'File Management' %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.is_superuser %}
+                        <!-- .nk-menu-item -->
+                        <li class="nk-menu-item">
+                            <a href="{% url 'public:settings' %}#" class="nk-menu-link">
+                                <span class="nk-menu-icon"><em class="icon ni ni-setting-alt"></em></span>
+                                <span class="nk-menu-text">{% trans 'General Settings' %}</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
                         <a href="{% url 'public:index' %}#" class="nk-menu-link">

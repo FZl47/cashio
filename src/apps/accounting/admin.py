@@ -12,6 +12,9 @@ admin.site.register(models.PettyCashTransaction)
 admin.site.register(models.Document)
 admin.site.register(models.DocumentStatus)
 
+admin.site.register(models.DocumentApprovalProcessGroup)
+admin.site.register(models.DocumentApprovalProcessGroupUser)
+
 
 
 

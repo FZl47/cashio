@@ -49,6 +49,7 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True, validators=[AbstractUser.username_validator])
     phonenumber = models.CharField(_("Phonenumber"), null=True, blank=True, max_length=20,
                                    validators=[PhonenumberValidator()])
+
     role = models.CharField(max_length=15, choices=ROLE_TYPES, default='common_user')
 
     username = None

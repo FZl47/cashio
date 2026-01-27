@@ -15,6 +15,7 @@ urlpatterns = [
     path('u/', include('apps.account.urls', namespace='account')),
     path('a/', include('apps.accounting.urls', namespace='accounting')),
     path('n/', include('apps.notification.urls', namespace='notification')),
+    path('c/', include('apps.comm.urls', namespace='communication')),
 
 ]
 

@@ -2,6 +2,8 @@ import decimal
 import string
 import random
 import math
+import shutil
+from cachetools import TTLCache, cached
 
 from django.conf import settings
 
@@ -49,3 +51,22 @@ def c_bool(str_value):
 
 def spread_num(number):
     return '{:,}'.format(truncate_decimal(number))
+
+
+space_detail_cache = TTLCache(maxsize=1, ttl=60 * 3)
+
+
+@cached(space_detail_cache)
+def get_space_detail_cached(path):
+    """
+    Return total, used, and free disk space (in bytes) for the given path.
+    Uses caching to avoid repeated disk access. Works on Windows and Linux.
+
+    Parameters:
+        path (str): Path to check disk usage for.
+
+    Returns:
+        tuple: (total, used, free) space in bytes.
+    """
+    total, used, free = shutil.disk_usage(path)
+    return total, used, free

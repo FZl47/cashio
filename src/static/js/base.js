@@ -163,6 +163,9 @@ for (let el of all_spread_price) {
 }
 
 function numberWithCommas(x, decimals = 3) {
+    if (LANGUAGE_CODE == 'fa'){
+        decimals = 0
+    }
     let num = Number(x);
     num = num.toFixed(decimals);
     return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -184,14 +187,13 @@ $('.container-select-choices input[type="radio"]').on('change', function (e) {
 
 // price elements
 document.querySelectorAll('.price-el').forEach((el) => {
-    // TODO: fix numbers with decimal places
     let p = el.innerText
     el.setAttribute('price-val', p)
     let formatted = p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     let n = formatted.split('.')[0]
     let decimal = formatted.split('.')[1]
 
-    if (decimal) {
+    if (decimal && LANGUAGE_CODE != 'fa') {
         el.innerHTML = `${n}<span class="decimal">.${decimal}</span>`
     } else {
         el.innerHTML = n
@@ -206,7 +208,7 @@ document.querySelectorAll('.num-el').forEach((el) => {
     let formatted = p.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     let n = formatted.split('.')[0]
     let decimal = formatted.split('.')[1]
-    if (decimal) {
+    if (decimal && LANGUAGE_CODE != 'fa') {
         el.innerHTML = `${n}.<span class="decimal">${decimal}</span>`
     } else {
         el.innerHTML = n

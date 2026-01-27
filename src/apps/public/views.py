@@ -3,7 +3,6 @@ from django.utils.translation import activate as activate_lang
 from django.utils import timezone
 from django.views.generic import TemplateView, View
 from django.shortcuts import redirect
-from django.contrib.auth.models import Permission
 from django.contrib.auth import get_user_model
 from django.db.models.functions import TruncMonth, Coalesce
 from django.db.models import Sum, Value, DecimalField, Q
@@ -11,10 +10,10 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.conf import settings
 
-from apps.core.auth.permissions import PermissionMixin
+from apps.core.auth.permissions import PermissionMixin, SuperUserRequiredMixin
 from apps.core.views import UpdateViewMixin
 
-from apps.accounting.models import (Company, PettyCashTransaction, PettyCashFund, Document)
+from apps.accounting.models import (PettyCashTransaction, PettyCashFund, Document, DocumentApprovalProcessGroup)
 
 from . import forms
 
@@ -149,7 +148,6 @@ class SetLang(View):
         return any(c == lang for c, n in langs)
 
     def get(self, request, lang):
-
         if not self.is_language_available(lang):
             messages.error(request, _('Language code is not available'))
             return redirect(self.get_referrer_url())
@@ -167,14 +165,12 @@ class SetLang(View):
         return response
 
 
-class Settings(PermissionMixin, TemplateView):
-    permissions = ('public.manage_settings',)
+class Settings(SuperUserRequiredMixin, TemplateView):
     template_name = 'public/settings.html'
 
     def get_context_data(self, **kwargs):
         return {
-            'company': Company.objects.first(),
-            'permissions': Permission.objects.all(),
+            'approval_process_groups': DocumentApprovalProcessGroup.objects.all()
         }
 
 

@@ -1,0 +1,1210 @@
+{% extends 'base/base_template.html' %}
+{% load static i18n %}
+
+{% block Title %}
+    {% trans "Complete Profile" %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body bg-white npc-default apps-only
+{% endblock %}
+
+{% block Style %}
+    <style>
+        .bg-1 {
+            background: #ff7760 !important;
+        }
+
+        .bg-2 {
+            background: #c06df4 !important;
+        }
+
+        .bg-3 {
+            background: #4d9eff !important;
+        }
+
+        .bg-4 {
+            background: #219a44 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root profile-locked">
+        <div class="nk-main">
+            <div class="nk-wrap">
+
+                {% include 'base/components/header.html' %}
+
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+                            <!-- .nk-aside -->
+                            <div class="nk-content-body">
+                                <div class="nk-content-wrap">
+                                    <div class="nk-block-head nk-block-head-md">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">{% trans 'File Management' %}</h3>
+                                            </div>
+                                            <!-- .nk-block-head-content -->
+                                            <div class="nk-block-head-content">
+                                                <a href="{% url 'public:index' %}" class="back-to">
+                                                    <span class="d-none d-sm-inline-block">{% trans 'Back to' %}</span>
+                                                    &nbsp;
+                                                    {% trans 'Dashboard' %}
+                                                    <em class="icon ni ni-arrow-right"></em><span>
+                                                </span>
+                                                </a>
+                                            </div>
+                                            <!-- .nk-block-head-content -->
+                                        </div>
+                                        <!-- .nk-block-between -->
+                                    </div>
+                                    <!-- .nk-block-head -->
+                                    <div class="nk-fmg nk-fmg-boxed">
+                                        {% include 'comm/components/aside.html' %}
+                                        <!-- .nk-fmg-aside -->
+                                        <div class="nk-fmg-body">
+                                            <div class="nk-fmg-body-head d-none d-lg-flex">
+                                                <div class="nk-fmg-search">
+                                                    <em class="icon ni ni-search"></em>
+                                                    <form>
+                                                        <input type="text" name="search"
+                                                               class="form-control border-transparent form-focus-none"
+                                                               value="{{ request.GET.search }}"
+                                                               placeholder="{% trans 'Search files and folders by title or ...' %}"/>
+                                                    </form>
+                                                </div>
+                                                <div class="nk-fmg-actions">
+                                                    <ul class="nk-block-tools g-3">
+                                                        <li>
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-light"
+                                                                   data-bs-toggle="dropdown"><em
+                                                                        class="icon ni ni-plus"></em>
+                                                                    <span>{% trans 'Create' %}</span></a>
+                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li>
+                                                                            <a href="#file-upload"
+                                                                               data-bs-toggle="modal"><em
+                                                                                    class="icon ni ni-upload-cloud"></em><span>{% trans 'Upload File' %}</span></a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#folder-create"
+                                                                               data-bs-toggle="modal"><em
+                                                                                    class="icon ni ni-folder-plus"></em><span>{% trans 'Create Folder' %}</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#file-upload" class="btn btn-primary"
+                                                               data-bs-toggle="modal"><em
+                                                                    class="icon ni ni-upload-cloud"></em>
+                                                                <span>{% trans 'Upload' %}</span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="nk-fmg-body-content">
+                                                <div class="nk-block-head nk-block-head-sm">
+                                                    <div class="nk-block-between position-relative">
+                                                        <div class="nk-block-head-content">
+                                                            <h3 class="nk-block-title page-title">{% trans 'Resources' %}</h3>
+                                                        </div>
+                                                        <div class="nk-block-head-content">
+                                                            <ul class="nk-block-tools g-1">
+                                                                <li class="d-lg-none">
+                                                                    <a href="#"
+                                                                       class="btn btn-trigger btn-icon search-toggle toggle-search"
+                                                                       data-target="search"><em
+                                                                            class="icon ni ni-search"></em></a>
+                                                                </li>
+                                                                <li class="d-lg-none">
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-trigger btn-icon"
+                                                                           data-bs-toggle="dropdown"><em
+                                                                                class="icon ni ni-plus"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li>
+                                                                                    <a href="#file-upload"
+                                                                                       data-bs-toggle="modal"><em
+                                                                                            class="icon ni ni-upload-cloud"></em><span>{% trans 'Upload File' %}</span></a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a href="#folder-create"
+                                                                                       data-bs-toggle="modal"><em
+                                                                                            class="icon ni ni-folder-plus"></em><span>{% trans 'Create Folder' %}</span></a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="d-lg-none me-n1">
+                                                                    <a href="#" class="btn btn-trigger btn-icon toggle"
+                                                                       data-target="files-aside"><em
+                                                                            class="icon ni ni-menu-alt-r"></em></a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="search-wrap px-2 d-lg-none" data-search="search">
+                                                            <div class="search-content">
+                                                                <a href="#"
+                                                                   class="search-back btn btn-icon toggle-search"
+                                                                   data-target="search"><em
+                                                                        class="icon ni ni-arrow-left"></em></a>
+                                                                <form>
+                                                                    <input type="text" name="search"
+                                                                           class="form-control border-transparent form-focus-none"
+                                                                           value="{{ request.GET.search }}"
+                                                                           placeholder="{% trans 'Search files and folders by title or ...' %}"/>
+                                                                </form>
+                                                                <button class="search-submit btn btn-icon"><em
+                                                                        class="icon ni ni-search"></em></button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- .search-wrap -->
+                                                    </div>
+                                                </div>
+                                                {% if resources_pinned %}
+                                                    <div class="nk-fmg-quick-list nk-block">
+                                                        <div class="nk-block-head-xs">
+                                                            <div class="nk-block-between g-2">
+                                                                <div class="nk-block-head-content">
+                                                                    <h6 class="nk-block-title title text-warning">
+                                                                        {% trans 'Pinned' %}
+                                                                        <em class="icon ni ni-star"></em>
+                                                                    </h6>
+                                                                </div>
+                                                                <div class="nk-block-head-content">
+                                                                    <a href="#"
+                                                                       class="link link-primary toggle-opt active"
+                                                                       data-target="quick-access">
+                                                                        <div class="inactive-text">{% trans 'Show' %}</div>
+                                                                        <div class="active-text">{% trans 'Hide' %}</div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- .nk-block-head -->
+                                                        <div class="toggle-expand-content expanded"
+                                                             data-content="quick-access">
+                                                            <div class="nk-files nk-files-view-grid">
+                                                                <div class="nk-files-list">
+                                                                    {% for resource in resources_pinned %}
+                                                                        <div class="nk-file-item nk-file">
+                                                                            <div class="nk-file-info">
+                                                                                <a href="{{ resource.get_absolute_url }}"
+                                                                                   class="nk-file-link">
+                                                                                    <div class="nk-file-title">
+                                                                                        <div class="nk-file-icon">
+                                                                                        <span class="nk-file-icon-type icon-by-extension"
+                                                                                              extension="{{ resource.extension }}"></span>
+                                                                                        </div>
+                                                                                        <div class="nk-file-name">
+                                                                                            <div class="nk-file-name-text">
+                                                                                                <span class="title">{{ resource.name|truncatechars:'40' }}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="nk-file-actions">
+                                                                                <a href="{% url 'communication:resource__pin_change_state' pk=resource.id %}"
+                                                                                   class="btn btn-sm btn-icon btn-trigger"><em
+                                                                                        class="icon ni ni-star-fill text-warning"></em></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endfor %}
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- .nk-files -->
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="nk-fmg-listing nk-block-lg">
+                                                    <div class="nk-block-head-xs">
+                                                        <div class="nk-block-between g-2">
+                                                            <div class="nk-block-head-content">
+                                                                <h6 class="nk-block-title title">{% trans 'Files/Folders' %}</h6>
+                                                            </div>
+                                                            <div class="nk-block-head-content">
+                                                                <ul class="nk-block-tools g-2 nav gx-3 column-gap-1">
+                                                                    <li class="badge badge-dim bg-success">
+                                                                        <span class="fs-14px price-el">{{ resource_files.count|default:'0' }}</span>
+                                                                        <em class="icon ni ni-files"></em>
+                                                                    </li>
+                                                                    <li class="badge badge-dim bg-success">
+                                                                        <span class="fs-14px price-el">{{ resource_folders.count|default:'0' }}</span>
+                                                                        <em class="icon ni ni-folder"></em>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- .nk-block-head -->
+                                                    <div class="tab-content mt-1">
+                                                        <div class="tab-pane active" id="file-list-view">
+                                                            {% if resources %}
+                                                                <div class="nk-files nk-files-view-list">
+                                                                    <div class="nk-files-head">
+                                                                        <div class="nk-file-item">
+                                                                            <div class="nk-file-info">
+                                                                                {% trans 'Name' %}
+                                                                            </div>
+                                                                            <div class="nk-file-meta">
+                                                                                {% trans 'Last opened' %}
+                                                                            </div>
+                                                                            <div class="nk-file-members">
+                                                                                <div class="tb-head">{% trans 'Shared With' %}</div>
+                                                                            </div>
+                                                                            <div class="nk-file-actions d-none">
+                                                                                <div class="dropdown">
+                                                                                    <a href=""
+                                                                                       class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
+                                                                                       data-bs-toggle="dropdown"><em
+                                                                                            class="icon ni ni-more-h"></em></a>
+                                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                                        <ul class="link-list-opt no-bdr">
+                                                                                            <li>
+                                                                                                <a href="#file-share"
+                                                                                                   data-bs-toggle="modal"><em
+                                                                                                        class="icon ni ni-share"></em><span>به اشتراک گذاری</span></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#file-copy"
+                                                                                                   data-bs-toggle="modal"><em
+                                                                                                        class="icon ni ni-copy"></em><span>کپی</span></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#file-move"
+                                                                                                   data-bs-toggle="modal"><em
+                                                                                                        class="icon ni ni-forward-arrow"></em><span>انتقال</span></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"
+                                                                                                   class="file-dl-toast"><em
+                                                                                                        class="icon ni ni-download"></em><span>دانلود</span></a>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href="#"><em
+                                                                                                        class="icon ni ni-trash"></em><span>حذف</span></a>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- .nk-files-head -->
+                                                                    <div class="nk-files-list">
+                                                                        {% for resource in resources %}
+                                                                            <!-- .nk-file -->
+                                                                            <div class="nk-file-item nk-file">
+                                                                                <div class="nk-file-info">
+                                                                                    <div class="nk-file-title">
+                                                                                        <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                                            <input type="checkbox"
+                                                                                                   class="custom-control-input"
+                                                                                                   id="file-check-n3"/>
+                                                                                            <label class="custom-control-label"
+                                                                                                   for="file-check-n3"></label>
+                                                                                        </div>
+                                                                                        <div class="nk-file-icon">
+                                                                                        <span class="nk-file-icon-type icon-by-extension"
+                                                                                              extension="{{ resource.extension }}">
+
+                                                                                        </span>
+                                                                                        </div>
+                                                                                        <div class="nk-file-name">
+                                                                                            <div class="nk-file-name-text">
+                                                                                                <a href="{{ resource.get_absolute_url }}"
+                                                                                                   class="title">
+                                                                                                    {{ resource.name|truncatechars:'40' }}
+                                                                                                </a>
+                                                                                                <a class="p-1 fs-19px"
+                                                                                                   href="{% url 'communication:resource__pin_change_state' pk=resource.id %}">
+                                                                                                    {% if resource.id in resources_pinned_ids %}
+                                                                                                        <em class="icon ni ni-star-fill text-warning"></em>
+                                                                                                    {% else %}
+                                                                                                        <em class="icon ni ni-star text-warning"></em>
+                                                                                                    {% endif %}
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="nk-file-meta fs-15px">
+                                                                                    {% with resource.last_opened as last_opened %}
+                                                                                        {% if last_opened %}
+                                                                                            <div class="tb-lead">
+                                                                                                {{ last_opened }}
+                                                                                            </div>
+                                                                                            <div class="tb-sub">
+                                                                                                {% if last_opened.user == request.user %}
+                                                                                                    {% trans 'You' %}
+                                                                                                {% else %}
+                                                                                                    {{ last_opened.user.get_full_name }}
+                                                                                                {% endif %}
+                                                                                            </div>
+                                                                                        {% else %}
+                                                                                            <span class="text-purple">{% trans 'Not Yet Opened.' %}</span>
+                                                                                        {% endif %}
+                                                                                    {% endwith %}
+                                                                                </div>
+                                                                                <div class="nk-file-members">
+                                                                                    <div class="user-avatar-group">
+                                                                                        {% with resource.shared_with.all as shared_with %}
+                                                                                            {% for user in shared_with|slice:':4' %}
+                                                                                                <div class="user-avatar xs bg-{{ forloop.counter }}">
+                                                                                                    <span>{{ user.first_name.0 }} {{ user.last_name.0 }}</span>
+                                                                                                </div>
+                                                                                            {% endfor %}
+                                                                                            {% if shared_with.count > 4 %}
+                                                                                                <div class="user-avatar xs bg-light">
+                                                                                                <span>
+                                                                                                    {% if shared_with.count|add:'-4' %}
+                                                                                                        {{ shared_with.count|add:'-4' }}
+                                                                                                    {% endif %}
+                                                                                                    +
+                                                                                                </span>
+                                                                                                </div>
+                                                                                            {% endif %}
+                                                                                        {% endwith %}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="nk-file-actions">
+                                                                                    <div class="dropdown">
+                                                                                        <a href=""
+                                                                                           class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
+                                                                                           data-bs-toggle="dropdown"><em
+                                                                                                class="icon ni ni-more-h"></em></a>
+                                                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                                                            <ul class="link-list-plain no-bdr">
+                                                                                                <li>
+                                                                                                    <a href="{{ resource.get_absolute_url }}"
+                                                                                                       data-bs-toggle="modal"><em
+                                                                                                            class="icon ni ni-eye"></em><span>{% trans 'Details' %}</span></a>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <a href="#"
+                                                                                                       style="cursor: not-allowed;opacity: .4"
+                                                                                                       data-bs-toggle="modal"><em
+                                                                                                            class="icon ni ni-share"></em><span>{% trans 'Share' %}</span></a>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <a href="#"
+                                                                                                       style="cursor: not-allowed;opacity: .4"
+                                                                                                       data-bs-toggle="modal"><em
+                                                                                                            class="icon ni ni-forward-arrow"></em><span>{% trans 'Move' %}</span></a>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <a href="#"
+                                                                                                       style="cursor: not-allowed;opacity: .4"
+                                                                                                       class="file-dl-toast"><em
+                                                                                                            class="icon ni ni-download"></em><span>{% trans 'Download' %}</span></a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
+                                                            {% else %}
+                                                                {% if request.GET.search %}
+                                                                    <div class="text-center mt-4">
+                                                                        <span class="nk-file-icon-type d-block"
+                                                                          style="width: 150px">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                             version="1.1" id="Layer_1" x="0px" y="0px"
+                                                                             viewBox="0 0 42 45"
+                                                                             style="enable-background:new 0 0 42 45;"
+                                                                             xml:space="preserve">
+                                                                                <style type="text/css">
+                                                                                    .pcc {
+                                                                                        clip-path: url(#SVGID_2_);
+                                                                                        fill: #E5A337;
+                                                                                    }
+                                                                                </style>
+                                                                                <g>
+                                                                                    <defs>
+                                                                                        <rect id="SVGID_1_" y="2.9"
+                                                                                              width="42" height="39.2"/>
+                                                                                    </defs>
+                                                                                    <clipPath id="SVGID_2_">
+                                                                                        <use xlink:href="#SVGID_1_"
+                                                                                             style="overflow:visible;"/>
+                                                                                    </clipPath>
+                                                                                    <path class="pcc"
+                                                                                          d="M40.1,23.4c-2.8-3.8-4.7-7.2-6.3-9.9l-3.1,3.1l-4.4-4.4L30.5,8c-2.4-3.3-5-5.1-10.4-5.1C9,2.9,0,11.4,0,23.4   c0,12,8.6,18.7,19.7,18.7C30.8,42.1,47.6,33.6,40.1,23.4 M12.1,37.7c-1.3,0-2.3-1.1-2.3-2.3c0-1.3,1.1-2.3,2.3-2.3   c1.3,0,2.3,1.1,2.3,2.3C14.4,36.6,13.4,37.7,12.1,37.7 M16,38.2c-0.6,0-1.1-0.5-1.1-1.1S15.4,36,16,36c0.6,0,1.1,0.5,1.1,1.1   S16.6,38.2,16,38.2 M21.3,34.9c-0.2,0.2-0.4,0.3-0.7,0.4c-0.3,0-0.5-0.1-0.7-0.3l-3-3l4.6-5c0.3-0.4,0.3-1-0.1-1.3   c-0.4-0.3-1-0.3-1.3,0.1l-4.5,4.9l-3.3-3.3l4.9-4.5c0.4-0.3,0.4-0.9,0.1-1.3c-0.3-0.4-0.9-0.4-1.3-0.1l-5,4.6l-3-3   c-0.2-0.2-0.3-0.4-0.3-0.7c0-0.3,0.1-0.5,0.4-0.7l9.4-7.3l11.2,11.2L21.3,34.9z M29.9,23.8L29.8,24L18.9,13.1l0.2-0.2   c1.7-1.3,4.2-1.2,5.7,0.4l4.8,4.8C31.1,19.6,31.3,22.1,29.9,23.8"/>
+                                                                                </g>
+                                                                            </svg>
+                                                                    </span>
+                                                                        <a class="btn btn-outline-warning mt-2 btn-lg"
+                                                                           href="{% url 'communication:index' %}">
+                                                                            {% trans 'Clear Search' %}
+                                                                        </a>
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="text-center mx-auto col-12 p-2">
+                                                                        <div class="nk-file-icon-type d-block mb-2"
+                                                                             style="width: 150px">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 viewBox="0 0 90 90">
+                                                                                <rect x="15" y="5" width="56"
+                                                                                      height="70" rx="6" ry="6"
+                                                                                      fill="#e3e7fe" stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <path d="M69.88,85H30.12A6.06,6.06,0,0,1,24,79V21a6.06,6.06,0,0,1,6.12-6H59.66L76,30.47V79A6.06,6.06,0,0,1,69.88,85Z"
+                                                                                      fill="#fff" stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <polyline points="60 16 60 31 75 31.07"
+                                                                                          fill="none" stroke="#6576ff"
+                                                                                          stroke-linecap="round"
+                                                                                          stroke-linejoin="round"
+                                                                                          stroke-width="2"/>
+                                                                                <rect x="40" y="45" width="23"
+                                                                                      height="19" fill="#e3e7fe"
+                                                                                      stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <rect x="36" y="49" width="23"
+                                                                                      height="19" fill="#fff"
+                                                                                      stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <polyline
+                                                                                        points="37 62.88 45.12 55.94 52.81 63.06 55.99 59.44 59 62.76"
+                                                                                        fill="none" stroke="#6576ff"
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"/>
+                                                                                <circle cx="52.11" cy="54.98" r="2.02"
+                                                                                        fill="none" stroke="#6576ff"
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <h4 class="text-warning">
+                                                                            {% trans 'No files or folders have been added yet.' %}
+                                                                        </h4>
+                                                                        <div class="m-4">
+                                                                            <a href="#file-upload"
+                                                                               class="btn btn-primary btn-lg m-1"
+                                                                               data-bs-toggle="modal"><em
+                                                                                    class="icon ni ni-upload-cloud"></em>
+                                                                                <span>{% trans 'Upload File' %}</span></a>
+                                                                            <a href="#folder-create"
+                                                                               class="btn btn-success btn-lg m-1"
+                                                                               data-bs-toggle="modal"><em
+                                                                                    class="icon ni ni-upload-cloud"></em>
+                                                                                <span>{% trans 'Create Folder' %}</span></a>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            <!-- .nk-files -->
+                                                        </div>
+                                                        <!-- .tab-pane -->
+                                                    </div>
+                                                    <!-- .tab-content -->
+                                                </div>
+                                                <!-- .nk-block -->
+                                            </div>
+                                            <!-- .nk-fmg-body-content -->
+                                        </div>
+                                        <!-- .nk-fmg-body -->
+                                    </div>
+                                    <!-- .nk-fmg -->
+                                </div>
+                                <!-- footer @s -->
+                                {% include 'base/components/footer.html' %}
+                                <!-- footer @e -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- @@ Share File Modal @e -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="folder-create">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <form method="post" action="{% url 'communication:resource__folder__create' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="extension" value="folder">
+                    <div class="modal-header">
+                        <div class="d-flex justify-content-between align-items-center column-gap-1">
+                            <h5 class="modal-title">{% trans 'Create Folder' %}</h5>
+                            <span class="nk-file-icon-type">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                                <g>
+                                    <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5"
+                                          style="fill: #f29611;"></rect>
+                                    <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
+                                          style="fill: #ffb32c;"></path>
+                                    <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
+                                          style="fill: #f2a222;"></path>
+                                </g>
+                            </svg>
+                        </span>
+                        </div>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-label">{% trans 'Name' %}</label>
+                            <input type="text" name="name" class="form-control" required="">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans 'Active Status' %}</label>
+                            <select name="is_active" class="form-control">
+                                <option value="true" selected="">{% trans 'Yes' %}</option>
+                                <option value="false">{% trans 'No' %}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans 'Share With' %}</label>
+                            <select name="shared_with" class="form-control js-select2" multiple>
+                                {% for user in users %}
+                                    <option value="{{ user.id }}">{{ user.get_full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">{% trans 'Description' %}</label>
+                            <textarea name="description" class="form-control" cols="30" rows="10"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Cancel' %}</button>
+                        <button class="btn btn-primary">{% trans 'Create' %}</button>
+                    </div>
+                </form>
+            </div>
+            <!-- .modal-content -->
+        </div>
+        <!-- .modla-dialog -->
+    </div>
+    <!-- .modal -->
+
+
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="file-share">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header align-center">
+                    <div class="nk-file-title">
+                        <div class="nk-file-icon">
+                                    <span class="nk-file-icon-type">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 72 72">
+                                            <path
+                                                    fill="#6C87FE"
+                                                    d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                            />
+                                            <path
+                                                    fill="#8AA3FF"
+                                                    d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                            />
+                                            <path
+                                                    display="none"
+                                                    fill="#8AA3FF"
+                                                    d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                            />
+                                            <path fill="#798BFF"
+                                                  d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                        </svg>
+                                    </span>
+                        </div>
+                        <div class="nk-file-name">
+                            <div class="nk-file-name-text"><span class="title">طراحی رابط / تجربه کاربری</span></div>
+                            <div class="nk-file-name-sub">394.87 مگابایت</div>
+                        </div>
+                    </div>
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="nk-file-share-header">
+                        <div class="nk-file-share-group">
+                            <div class="nk-file-share-input-group">
+                                <div class="nk-file-share-input nk-file-share-input-to">
+                                    <label class="label">به</label>
+                                    <input type="text" class="input-mail tagify" placeholder="ایمیل یا نام"
+                                           data-whitelist="team@yourwebsite.com, help@yourwebsite.com, contact@yourwebsite.com"/>
+                                </div>
+                            </div>
+                            <ul class="nk-file-share-nav">
+                                <li><span class="badge badge-sm bg-outline-gray">قابل مشاهده</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nk-file-share-editor">
+                        <div class="nk-file-share-field">
+                            <textarea class="form-control form-control-simple no-resize ex-large"
+                                      placeholder="افزودن پیام (اختیاری)"></textarea>
+                        </div>
+                    </div>
+                    <!-- .nk-file-share-editor -->
+                </div>
+                <!-- .modal-body -->
+                <div class="modal-footer bg-light">
+                    <ul class="btn-toolbar g-3">
+                        <li><a href="#" data-bs-dismiss="modal" class="btn btn-outline-light btn-white">لغو</a></li>
+                        <li><a href="#" class="btn btn-primary">به اشتراک گذاری</a></li>
+                    </ul>
+                </div>
+                <!-- .modal-footer -->
+            </div>
+            <!-- .modal-content -->
+        </div>
+        <!-- .modla-dialog -->
+    </div>
+    <!-- .modal -->
+    <!-- @@ Copy File Modal @e -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="file-copy">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header align-center border-bottom-0">
+                    <h5 class="modal-title">کپی آیتم در...</h5>
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                </div>
+                <div class="modal-body pt-0 mt-n2">
+                    <ul class="breadcrumb breadcrumb-alt breadcrumb-xs breadcrumb-arrow mb-1">
+                        <li class="breadcrumb-item">پروژه ها</li>
+                        <li class="breadcrumb-item">اپلیکیشن ها</li>
+                    </ul>
+                    <div class="nk-fmg-listing is-scrollable">
+                        <div class="nk-files nk-files-view-list is-compact">
+                            <div class="nk-files-list">
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                         viewBox="0 0 72 72">
+                                                        <path
+                                                                fill="#6C87FE"
+                                                                d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                                        />
+                                                        <path
+                                                                fill="#8AA3FF"
+                                                                d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                                        />
+                                                        <path
+                                                                display="none"
+                                                                fill="#8AA3FF"
+                                                                d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                                        />
+                                                        <path fill="#798BFF"
+                                                              d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">طراحی رابط / تجربه کاربری</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                                <div class="nk-file-item nk-file selected">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                         viewBox="0 0 72 72">
+                                                        <path
+                                                                fill="#6C87FE"
+                                                                d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                                        />
+                                                        <path
+                                                                fill="#8AA3FF"
+                                                                d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                                        />
+                                                        <path
+                                                                display="none"
+                                                                fill="#8AA3FF"
+                                                                d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                                        />
+                                                        <path fill="#798BFF"
+                                                              d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">طراحی رابط کاربری</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                                                        <g>
+                                                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5"
+                                                                  style="fill: #6c87fe;"/>
+                                                            <path
+                                                                    d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
+                                                                    style="fill: #8aa3ff;"
+                                                            />
+                                                            <path d="M7.7454,58.9807C9.9352,61.3864,12.4882,61.0163,14,61H59a6.3373,6.3373,0,0,0,5.2562-2.0193Z"
+                                                                  style="fill: #798bff;"/>
+                                                            <path
+                                                                    d="M29.6309,37.36a3.0236,3.0236,0,0,1-.86-2.39A4.3748,4.3748,0,0,1,32.9961,31h.0078a4.36,4.36,0,0,1,4.22,3.9121,3.0532,3.0532,0,0,1-.8545,2.4482A4.4158,4.4158,0,0,1,33.23,38.53c-.0771,0-.1533-.002-.23-.0049A4.519,4.519,0,0,1,29.6309,37.36Zm13.8359,2.7549a1,1,0,1,0-.9336,1.77c.7207.38,1.4658,2.126,1.4668,4.39V48a1,1,0,0,0,2,0V46.2744C45.999,43.3447,45.0049,40.9268,43.4668,40.1152ZM40.165,37.3965c-.1445.084-.29.168-.4316.2549a1,1,0,0,0,.5215,1.8535.9887.9887,0,0,0,.52-.1465c.1289-.0781.2607-.1543.3916-.23a4.2311,4.2311,0,0,0,2.1465-2.124.9839.9839,0,0,0,.0313-.1045A3.8411,3.8411,0,0,0,40.5,32.5352a1,1,0,0,0-.4922,1.9395,1.8773,1.8773,0,0,1,1.4,1.9092A2.835,2.835,0,0,1,40.165,37.3965ZM36.5,41h-7c-2.5234,0-4.5,2.7822-4.5,6.333V48.5a.8355.8355,0,0,0,.0588.2914.9731.9731,0,0,0,.3508.4946C26.4646,50.2812,29.4614,51,33,51s6.5353-.7187,7.59-1.7139a.9726.9726,0,0,0,.3509-.4949A.8361.8361,0,0,0,41,48.5V47.333C41,43.7822,39.0234,41,36.5,41Z"
+                                                                    style="fill: #4b66bc;"
+                                                            />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">پروژه ها</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                         viewBox="0 0 72 72">
+                                                        <path
+                                                                fill="#6C87FE"
+                                                                d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                                        />
+                                                        <path
+                                                                fill="#8AA3FF"
+                                                                d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                                        />
+                                                        <path
+                                                                display="none"
+                                                                fill="#8AA3FF"
+                                                                d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                                        />
+                                                        <path fill="#798BFF"
+                                                              d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">پروژه های 1400</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-body -->
+                <div class="modal-footer modal-footer-stretch bg-light">
+                    <div class="modal-footer-between">
+                        <div class="g">
+                            <a href="#" class="link link-primary">ایجاد پوشه جدید</a>
+                        </div>
+                        <div class="g">
+                            <ul class="btn-toolbar g-3">
+                                <li><a href="#" data-bs-dismiss="modal" class="btn btn-outline-light btn-white">لغو</a>
+                                </li>
+                                <li><a href="#" class="btn btn-primary">کپی</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-footer -->
+            </div>
+            <!-- .modal-content -->
+        </div>
+        <!-- .modla-dialog -->
+    </div>
+    <!-- .modal -->
+    <!-- @@ Move File Modal @e -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="file-move">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header align-center border-bottom-0">
+                    <h5 class="modal-title">انتقال آیتم به...</h5>
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                </div>
+                <div class="modal-body pt-0 mt-n2">
+                    <ul class="breadcrumb breadcrumb-alt breadcrumb-xs breadcrumb-arrow mb-1">
+                        <li class="breadcrumb-item">پروژه ها</li>
+                        <li class="breadcrumb-item">اپلیکیشن ها</li>
+                    </ul>
+                    <div class="nk-fmg-listing is-scrollable">
+                        <div class="nk-files nk-files-view-list is-compact">
+                            <div class="nk-files-list">
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                         viewBox="0 0 72 72">
+                                                        <path
+                                                                fill="#6C87FE"
+                                                                d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                                        />
+                                                        <path
+                                                                fill="#8AA3FF"
+                                                                d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                                        />
+                                                        <path
+                                                                display="none"
+                                                                fill="#8AA3FF"
+                                                                d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                                        />
+                                                        <path fill="#798BFF"
+                                                              d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">طراحی رابط / تجربه کاربری</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                         viewBox="0 0 72 72">
+                                                        <path
+                                                                fill="#6C87FE"
+                                                                d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                                        />
+                                                        <path
+                                                                fill="#8AA3FF"
+                                                                d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                                        />
+                                                        <path
+                                                                display="none"
+                                                                fill="#8AA3FF"
+                                                                d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                                        />
+                                                        <path fill="#798BFF"
+                                                              d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">پروژه های 1400</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                                <div class="nk-file-item nk-file selected">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                                                        <g>
+                                                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5"
+                                                                  style="fill: #6c87fe;"/>
+                                                            <path
+                                                                    d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
+                                                                    style="fill: #8aa3ff;"
+                                                            />
+                                                            <path d="M7.7454,58.9807C9.9352,61.3864,12.4882,61.0163,14,61H59a6.3373,6.3373,0,0,0,5.2562-2.0193Z"
+                                                                  style="fill: #798bff;"/>
+                                                            <path
+                                                                    d="M29.6309,37.36a3.0236,3.0236,0,0,1-.86-2.39A4.3748,4.3748,0,0,1,32.9961,31h.0078a4.36,4.36,0,0,1,4.22,3.9121,3.0532,3.0532,0,0,1-.8545,2.4482A4.4158,4.4158,0,0,1,33.23,38.53c-.0771,0-.1533-.002-.23-.0049A4.519,4.519,0,0,1,29.6309,37.36Zm13.8359,2.7549a1,1,0,1,0-.9336,1.77c.7207.38,1.4658,2.126,1.4668,4.39V48a1,1,0,0,0,2,0V46.2744C45.999,43.3447,45.0049,40.9268,43.4668,40.1152ZM40.165,37.3965c-.1445.084-.29.168-.4316.2549a1,1,0,0,0,.5215,1.8535.9887.9887,0,0,0,.52-.1465c.1289-.0781.2607-.1543.3916-.23a4.2311,4.2311,0,0,0,2.1465-2.124.9839.9839,0,0,0,.0313-.1045A3.8411,3.8411,0,0,0,40.5,32.5352a1,1,0,0,0-.4922,1.9395,1.8773,1.8773,0,0,1,1.4,1.9092A2.835,2.835,0,0,1,40.165,37.3965ZM36.5,41h-7c-2.5234,0-4.5,2.7822-4.5,6.333V48.5a.8355.8355,0,0,0,.0588.2914.9731.9731,0,0,0,.3508.4946C26.4646,50.2812,29.4614,51,33,51s6.5353-.7187,7.59-1.7139a.9726.9726,0,0,0,.3509-.4949A.8361.8361,0,0,0,41,48.5V47.333C41,43.7822,39.0234,41,36.5,41Z"
+                                                                    style="fill: #4b66bc;"
+                                                            />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">پروژه ها</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <a class="nk-file-link" href="#">
+                                            <div class="nk-file-title">
+                                                <div class="nk-file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                         viewBox="0 0 72 72">
+                                                        <path
+                                                                fill="#6C87FE"
+                                                                d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                                        />
+                                                        <path
+                                                                fill="#8AA3FF"
+                                                                d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                                        />
+                                                        <path
+                                                                display="none"
+                                                                fill="#8AA3FF"
+                                                                d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                                        />
+                                                        <path fill="#798BFF"
+                                                              d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="nk-file-name">
+                                                    <div class="nk-file-name-text">
+                                                        <span class="title">طراحی رابط کاربری</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="nk-file-actions">
+                                        <a href="#" class="btn btn-sm btn-icon btn-trigger"><em
+                                                class="icon ni ni-chevron-right"></em></a>
+                                    </div>
+                                </div>
+                                <!-- .nk-file -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-body -->
+                <div class="modal-footer modal-footer-stretch bg-light">
+                    <div class="modal-footer-between">
+                        <div class="g">
+                            <a href="#" class="link link-primary">ایجاد پوشه جدید</a>
+                        </div>
+                        <div class="g">
+                            <ul class="btn-toolbar g-3">
+                                <li><a href="#" data-bs-dismiss="modal" class="btn btn-outline-light btn-white">لغو</a>
+                                </li>
+                                <li><a href="#" class="btn btn-primary">انتقال</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-footer -->
+            </div>
+            <!-- .modal-content -->
+        </div>
+        <!-- .modla-dialog -->
+    </div>
+    <!-- .modal -->
+    <!-- @@ File Details Modal @e -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="file-details">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header align-center">
+                    <div class="nk-file-title">
+                        <div class="nk-file-icon">
+                                    <span class="nk-file-icon-type">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 72 72">
+                                            <path
+                                                    fill="#6C87FE"
+                                                    d="M57.5,31h-23c-1.4,0-2.5-1.1-2.5-2.5v-10c0-1.4,1.1-2.5,2.5-2.5h23c1.4,0,2.5,1.1,2.5,2.5v10
+	C60,29.9,58.9,31,57.5,31z"
+                                            />
+                                            <path
+                                                    fill="#8AA3FF"
+                                                    d="M59.8,61H12.2C8.8,61,6,58,6,54.4V17.6C6,14,8.8,11,12.2,11h18.5c1.7,0,3.3,1,4.1,2.6L38,24h21.8
+	c3.4,0,6.2,2.4,6.2,6v24.4C66,58,63.2,61,59.8,61z"
+                                            />
+                                            <path
+                                                    display="none"
+                                                    fill="#8AA3FF"
+                                                    d="M62.1,61H9.9C7.8,61,6,59.2,6,57c0,0,0-31.5,0-42c0-2.2,1.8-4,3.9-4h19.3
+	c1.6,0,3.2,0.2,3.9,2.3l2.7,6.8c0.5,1.1,1.6,1.9,2.8,1.9h23.5c2.2,0,3.9,1.8,3.9,4v31C66,59.2,64.2,61,62.1,61z"
+                                            />
+                                            <path fill="#798BFF"
+                                                  d="M7.7,59c2.2,2.4,4.7,2,6.3,2h45c1.1,0,3.2,0.1,5.3-2H7.7z"/>
+                                        </svg>
+                                    </span>
+                        </div>
+                        <div class="nk-file-name">
+                            <div class="nk-file-name-text"><span class="title">طراحی رابط / تجربه کاربری</span></div>
+                            <div class="nk-file-name-sub">پروژه</div>
+                        </div>
+                    </div>
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                </div>
+                <div class="modal-body">
+                    <div class="nk-file-details">
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">نوع</div>
+                            <div class="nk-file-details-col">پوشه</div>
+                        </div>
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">حجم</div>
+                            <div class="nk-file-details-col">35.48 مگابایت</div>
+                        </div>
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">مکان</div>
+                            <div class="nk-file-details-col">
+                                <ul class="breadcrumb breadcrumb-sm breadcrumb-alt breadcrumb-arrow">
+                                    <li class="breadcrumb-item">تم فارست</li>
+                                    <li class="breadcrumb-item">پروژه ها</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">مالک</div>
+                            <div class="nk-file-details-col">من</div>
+                        </div>
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">به اشتراک گذاری شده با</div>
+                            <div class="nk-file-details-col">
+                                <div class="user-avatar-group">
+                                    <div class="user-avatar xs">
+                                        <img src="./images/avatar/b-sm.jpg" alt=""/>
+                                    </div>
+                                    <div class="user-avatar xs bg-purple">
+                                        <span>م‌م</span>
+                                    </div>
+                                    <div class="user-avatar xs bg-pink">
+                                        <span>ف‌ت</span>
+                                    </div>
+                                    <div class="user-avatar xs bg-light">
+                                        <span>2+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">اصلاح شد</div>
+                            <div class="nk-file-details-col">21 آبان 1402 توسط فرشید ترنیان</div>
+                        </div>
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">باز شد</div>
+                            <div class="nk-file-details-col">30 آبان 1402 توسط من</div>
+                        </div>
+                        <div class="nk-file-details-row">
+                            <div class="nk-file-details-col">ایجاد شد</div>
+                            <div class="nk-file-details-col">21 آبان 1402</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-body -->
+                <div class="modal-footer modal-footer-stretch bg-light">
+                    <div class="modal-footer-between">
+                        <div class="g">
+                            <a href="#" class="link link-primary">مشاهده همه فعالیت ها</a>
+                        </div>
+                        <div class="g">
+                            <ul class="btn-toolbar g-3">
+                                <li><a href="#file-share" data-bs-toggle="modal" data-bs-dismiss="modal"
+                                       class="btn btn-outline-light btn-white">به اشتراک گذاری</a></li>
+                                <li><a href="#" class="btn btn-primary file-dl-toast">دانلود</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-footer -->
+            </div>
+            <!-- .modal-content -->
+        </div>
+        <!-- .modla-dialog -->
+    </div>
+    <!-- .modal -->
+    <!-- @@ File Upload Modal @e -->
+    {% include 'comm/components/modals/upload-file.html' with uses=uses %}
+    <!-- .modal -->
+{% endblock %}
+
+{% block Script %}
+    <script src="{% static 'js/file-management.js' %}"></script>
+{% endblock %}

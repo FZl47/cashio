@@ -33,6 +33,7 @@ class NotificationUser(BaseModel):
     def __str__(self):
         return f'{self.to_user} / {self.title}'
 
+
     def get_absolute_url(self):
         return reverse_lazy('notification:notification__detail', args=(self.id,))
 

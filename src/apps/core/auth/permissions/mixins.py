@@ -44,3 +44,37 @@ class PermissionMixin(ABC):
             return redirect(settings.LOGIN_URL)
 
         return super().dispatch(request, *args, **kwargs)
+
+
+class SuperUserRequiredMixin(ABC):
+    """
+        An interface to manage superusers to take action
+    """
+
+    raise_exc: bool = True
+
+    def _perm_check(self, request):
+        """
+            Check user authentication and authoritarian state
+            :param request:
+            :return bool:
+        """
+        user = request.user
+
+        if not user.is_authenticated:
+            return False
+
+        if not user.is_superuser:
+            return False
+
+        return True
+
+    def dispatch(self, request, *args, **kwargs):
+
+        has_perm = self._perm_check(request)
+        if not has_perm:
+            if self.raise_exc:
+                raise PermissionDenied
+            return redirect(settings.LOGIN_URL)
+
+        return super().dispatch(request, *args, **kwargs)

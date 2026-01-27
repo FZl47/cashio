@@ -606,6 +606,15 @@ pre {
     border-color: #203247;
 }
 
+.dark-mode .data-head {
+    background: #203247;
+}
+
+.nk-fmg {
+    border-radius: 8px!important;
+    padding: 3px;
+}
+
 .driver-popover {
     font-family: 'YekanBakhFaNum', sans-serif !important;
     background: #f19c3b;
@@ -647,6 +656,8 @@ pre {
     transform: scale(1.2) !important;
 }
 
-.price-el .decimal{
+.price-el .decimal {
     opacity: .6;
 }
+
+

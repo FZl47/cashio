@@ -267,13 +267,14 @@ class Document(NotificationModelMixin, BaseModel):
 
         if self.statuses.filter(status='rejected',
                                 created_by__in=self.required_approvers.filter(priority__lt=approver.priority).values(
-                                        'user')).exists():
+                                    'user')).exists():
             return False
 
         if self.statuses.filter(created_by=user).exists():
             return False
 
-        pending_approvers = self.required_approvers.exclude(user__in=self.statuses.values_list('created_by', flat=True)).order_by('priority')
+        pending_approvers = self.required_approvers.exclude(
+            user__in=self.statuses.values_list('created_by', flat=True)).order_by('priority')
 
         if not pending_approvers.exists():
             return False
@@ -282,6 +283,7 @@ class Document(NotificationModelMixin, BaseModel):
             return False
 
         return True
+
 
 class DocumentStatus(NotificationModelMixin, BaseModel):
     STATUS_CHOICES = (
@@ -309,3 +311,28 @@ class DocumentStatus(NotificationModelMixin, BaseModel):
 
     def __str__(self):
         return f'{self.created_by} - {self.document.title} ({self.get_status_display()})'
+
+
+class DocumentApprovalProcessGroup(BaseModel):
+    title = models.CharField(max_length=100)
+    users = models.ManyToManyField('account.User')
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_users(self):
+        return self.users.all()
+
+
+    def get_approver_users(self):
+        return self.documentapprovalprocessgroupuser_set.all()
+
+
+class DocumentApprovalProcessGroupUser(BaseModel):
+    group = models.ForeignKey(DocumentApprovalProcessGroup, on_delete=models.CASCADE)
+    user = models.ForeignKey('account.User', on_delete=models.CASCADE)
+    priority = models.IntegerField(validators=[MinValueValidator(0)])
+
+    def __str__(self):
+        return f'{self.group} / {self.user}({self.priority})'

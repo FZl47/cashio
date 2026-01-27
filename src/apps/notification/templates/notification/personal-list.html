@@ -51,6 +51,13 @@
                                                 <div class="card-inner position-relative card-tools-toggle">
                                                     <div class="card-tools me-n1">
                                                         <ul class="btn-toolbar gx-1">
+                                                            <!-- Seen all -->
+                                                            <li data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans 'Mark All as Read' %}">
+                                                                <a href="{% url 'apps.notification:seen_all' %}"
+                                                                   class="btn btn-icon">
+                                                                    <em class="icon ni ni-list-check"></em>
+                                                                </a>
+                                                            </li>
 
                                                             <!-- Filter -->
                                                             <li>
@@ -71,11 +78,12 @@
                                                                         </div>
                                                                         <div class="dropdown-body dropdown-body-rg">
                                                                             <form class="add-params-to-form">
-                                                                                <input type="hidden" name="filter" value="true">
+                                                                                <input type="hidden" name="filter"
+                                                                                       value="true">
 
                                                                                 <div class="row gx-6 gy-4">
 
-                                                                                       <div class="col-12">
+                                                                                    <div class="col-12">
                                                                                         <div class="form-group">
                                                                                             <label class="overline-title overline-title-alt">
                                                                                                 {% trans "Sort By" %}
@@ -165,10 +173,14 @@
 
                                                     <div class="nk-tb-item nk-tb-head">
                                                         <div class="nk-tb-col"><span class="sub-text">ID</span></div>
-                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Title" %}</span></div>
-                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Visited" %}</span></div>
-                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Send Notify" %}</span></div>
-                                                        <div class="nk-tb-col"><span class="sub-text">{% trans "Date" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Title" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Visited" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Send Notify" %}</span></div>
+                                                        <div class="nk-tb-col"><span
+                                                                class="sub-text">{% trans "Date" %}</span></div>
                                                         <div class="nk-tb-col nk-tb-col-tools"></div>
                                                     </div>
 

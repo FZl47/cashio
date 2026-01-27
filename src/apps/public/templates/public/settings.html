@@ -1,0 +1,686 @@
+{% extends 'base/base_template.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block Title %}
+    {% trans 'Settings' %}
+{% endblock %}
+
+{% block BodyClass %}
+    has-rtl nk-body bg-white npc-default has-aside
+{% endblock %}
+
+{% block Content %}
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            <!-- sidebar @e -->
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                {% include 'base/components/header.html' %}
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content">
+                    <div class="container wide-xl">
+                        <div class="nk-content-inner">
+                            <!-- sidebar @s -->
+                            {% include 'base/components/menu.html' %}
+                            <div class="nk-content-body">
+                                <div class="nk-block">
+                                    <div class="card">
+                                        <div class="card-aside-wrap tab-content">
+
+                                            <div class="card-inner card-inner-lg tab-pane d-none"
+                                                 id="company-management">
+                                                <div class="nk-block-head nk-block-head-lg">
+                                                    <div class="nk-block-between">
+                                                        <div class="nk-block-head-content">
+                                                            <h4 class="nk-block-title">{% trans 'Company Management' %}</h4>
+                                                            <div class="nk-block-des">
+                                                                <p>
+                                                                    {% trans 'You can manage your company here.' %}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-block-head-content align-self-start d-lg-none">
+                                                            <a href="#" class="toggle btn btn-icon btn-trigger mt-n1"
+                                                               data-target="userAside"><em
+                                                                    class="icon ni ni-menu-alt-r"></em></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- .nk-block-head -->
+                                                <div class="nk-block">
+                                                    <div class="nk-data data-list">
+                                                        <div class="data-head">
+                                                            <h6>{% trans 'Base Information' %}</h6>
+                                                        </div>
+                                                        <div class="data-item" data-bs-toggle="modal"
+                                                             data-bs-target="#company-edit">
+                                                            <div class="data-col">
+                                                                <span class="data-label">{% trans 'Name' %}</span>
+                                                                <span class="data-value">{{ company.name }}</span>
+                                                            </div>
+                                                            <div class="data-col data-col-end">
+                                                            <span class="data-more"><em
+                                                                    class="icon ni ni-forward-ios"></em></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- data-item -->
+                                                        <div class="data-item" data-bs-toggle="modal"
+                                                             data-bs-target="#company-edit">
+                                                            <div class="data-col">
+                                                                <span class="data-label">{% trans 'Scale' %}</span>
+                                                                <span class="data-value">{{ company.get_scale_display }}</span>
+                                                            </div>
+                                                            <div class="data-col data-col-end">
+                                                            <span class="data-more"><em
+                                                                    class="icon ni ni-forward-ios"></em></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- data-item -->
+                                                    </div>
+                                                    <!-- data-list -->
+                                                    <div class="nk-data data-list">
+                                                        <div class="data-head">
+                                                            <h6>{% trans 'Language/TimeZone' %}</h6>
+                                                        </div>
+                                                        <div class="data-item">
+                                                            <div class="data-col">
+                                                                <span class="data-label">{% trans 'Language' %}</span>
+                                                                <span class="data-value">
+                                                                {{ LANGUAGE_CODE }}
+                                                            </span>
+                                                            </div>
+                                                            <div class="data-col data-col-end">
+                                                            </div>
+                                                        </div>
+                                                        <!-- data-item -->
+                                                        <!-- data-item -->
+                                                        <div class="data-item">
+                                                            <div class="data-col">
+                                                                <span class="data-label">{% trans 'TimeZone' %}</span>
+                                                                <span class="data-value">
+                                                                Iran(GMT+3:30)
+                                                            </span>
+                                                            </div>
+                                                            <div class="data-col data-col-end"><a href="#"
+                                                                                                  class="link link-primary">{% trans 'Change' %}</a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- data-item -->
+                                                    </div>
+                                                    <!-- data-list -->
+                                                </div>
+                                                <!-- .nk-block -->
+                                            </div>
+
+                                            <div class="card-inner card-inner-lg tab-pane active" id="approval-process">
+                                                <div class="nk-block-head nk-block-head-lg">
+                                                    <div class="nk-block-between">
+                                                        <div class="nk-block-head-content">
+                                                            <h4 class="nk-block-title">{% trans 'Approval Process' %}</h4>
+                                                            <div class="nk-block-des">
+                                                                <p>
+                                                                    {% trans 'You can manage approval process groups' %}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-block-head-content align-self-start d-lg-none">
+                                                            <a href="#" class="toggle btn btn-icon btn-trigger mt-n1"
+                                                               data-target="userAside"><em
+                                                                    class="icon ni ni-menu-alt-r"></em></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- .nk-block-head -->
+                                                <div class="nk-block">
+                                                    <!-- data-list -->
+                                                    <div class="nk-data data-list">
+                                                        <div class="row">
+                                                            <!-- .col -->
+                                                            <div class="col-12 col-lg-6 col-xl-12 mb-4">
+                                                                <button class="h-100 w-100 bg-white border border-dashed round-xl p-4 d-flex align-items-center justify-content-center"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#journal-status-config-create">
+                                                                <span class="text-soft">
+                                                                    {% trans 'Create Group' %}
+                                                                </span>
+                                                                </button>
+                                                            </div>
+                                                            <!-- .col -->
+                                                            {% for approval_process_group in approval_process_groups %}
+                                                                <div class="col-12 col-lg-6 col-xl-12" dir="ltr">
+                                                                    <div class="card">
+                                                                        <div class="card-inner">
+                                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <div class="ms-3">
+                                                                                        <h6
+                                                                                            data-bs-toggle="tooltip"
+                                                                                            data-bs-placement="bottom"
+                                                                                            title="{{ approval_process_group.title }}">
+                                                                                            <b>{{ approval_process_group.title|truncatechars:'15' }}</b>
+                                                                                        </h6>
+                                                                                        <span class="sub-text">
+                                                                                            {{ approval_process_group.description|truncatechars:'20' }}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <ul class="btn-toolbar justify-center gx-1 me-n1 flex-nowrap">
+                                                                                    <li style="margin-right: 7.5px;padding-right: 15px;border-right: 1px dashed rgba(142,142,142,0.4);">
+                                                                                        <a class="btn btn-icon"
+                                                                                           style="cursor: default">
+                                                                                            <em class="icon ni ni-users"></em>
+                                                                                            <b class="fs-17px">{{ approval_process_group.users.count }}</b>
+                                                                                        </a>
+                                                                                        <a class="btn btn-icon"
+                                                                                           style="cursor: default">
+                                                                                            <em class="icon ni ni-check-c"></em>
+                                                                                            <b class="fs-17px">{{ approval_process_group.get_approver_users.count }}</b>
+                                                                                        </a>
+                                                                                    </li>
+
+                                                                                    <li>
+                                                                                        <a href="#"
+                                                                                           class="btn btn-trigger btn-icon"><em
+                                                                                                class="icon ni ni-eye"></em></a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="#"
+                                                                                           class="btn btn-trigger btn-icon"><em
+                                                                                                class="icon ni ni-trash text-danger"></em></a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!-- data-item -->
+                                                    </div>
+                                                    <!-- data-list -->
+                                                </div>
+                                                <!-- .nk-block -->
+                                            </div>
+
+                                            <div class="card-inner card-inner-lg tab-pane" id="yarmalli">
+                                                <div class="nk-block-head nk-block-head-lg">
+                                                    <div class="nk-block-between">
+                                                        <div class="nk-block-head-content">
+                                                            <h4 class="nk-block-title">
+                                                                <span style="color: #2edf76">{% trans 'YarMalli ' %}</span>
+                                                                {% trans 'Application Settings' %}
+                                                            </h4>
+                                                            <div class="nk-block-des">
+                                                                <p>
+                                                                    {% trans 'You can manage approval process groups' %}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-block-head-content align-self-start d-lg-none">
+                                                            <a href="#" class="toggle btn btn-icon btn-trigger mt-n1"
+                                                               data-target="userAside"><em
+                                                                    class="icon ni ni-menu-alt-r"></em></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- .nk-block-head -->
+                                                <div class="nk-block">
+                                                    <!-- data-list -->
+                                                    <div class="nk-data data-list">
+                                                        <div class="row">
+                                                            <!-- .col -->
+                                                            <div class="col-12 col-lg-6 col-xl-12">
+                                                                <button class="h-100 w-100 bg-white border border-dashed round-xl p-4 d-flex align-items-center justify-content-center"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#journal-status-config-create">
+                                                            <span class="text-soft">
+                                                                {% trans 'Create Group' %}
+                                                            </span>
+                                                                </button>
+                                                            </div>
+                                                            <!-- .col -->
+                                                            {% for approval_process_group in approval_process_groups %}
+                                                                <div class="col-12 col-lg-6 col-xl-12">
+                                                                    <div class="card">
+                                                                        <div class="card-inner">
+                                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <div class="ms-3">
+                                                                                        <h6 class="text-warning fs-15px">
+                                                                                            <span>{% trans 'Step' %} </span>
+                                                                                            <b>{{ journal_status_config.number_of_step }}</b>
+                                                                                        </h6>
+                                                                                        <span class="sub-text">
+                                                                                    {% for permission in journal_status_config.permissions.all %}
+                                                                                        <span class="badge badge-dim bg-info m-1">
+                                                                                            {{ permission.name }}
+                                                                                        </span>
+                                                                                    {% endfor %}
+                                                                                </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <ul class="btn-toolbar justify-center gx-1 me-n1 flex-nowrap">
+                                                                                    <li>
+                                                                                        <a href="#"
+                                                                                           style="opacity: .5;cursor:not-allowed;"
+                                                                                           class="btn btn-trigger btn-icon"><em
+                                                                                                class="icon ni ni-eye"></em></a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="#"
+                                                                                           style="opacity: .5;cursor:not-allowed;"
+                                                                                           class="btn btn-trigger btn-icon"><em
+                                                                                                class="icon ni ni-edit"></em></a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!-- data-item -->
+                                                    </div>
+                                                    <!-- data-list -->
+                                                </div>
+                                                <!-- .nk-block -->
+                                            </div>
+
+                                            <div
+                                                    class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg"
+                                                    data-toggle-body="true"
+                                                    data-content="userAside"
+                                                    data-toggle-screen="lg"
+                                                    data-toggle-overlay="true"
+                                            >
+                                                <div class="card-inner-group" data-simplebar>
+                                                    <div class="card-inner">
+                                                        <div class="user-card">
+                                                            <div class="user-avatar bg-primary">
+                                                            <span>
+                                                                {{ user.first_name|slice:':1' }}
+                                                                {{ user.last_name|slice:':1' }}
+                                                            </span>
+                                                            </div>
+                                                            <div class="user-info">
+                                                                <span class="lead-text">{{ user.get_full_name }}</span>
+                                                                <span class="sub-text">{{ user.email }}</span>
+                                                            </div>
+                                                            <div class="user-action">
+                                                                <div class="dropdown">
+                                                                    <a class="btn btn-icon btn-trigger me-n2"
+                                                                       data-bs-toggle="dropdown" href="#"><em
+                                                                            class="icon ni ni-more-v"></em></a>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <ul class="link-list-opt no-bdr">
+                                                                            <li>
+                                                                                <a href="#"><em
+                                                                                        class="icon ni ni-edit-fill"></em><span>
+                                                                                {% trans 'Edit Profile' %}
+                                                                            </span></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- .user-card -->
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                    <div class="card-inner d-none">
+                                                        <div class="user-account-info py-0">
+                                                            <h6 class="-alt">{% trans 'Company' %}</h6>
+                                                            <div class="text-info fs-2">
+                                                                {{ company.name }}
+                                                            </div>
+                                                            <div class="fs-14px">
+                                                                {{ fiscal_year.name }}
+                                                                {% if fiscal_year.is_active %}
+                                                                    &nbsp;
+                                                                    <span class="badge bg-success badge-dim rounded-pill">{% trans 'Active' %}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                    <div class="card-inner p-0">
+                                                        <ul class="nav link-list-menu m-0">
+                                                            <li class="nav-item d-none">
+                                                                <a class="" data-bs-toggle="tab"
+                                                                   href="#company-management">
+                                                                    <em class="icon ni ni-building"></em>
+                                                                    <span>{% trans 'Company/General' %}</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a data-bs-toggle="tab" class="active"
+                                                                   href="#approval-process">
+                                                                    <em class="icon ni ni-check-circle-cut"></em>
+                                                                    <span>{% trans 'Approval Process' %}</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a data-bs-toggle="tab"
+                                                                   href="#yarmalli">
+                                                                    <em class="icon ni ni-code"></em>
+                                                                    <span>
+                                                                        <span>{% trans 'YarMalli' %}</span>
+                                                                        {% trans 'Application Settings' %}
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- .card-inner -->
+                                                </div>
+                                                <!-- .card-inner-group -->
+                                            </div>
+                                            <!-- card-aside -->
+                                        </div>
+                                        <!-- .card-aside-wrap -->
+                                    </div>
+                                    <!-- .card -->
+                                </div>
+                                <!-- .nk-block -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                {% include 'base/components/footer.html' %}
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+        <div class="modal fade" role="dialog" id="company-edit">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                    <div class="modal-body ">
+                        <h5 class="title">{% trans 'Edit Company' %}</h5>
+                        <!-- .nav-tabs -->
+
+                        <form action="#" method="post" class="form-validate is-alter">
+                            {% csrf_token %}
+                            <div class="row gy-4 mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name">{% trans 'Name' %}</label>
+                                        <input type="text" class="form-control" id="full-name" name="name"
+                                               value="{{ company.name }}" placeholder="{% trans 'Name' %}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="scale">{% trans 'Scale' %}</label>
+                                        <select name="scale" id="scale"
+                                                class="form-control form-select js-select2 select-by-value"
+                                                value="{{ company.scale }}">
+                                            {% for scale in company.SCALE_TYPES %}
+                                                <option value="{{ scale.0 }}">{{ scale.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-5">
+                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                        <li>
+                                            <button data-bs-dismiss="modal" class="btn btn-lg btn-primary">
+                                                {% trans 'Update' %}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bs-dismiss="modal"
+                                               class="link link-light">{% trans 'Cancel' %}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- .tab-content -->
+                    </div>
+                    <!-- .modal-body -->
+                </div>
+                <!-- .modal-content -->
+            </div>
+            <!-- .modal-dialog -->
+        </div>
+
+        <div class="modal fade" role="dialog" id="fiscal-create">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                    <div class="modal-body ">
+                        <h5 class="title">{% trans 'Create Financial Year' %}</h5>
+                        <!-- .nav-tabs -->
+
+                        <form action="#" method="post"
+                              class="form-validate is-alter">
+                            {% csrf_token %}
+                            <input type="hidden" name="is_default" value="true">
+                            <div class="row gy-4 mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name">{% trans 'Name' %}</label>
+                                        <input type="text" class="form-control" id="full-name" name="name"
+                                               placeholder="{% trans 'Name' %}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="start_time">{% trans 'Start Time' %}</label>
+                                        <input type="text" name="start_time" id="start_time" required
+                                               class="form-control date-picker-alt"
+                                               placeholder="{% trans 'Start Time' %}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="end_time">{% trans 'End Time' %}</label>
+                                        <input type="text" name="end_time" id="end_time" required
+                                               class="form-control date-picker-alt"
+                                               placeholder="{% trans 'End Time' %}" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-5">
+                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                        <li>
+                                            <button data-bs-dismiss="modal" class="btn btn-lg btn-primary">
+                                                {% trans 'Create' %}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bs-dismiss="modal"
+                                               class="link link-light">{% trans 'Cancel' %}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- .tab-content -->
+                    </div>
+                    <!-- .modal-body -->
+                </div>
+                <!-- .modal-content -->
+            </div>
+            <!-- .modal-dialog -->
+        </div>
+
+        <div class="modal fade" role="dialog" id="journal-status-config-create">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                    <div class="modal-body ">
+                        <h5 class="title">{% trans 'Create Journal Status Confirmation Config' %}</h5>
+                        <!-- .nav-tabs -->
+
+                        <form action="#" method="post"
+                              class="form-validate is-alter">
+                            {% csrf_token %}
+                            <input type="hidden" name="is_default" value="true">
+                            <div class="row gy-4 mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="number_of_step">{% trans 'Number of Step' %}</label>
+                                        <input type="text" class="form-control" id="number_of_step"
+                                               name="number_of_step"
+                                               placeholder="{% trans 'Number of Step' %}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">{% trans 'Permissions' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select class="form-select js-select2" multiple name="permissions">
+                                                {% for permission in permissions %}
+                                                    <option value="{{ permission.id }}">
+                                                        {{ permission.name }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-5">
+                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                        <li>
+                                            <button data-bs-dismiss="modal" class="btn btn-lg btn-primary">
+                                                {% trans 'Create' %}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bs-dismiss="modal"
+                                               class="link link-light">{% trans 'Cancel' %}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- .tab-content -->
+                    </div>
+                    <!-- .modal-body -->
+                </div>
+                <!-- .modal-content -->
+            </div>
+            <!-- .modal-dialog -->
+        </div>
+
+        <div class="modal fade" role="dialog" id="currency-exchange-rate-manual-create">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                    <div class="modal-body ">
+                        <h5 class="title">{% trans 'Create Manual Exchange Rate' %}</h5>
+                        <!-- .nav-tabs -->
+
+                        <form action="#" method="post"
+                              class="form-validate is-alter">
+                            {% csrf_token %}
+                            <span class="sub-text fs-13px mb-1 text-decoration-underline text-warning">{% trans 'Please note that by manually activating the currency rate, the automatic currency rate will be disabled until it is deactivated.' %}</span>
+                            <div class="badge badge-dim bg-info fs-17px p-2 d-flex justify-content-between align-items-center mt-4">
+                                                    <span>
+                                                        {% trans 'Base Currency Code' %}
+                                                    </span>
+                                <span class="badge bg-info fs-15px p-1">
+                                                        {{ base_currency_code }}
+                                                        (<span
+                                        class="currency-convert-label">{{ base_currency_code }}</span>)
+                                                    </span>
+                            </div>
+                            <div class="row gy-4 mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">{% trans 'Default Currency Code' %}</label>
+                                        <div class="form-control-wrap">
+                                            <select class="form-select js-select2" name="default_currency_code"
+                                                    required>
+                                                {% for currency in currencies %}
+                                                    <option value="{{ currency.code }}">
+                                                        {{ currency.name }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                               for="rate">{% trans 'Rate' %}</label>
+                                        <input type="text" class="form-control" id="rate" required
+                                               name="rate"
+                                               placeholder="{% trans 'Rate' %}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-5">
+                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                        <li>
+                                            <button data-bs-dismiss="modal" class="btn btn-lg btn-primary">
+                                                {% trans 'Create' %}
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bs-dismiss="modal"
+                                               class="link link-light">{% trans 'Cancel' %}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- .tab-content -->
+                    </div>
+                    <!-- .modal-body -->
+                </div>
+                <!-- .modal-content -->
+            </div>
+            <!-- .modal-dialog -->
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block Script %}
+    <script>
+        // Control Active Settings Tab
+        function saveActiveSettingsTab(tab_name) {
+            setCookie('active_settings_tab', tab_name, 20)
+        }
+
+        function loadActiveSettingsTab() {
+            let tab = getCookie('active_settings_tab')
+            if (!tab) {
+                return null
+            }
+            document.querySelector(`[data-bs-toggle="tab"][href="${tab}"]`).click()
+        }
+
+        loadActiveSettingsTab()
+        document.querySelectorAll('[data-bs-toggle="tab"]').forEach(function (el) {
+            el.addEventListener('click', function (el) {
+                saveActiveSettingsTab(this.getAttribute('href'))
+            })
+        })
+
+    </script>
+{% endblock %}

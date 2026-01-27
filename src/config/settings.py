@@ -2,6 +2,7 @@
     using Django 5.2.
 """
 
+import os
 from pathlib import Path
 from django.urls import reverse_lazy
 
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Apps
     'apps.core',
+    'apps.comm',  # Communication
     'apps.public',
     'apps.account',
     'apps.accounting',
@@ -124,3 +126,16 @@ PROFILE_URL = reverse_lazy('account:user_profile')
 EXCEPT_USER_AUTH_URLS = [LOGIN_URL]
 
 EXCEPT_USER_PROFILE_URLS = [*EXCEPT_USER_AUTH_URLS, PROFILE_URL, LOGOUT_URL]
+
+NOTIFICATION_CONFIG = {
+    'PROVIDERS': [
+        'apps.notification.utils.providers.SmsProvider',
+        'apps.notification.utils.providers.EmailProvider',
+    ]
+}
+
+SMS_CONFIG = {
+    'API_KEY': os.environ.get('SMS_API_KEY'),
+    'API_URL': 'http://rest.ippanel.com/v1/messages/patterns/send',
+    'ORIGINATOR': '983000505'
+}

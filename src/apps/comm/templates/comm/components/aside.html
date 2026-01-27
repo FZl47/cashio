@@ -1,0 +1,63 @@
+{% load i18n %}
+
+<div class="nk-fmg-aside" data-content="files-aside" data-toggle-overlay="true"
+     data-toggle-body="true" data-toggle-screen="lg" data-simplebar>
+    <div class="nk-fmg-aside-wrap">
+        <div class="nk-fmg-aside-top" data-simplebar>
+            <ul class="nk-fmg-menu">
+                <li class="active">
+                    <a class="nk-fmg-menu-item"
+                       href="{% url 'communication:index' %}">
+                        <em class="icon ni ni-home-alt"></em>
+                        <span class="nk-fmg-menu-text">{% trans 'Home' %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nk-fmg-menu-item"
+                       href="{% url 'public:index' %}">
+                        <em class="icon ni ni-dashboard"></em>
+                        <span class="nk-fmg-menu-text">{% trans 'Dashboard' %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nk-fmg-menu-item" href="#"
+                       style="opacity: .5;cursor: not-allowed">
+                        <em class="icon ni ni-file-docs"></em>
+                        <span class="nk-fmg-menu-text">{% trans 'Files' %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nk-fmg-menu-item" href="#"
+                       style="opacity: .5;cursor: not-allowed">
+                        <em class="icon ni ni-star"></em>
+                        <span class="nk-fmg-menu-text">{% trans 'Pinned' %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nk-fmg-menu-item" href="#"
+                       style="opacity: .5;cursor: not-allowed">
+                        <em class="icon ni ni-setting-alt"></em>
+                        <span class="nk-fmg-menu-text">{% trans "Settings" %}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="nk-fmg-aside-bottom">
+            <div class="nk-fmg-status">
+                <h6 class="nk-fmg-status-title"><em
+                        class="icon ni ni-hard-drive"></em><span>{% trans 'Storage Space' %}</span>
+                </h6>
+                <div class="progress progress-md bg-light">
+                    <div class="progress-bar"
+                         data-progress="{{ used_disk_space_percent }}"></div>
+                </div>
+                <div class="nk-fmg-status-info" dir="ltr">
+                    {% blocktrans with used=used_disk_space total=total_disk_space percent=free_disk_space_percent %}
+                        {{ used }} MB of {{ total }} MB used ({{ percent }}%
+                        free)
+                    {% endblocktrans %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

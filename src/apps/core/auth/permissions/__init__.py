@@ -1,1 +1,1 @@
-from .mixins import PermissionMixin
+from .mixins import PermissionMixin, SuperUserRequiredMixin
