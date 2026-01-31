@@ -12,6 +12,7 @@ urlpatterns = [
     path('resource/folder/create', views.ResourceFolderCreate.as_view(), name='resource__folder__create'),
     path('resource/file/create', views.ResourceFileCreate.as_view(), name='resource__file__create'),
     path('resource/<int:pk>/detail', views.ResourceDetail.as_view(), name='resource__detail'),
+    path('resource/<int:pk>/delete', views.ResourceDelete.as_view(), name='resource__delete'),
 
     path('file-raw/upload', views.FileRawUpload.as_view(), name='file_raw__upload'),
 ]

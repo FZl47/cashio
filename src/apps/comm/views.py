@@ -23,8 +23,6 @@ class Index(PermissionMixin, TemplateView):
     template_name = 'comm/index.html'
 
     def get_context_data(self, **kwargs):
-
-
         total_disk_space, used_disk_space, free_disk_space = get_space_detail_cached(settings.MEDIA_ROOT)
         free_disk_space_percent = round((free_disk_space / total_disk_space) * 100, 2)
 
@@ -104,7 +102,7 @@ class ResourceFileCreate(PermissionMixin, CreateViewMixin, View):
         }
 
 
-class ResourceDetail(PermissionMixin, DetailViewMixin,TemplateView):
+class ResourceDetail(PermissionMixin, DetailViewMixin, TemplateView):
     permissions = ('comm.view_resource',)
     template_name = 'comm/resource/detail.html'
 
@@ -113,11 +111,12 @@ class ResourceDetail(PermissionMixin, DetailViewMixin,TemplateView):
         resource = models.ResourceBase.objects.get_subclass(id=pk)
         if not resource:
             raise Http404
-        
+
         # Check user permission's
         user = self.request.user
 
-        if not resource.created_by == user and not resource.shared_with.all().filter(id=user.id).first() and not user.is_superuser:
+        if not resource.created_by == user and not resource.shared_with.all().filter(
+                id=user.id).first() and not user.is_superuser:
             raise Http404
 
         # Create resource event
@@ -125,10 +124,41 @@ class ResourceDetail(PermissionMixin, DetailViewMixin,TemplateView):
             resource=resource,
             user=user,
             action='open'
-        )    
-    
+        )
+
         return resource
 
+    def additional_context(self):
+        user = self.request.user
+        if not self.obj.type == 'folder':
+            return None
+        return {
+            'resource_children': self.obj.get_children(shared_with=user),
+            'resource_files': self.obj.get_resource_files(shared_with=user),
+        }
+
+
+class ResourceDelete(PermissionMixin, DeleteViewMixin, View):
+    permissions = ('comm.delete_resourcebase',)
+
+    def get_instance(self, pk):
+        try:
+            obj = models.ResourceBase.objects.get_subclass(id=pk)
+        except models.ResourceBase.DoesNotExist:
+            raise Http404
+
+        user = self.request.user
+
+        if not obj.created_by == user and not user.is_superuser:
+            raise Http404
+
+        return obj
+
+    def get_redirect_url(self):
+        parent = self.obj.parent
+        if not parent:
+            return reverse_lazy('communication:index')
+        return parent.get_absolute_url()
 
 
 @method_decorator(csrf_exempt, name='dispatch')

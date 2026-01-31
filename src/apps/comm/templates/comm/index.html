@@ -339,7 +339,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="nk-file-meta fs-15px">
+                                                                                <div class="nk-file-meta fs-13px">
                                                                                     {% with resource.last_opened as last_opened %}
                                                                                         {% if last_opened %}
                                                                                             <div class="tb-lead">
@@ -362,7 +362,7 @@
                                                                                         {% with resource.shared_with.all as shared_with %}
                                                                                             {% for user in shared_with|slice:':4' %}
                                                                                                 <div class="user-avatar xs bg-{{ forloop.counter }}">
-                                                                                                    <span>{{ user.first_name.0 }} {{ user.last_name.0 }}</span>
+                                                                                                    <span title="{{ user.get_full_name }}" data-bs-placement="bottom" data-bs-toggle="tooltip">{{ user.first_name.0 }} {{ user.last_name.0 }}</span>
                                                                                                 </div>
                                                                                             {% endfor %}
                                                                                             {% if shared_with.count > 4 %}
@@ -387,8 +387,7 @@
                                                                                         <div class="dropdown-menu dropdown-menu-end">
                                                                                             <ul class="link-list-plain no-bdr">
                                                                                                 <li>
-                                                                                                    <a href="{{ resource.get_absolute_url }}"
-                                                                                                       data-bs-toggle="modal"><em
+                                                                                                    <a href="{{ resource.get_absolute_url }}"><em
                                                                                                             class="icon ni ni-eye"></em><span>{% trans 'Details' %}</span></a>
                                                                                                 </li>
                                                                                                 <li>

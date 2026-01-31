@@ -1,5 +1,6 @@
 {% extends 'base/base_template.html' %}
-{% load static i18n %}
+{% load static %}
+{% load i18n %}
 
 {% block Title %}
     {% trans "Resource Detail" %} - {{ object.name }}
@@ -7,14 +8,14 @@
 
 {% block Style %}
     <style>
-        .breadcrumb-c{
+        .breadcrumb-c {
             margin: 10px auto;
             padding: 8px;
             border-radius: 5px;
-            background: #aaa
+            background: rgba(236, 236, 236, 0.35)
         }
 
-        body.dark-mode .breadcrumb-c{
+        body.dark-mode .breadcrumb-c {
             background: #10111d
         }
 
@@ -52,31 +53,7 @@
                                             </nav>
                                         </div>
                                         <div class="nk-block-head-content d-flex justify-content-between gx-1">
-                                            {% if object.type == 'folder' %}
-                                                <ul class="link-list-opt">
-                                                    {% if perms.comm.add_fileresource %}
-                                                        <li>
-                                                        
-                                                            <a href="#file-upload"
-                                                            class="btn btn-primary btn-lg m-1"
-                                                            data-bs-toggle="modal"><em
-                                                                class="icon ni ni-upload-cloud"></em>
-                                                            <span>{% trans 'Upload File' %}</span></a>
-                                                        </li>
-                                                    {% endif %}
 
-                                                    {% if perms.comm.add_folderresource %}
-                                                        <li>
-                                                    
-                                                        <a href="#folder-create"
-                                                        class="btn btn-success btn-lg m-1"
-                                                        data-bs-toggle="modal"><em
-                                                                class="icon ni ni-upload-cloud"></em>
-                                                            <span>{% trans 'Create Folder' %}</span></a>
-                                                        </li>
-                                                    {% endif %}
-                                                </ul>
-                                            {% endif %}
                                             <div class="dropdown">
                                                 <button class="btn btn-outline-light bg-white d-none d-sm-inline-flex dropdown-toggle"
                                                         data-bs-toggle="dropdown">
@@ -89,42 +66,488 @@
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <ul class="link-list-opt">
-                                                        
+                                                        {% if perms.comm.delete_fileresource and object.type == 'file' and object.created_by == request.user %}
+                                                            <li>
+                                                                <a href="#file-delete"
+                                                                   class="text-danger"
+                                                                   data-bs-toggle="modal"><em
+                                                                        class="icon ni ni-trash"></em>
+                                                                    <span>{% trans 'Delete File' %}</span></a>
+                                                            </li>
+                                                        {% endif %}
+
+                                                        {% if perms.comm.delete_folderresource and object.type == 'folder' and object.created_by == request.user %}
+                                                            <li>
+                                                                <a href="#folder-delete"
+                                                                   class="text-danger"
+                                                                   data-bs-toggle="modal"><em
+                                                                        class="icon ni ni-trash"></em>
+                                                                    <span>{% trans 'Delete Folder' %}</span></a>
+                                                            </li>
+                                                        {% endif %}
                                                     </ul>
                                                 </div>
                                             </div>
-                                            
                                         </div>
-                                        
+                                    </div>
+                                    <div class="text-end">
+                                        {% if object.type == 'folder' %}
+                                            <a href="#file-upload"
+                                               class="btn btn-primary m-1"
+                                               data-bs-toggle="modal"><em
+                                                    class="icon ni ni-upload-cloud"></em>
+                                                <span>{% trans 'Upload File' %}</span></a>
+                                            <a href="#folder-create"
+                                               class="btn btn-success"
+                                               data-bs-toggle="modal"><em
+                                                    class="icon ni ni-upload-cloud"></em>
+                                                <span>{% trans 'Create Folder' %}</span></a>
+                                        {% endif %}
                                     </div>
                                 </div>
 
+
                                 <div class="nk-block">
                                     <div class="row">
-                                 
                                         <div class="p-3">
                                             <div class="text-center">
-                                                <span style="width: 100px;margin-bottom:-10px" class="icon-by-extension nk-file-icon-type text-center d-block" extension="{{ object.extension}}"></span>
-                                                <div>
-                                                    <span class="badge badge-dim bg-info">
-                                                        <span class="fs-14px">{{ object.file_resources.count }}</span>
-                                                        <em class="icon ni ni-files"></em>
-                                                    </span>
+                                                <span style="width: 100px"
+                                                      class="icon-by-extension nk-file-icon-type text-center d-block"
+                                                      extension="{{ object.extension }}"></span>
+                                                <h4 style="margin-top: -20px;">{{ object.name }}</h4>
+                                            </div>
+
+                                            {% if object.type == 'folder' %}
+                                                <div class="breadcrumb-c">
+                                                    <a href="{% url 'communication:index' %}"
+                                                       class="badge badge-dim badge-sm bg-secondary">{% trans 'Home' %}</a>
+                                                    <span class="text-light">/</span>
+                                                    {% for subfolder in object.get_parents_self %}
+                                                        <a href="{{ subfolder.get_absolute_url }}"
+                                                           class="badge badge-dim badge-sm bg-secondary">{{ subfolder.name }}</a>
+                                                        {% if not forloop.last %}
+                                                            <span class="text-light">/</span>
+                                                        {% endif %}
+                                                    {% empty %}
+                                                        <span class="badge badge-dim badge-sm bg-secondary">{{ object.name }}</span>
+                                                    {% endfor %}
                                                 </div>
-                                            </div>
-                                            <div class="breadcrumb-c">
-                                                {% for subfolder in object.get_parents %}
-                                                    <a href="{{ subfolder.get_absolute_url }}" class="badge badge-dim badge-sm bg-secondary">{{ subfolder.name }}</a>
-                                                    {% if not forloop.last %}
-                                                        <span class="text-light">/</span>
+                                            {% else %}
+                                                <div class="breadcrumb-c">
+                                                    <a href="{% url 'communication:index' %}"
+                                                       class="badge badge-dim badge-sm bg-secondary">{% trans 'Home' %}</a>
+                                                    <span class="text-light">/</span>
+                                                    {% if object.parent %}
+                                                        {% for subfolder in object.parent.get_parents_self %}
+                                                            <a href="{{ subfolder.get_absolute_url }}"
+                                                               class="badge badge-dim badge-sm bg-secondary">{{ subfolder.name }}</a>
+                                                            <span class="text-light">/</span>
+                                                        {% endfor %}
+                                                        <span class="badge badge-dim badge-sm bg-secondary">{{ object.name }}</span>
+                                                    {% else %}
+                                                        <span class="badge badge-dim badge-sm bg-secondary">{{ object.name }}</span>
                                                     {% endif %}
-                                                {% endfor %}
-                                            </div>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
-                                    <div class="row gy-5 mt-4">
+                                    <div class="row gy-5" style="margin-top: 65px;">
+                                        <div class="col-12 col-lg-7">
+                                            <div class="nk-fmg-listing nk-block-lg">
+                                                <div class="nk-block-head">
+                                                    <div class="nk-block-between g-2">
+                                                        <div class="nk-block-head-content">
+                                                            <h6 class="nk-block-title title">{% trans 'Files/Folders' %}</h6>
+                                                        </div>
+                                                        <div class="nk-block-head-content">
+                                                            <ul class="nk-block-tools g-2 nav gx-3 column-gap-1">
+                                                                {% if object.type == 'folder' %}
+                                                                    <li class="badge badge-dim bg-success">
+                                                                        <span class="fs-14px price-el">{{ resource_files.count|default:'0' }}</span>
+                                                                        <em class="icon ni ni-files"></em>
+                                                                    </li>
+                                                                    <li class="badge badge-dim bg-success">
+                                                                        <span class="fs-14px price-el">{{ resource_children.count|default:'0' }}</span>
+                                                                        <em class="icon ni ni-folder"></em>
+                                                                    </li>
+                                                                {% endif %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- .nk-block-head -->
+                                                <div class="card">
+                                                    <div class="tab-content mt-1 text-center">
+                                                        <div class="tab-pane active" id="file-list-view">
+                                                            {% if object.type == 'folder' %}
 
-                                        <div class="col-12">
+                                                                {% if not resource_files and not resource_children %}
+                                                                    <div class="text-center mx-auto col-12 p-2">
+                                                                        <div class="nk-file-icon-type d-block mb-2"
+                                                                             style="width: 150px">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 viewBox="0 0 90 90">
+                                                                                <rect x="15" y="5" width="56"
+                                                                                      height="70" rx="6" ry="6"
+                                                                                      fill="#e3e7fe" stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <path d="M69.88,85H30.12A6.06,6.06,0,0,1,24,79V21a6.06,6.06,0,0,1,6.12-6H59.66L76,30.47V79A6.06,6.06,0,0,1,69.88,85Z"
+                                                                                      fill="#fff" stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <polyline points="60 16 60 31 75 31.07"
+                                                                                          fill="none" stroke="#6576ff"
+                                                                                          stroke-linecap="round"
+                                                                                          stroke-linejoin="round"
+                                                                                          stroke-width="2"/>
+                                                                                <rect x="40" y="45" width="23"
+                                                                                      height="19" fill="#e3e7fe"
+                                                                                      stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <rect x="36" y="49" width="23"
+                                                                                      height="19" fill="#fff"
+                                                                                      stroke="#6576ff"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      stroke-width="2"/>
+                                                                                <polyline
+                                                                                        points="37 62.88 45.12 55.94 52.81 63.06 55.99 59.44 59 62.76"
+                                                                                        fill="none" stroke="#6576ff"
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"/>
+                                                                                <circle cx="52.11" cy="54.98" r="2.02"
+                                                                                        fill="none" stroke="#6576ff"
+                                                                                        stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <h4 class="text-warning">
+                                                                            {% trans 'No files or folders have been added yet.' %}
+                                                                        </h4>
+                                                                        <div class="m-4">
+                                                                            {% if perms.comm.add_fileresource %}
+                                                                                <a href="#file-upload"
+                                                                                   class="btn btn-primary btn-lg m-1"
+                                                                                   data-bs-toggle="modal"><em
+                                                                                        class="icon ni ni-upload-cloud"></em>
+                                                                                    <span>{% trans 'Upload File' %}</span></a>
+                                                                            {% endif %}
+                                                                            {% if perms.comm.add_folderresource %}
+                                                                                <a href="#folder-create"
+                                                                                   class="btn btn-success btn-lg m-1"
+                                                                                   data-bs-toggle="modal"><em
+                                                                                        class="icon ni ni-upload-cloud"></em>
+                                                                                    <span>{% trans 'Create Folder' %}</span></a>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="nk-files nk-files-view-list">
+                                                                        <div class="nk-files-head">
+                                                                            <div class="nk-file-item">
+                                                                                <div class="nk-file-info">
+                                                                                    {% trans 'Name' %}
+                                                                                </div>
+                                                                                <div class="nk-file-meta">
+                                                                                    {% trans 'Last opened' %}
+                                                                                </div>
+                                                                                <div class="nk-file-members">
+                                                                                    <div class="tb-head">{% trans 'Shared With' %}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- .nk-files-head -->
+                                                                        <div class="nk-files-list">
+
+                                                                            {% for resource in resource_children %}
+                                                                                <!-- .nk-file -->
+                                                                                <div class="nk-file-item nk-file">
+                                                                                    <div class="nk-file-info">
+                                                                                        <div class="nk-file-title">
+                                                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                                                <input type="checkbox"
+                                                                                                       class="custom-control-input"
+                                                                                                       id="file-check-n3"/>
+                                                                                                <label class="custom-control-label"
+                                                                                                       for="file-check-n3"></label>
+                                                                                            </div>
+                                                                                            <div class="nk-file-icon">
+                                                                                        <span class="nk-file-icon-type icon-by-extension"
+                                                                                              extension="{{ resource.extension }}">
+
+                                                                                        </span>
+                                                                                            </div>
+                                                                                            <div class="nk-file-name">
+                                                                                                <div class="nk-file-name-text">
+                                                                                                    <a href="{{ resource.get_absolute_url }}"
+                                                                                                       class="title">
+                                                                                                        {{ resource.name|truncatechars:'40' }}
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="nk-file-meta fs-13px">
+                                                                                        {% with resource.last_opened as last_opened %}
+                                                                                            {% if last_opened %}
+                                                                                                <div class="tb-lead">
+                                                                                                    {{ last_opened.date }}
+                                                                                                </div>
+                                                                                                <div class="tb-sub">
+                                                                                                    {% if last_opened.user == request.user %}
+                                                                                                        {% trans 'You' %}
+                                                                                                    {% else %}
+                                                                                                        {{ last_opened.user.get_full_name }}
+                                                                                                    {% endif %}
+                                                                                                </div>
+                                                                                            {% else %}
+                                                                                                <span class="text-purple">{% trans 'Not Yet Opened.' %}</span>
+                                                                                            {% endif %}
+                                                                                        {% endwith %}
+                                                                                    </div>
+                                                                                    <div class="nk-file-members">
+                                                                                        <div class="user-avatar-group">
+                                                                                            {% with resource.shared_with.all as shared_with %}
+                                                                                                {% for user in shared_with|slice:':4' %}
+                                                                                                    <div class="user-avatar xs bg-{{ forloop.counter }}">
+                                                                                                <span title="{{ user.get_full_name }}"
+                                                                                                      data-bs-placement="bottom"
+                                                                                                      data-bs-toggle="tooltip">{{ user.first_name.0 }} {{ user.last_name.0 }}</span>
+                                                                                                    </div>
+                                                                                                {% endfor %}
+                                                                                                {% if shared_with.count > 4 %}
+                                                                                                    <div class="user-avatar xs bg-light">
+                                                                                                <span>
+                                                                                                    {% if shared_with.count|add:'-4' %}
+                                                                                                        {{ shared_with.count|add:'-4' }}
+                                                                                                    {% endif %}
+                                                                                                    +
+                                                                                                </span>
+                                                                                                    </div>
+                                                                                                {% endif %}
+                                                                                            {% endwith %}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="nk-file-actions">
+                                                                                        <div class="dropdown">
+                                                                                            <a href=""
+                                                                                               class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
+                                                                                               data-bs-toggle="dropdown"><em
+                                                                                                    class="icon ni ni-more-h"></em></a>
+                                                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                                                <ul class="link-list-plain no-bdr">
+                                                                                                    <li>
+                                                                                                        <a href="{{ resource.get_absolute_url }}"><em
+                                                                                                                class="icon ni ni-eye"></em><span>{% trans 'Details' %}</span></a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#"
+                                                                                                           style="cursor: not-allowed;opacity: .4"
+                                                                                                           data-bs-toggle="modal"><em
+                                                                                                                class="icon ni ni-share"></em><span>{% trans 'Share' %}</span></a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#"
+                                                                                                           style="cursor: not-allowed;opacity: .4"
+                                                                                                           data-bs-toggle="modal"><em
+                                                                                                                class="icon ni ni-forward-arrow"></em><span>{% trans 'Move' %}</span></a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#"
+                                                                                                           style="cursor: not-allowed;opacity: .4"
+                                                                                                           class="file-dl-toast"><em
+                                                                                                                class="icon ni ni-download"></em><span>{% trans 'Download' %}</span></a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                            {% for resource in resource_files %}
+                                                                                <!-- .nk-file -->
+                                                                                <div class="nk-file-item nk-file">
+                                                                                    <div class="nk-file-info">
+                                                                                        <div class="nk-file-title">
+                                                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                                                <input type="checkbox"
+                                                                                                       class="custom-control-input"
+                                                                                                       id="file-check-n3"/>
+                                                                                                <label class="custom-control-label"
+                                                                                                       for="file-check-n3"></label>
+                                                                                            </div>
+                                                                                            <div class="nk-file-icon">
+                                                                                        <span class="nk-file-icon-type icon-by-extension"
+                                                                                              extension="{{ resource.extension }}">
+
+                                                                                        </span>
+                                                                                            </div>
+                                                                                            <div class="nk-file-name">
+                                                                                                <div class="nk-file-name-text">
+                                                                                                    <a href="{{ resource.get_absolute_url }}"
+                                                                                                       class="title">
+                                                                                                        {{ resource.name|truncatechars:'40' }}
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="nk-file-meta fs-13px">
+                                                                                        {% with resource.last_opened as last_opened %}
+                                                                                            {% if last_opened %}
+                                                                                                <div class="tb-lead">
+                                                                                                    {{ last_opened.date }}
+                                                                                                </div>
+                                                                                                <div class="tb-sub">
+                                                                                                    {% if last_opened.user == request.user %}
+                                                                                                        {% trans 'You' %}
+                                                                                                    {% else %}
+                                                                                                        {{ last_opened.user.get_full_name }}
+                                                                                                    {% endif %}
+                                                                                                </div>
+                                                                                            {% else %}
+                                                                                                <span class="text-purple">{% trans 'Not Yet Opened.' %}</span>
+                                                                                            {% endif %}
+                                                                                        {% endwith %}
+                                                                                    </div>
+                                                                                    <div class="nk-file-members">
+                                                                                        <div class="user-avatar-group">
+                                                                                            {% with resource.shared_with.all as shared_with %}
+                                                                                                {% for user in shared_with|slice:':4' %}
+                                                                                                    <div class="user-avatar xs bg-{{ forloop.counter }}">
+                                                                                                <span title="{{ user.get_full_name }}"
+                                                                                                      data-bs-placement="bottom"
+                                                                                                      data-bs-toggle="tooltip">{{ user.first_name.0 }} {{ user.last_name.0 }}</span>
+                                                                                                    </div>
+                                                                                                {% endfor %}
+                                                                                                {% if shared_with.count > 4 %}
+                                                                                                    <div class="user-avatar xs bg-light">
+                                                                                                <span>
+                                                                                                    {% if shared_with.count|add:'-4' %}
+                                                                                                        {{ shared_with.count|add:'-4' }}
+                                                                                                    {% endif %}
+                                                                                                    +
+                                                                                                </span>
+                                                                                                    </div>
+                                                                                                {% endif %}
+                                                                                            {% endwith %}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="nk-file-actions">
+                                                                                        <div class="dropdown">
+                                                                                            <a href=""
+                                                                                               class="dropdown-toggle btn btn-sm btn-icon btn-trigger"
+                                                                                               data-bs-toggle="dropdown"><em
+                                                                                                    class="icon ni ni-more-h"></em></a>
+                                                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                                                <ul class="link-list-plain no-bdr">
+                                                                                                    <li>
+                                                                                                        <a href="{{ resource.get_absolute_url }}"><em
+                                                                                                                class="icon ni ni-eye"></em><span>{% trans 'Details' %}</span></a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#"
+                                                                                                           style="cursor: not-allowed;opacity: .4"
+                                                                                                           data-bs-toggle="modal"><em
+                                                                                                                class="icon ni ni-share"></em><span>{% trans 'Share' %}</span></a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#"
+                                                                                                           style="cursor: not-allowed;opacity: .4"
+                                                                                                           data-bs-toggle="modal"><em
+                                                                                                                class="icon ni ni-forward-arrow"></em><span>{% trans 'Move' %}</span></a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#"
+                                                                                                           style="cursor: not-allowed;opacity: .4"
+                                                                                                           class="file-dl-toast"><em
+                                                                                                                class="icon ni ni-download"></em><span>{% trans 'Download' %}</span></a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                <div class="nk-files nk-files-view-list p-1 text-center">
+                                                                    <div class="nk-files-head">
+                                                                        <div class="nk-file-item">
+                                                                            <div class="nk-file-info">
+                                                                                {% trans 'Name' %}
+                                                                            </div>
+                                                                            <div class="nk-file-info">
+                                                                                {% trans 'Size' %}
+                                                                            </div>
+                                                                            <div class="nk-file-meta">
+                                                                                {% trans 'Action' %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- .nk-files-head -->
+                                                                    <div class="nk-files-list ">
+                                                                        {% for file in object.get_files %}
+                                                                            <!-- .nk-file -->
+                                                                            <div class="nk-file-item nk-file">
+                                                                                <div class="nk-file-info">
+                                                                                    <div class="nk-file-title">
+                                                                                        <div class="nk-file-icon">
+                                                                                            <span class="nk-file-icon-type icon-by-extension"
+                                                                                                  extension="{{ file.extension }}">
+
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div class="nk-file-name">
+                                                                                            <div class="nk-file-name-text">
+                                                                                                <span class="title">{% trans 'File' %} {{ forloop.counter }}</span>
+                                                                                                <span class="fs-12px badge badge-dim bg-secondary">{{ file.extension }}</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="nk-file-info">
+                                                                                    <div class="nk-file-title">
+                                                                                        <pre style="direction: ltr"
+                                                                                             class="d-block">{{ file.size|default:"0" }} {% trans 'KB' %}</pre>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="d-flex gap-1 justify-content-center align-items-center">
+                                                                                    <a class="btn btn-secondary"
+                                                                                       download="download"
+                                                                                       href="{{ file.file.url }}">
+                                                                                        <em class="icon ni ni-download"></em>
+                                                                                    </a>
+                                                                                    <a class="btn btn-success"
+                                                                                       target="_blank"
+                                                                                       href="{{ file.file.url }}">
+                                                                                        <em class="icon ni ni-eye"></em>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            <!-- .nk-files -->
+                                                        </div>
+                                                        <!-- .tab-pane -->
+                                                    </div>
+                                                    <!-- .tab-content -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-5">
                                             <div class="nk-block-head">
                                                 <div class="nk-block-head-content">
                                                     <h5 class="nk-block-title title">{% trans "Basic Information" %}</h5>
@@ -138,7 +561,7 @@
                                                             <div class="data-value">
                                                                 {% if object.is_active %}
                                                                     <em class="icon ni ni-check-c text-success"></em>
-                                                                    {% else %}
+                                                                {% else %}
                                                                     <em class="icon ni ni-minus-c text-danger"></em>
                                                                 {% endif %}
                                                             </div>
@@ -170,7 +593,7 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                               
+
                                                     <li class="data-item">
                                                         <div class="data-col">
                                                             <div class="data-label">{% trans "Description" %}</div>
@@ -183,7 +606,8 @@
                                                         <div class="data-col">
                                                             <div class="data-label">{% trans "Size" %}</div>
                                                             <div class="data-value">
-                                                                <pre>{{ object.size|default:"-" }}</pre>
+                                                                <pre style="direction: ltr"
+                                                                     class="d-block">{{ object.size|default:"0" }} {% trans 'KB' %}</pre>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -195,7 +619,7 @@
                                                                     {% for user in object.shared_with.all %}
                                                                         <a href="{{ user.get_absolute_url }}">
                                                                         <span class="badge fs-13px bg-primary"
-                                                                              style="margin: auto 3px;">
+                                                                              style="margin: 5px 2px;">
                                                                             {{ user.get_full_name }}
                                                                         </span>
                                                                         </a>
@@ -206,99 +630,8 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                   
-                                                </ul>
-                                            </div>
-                                        </div>
 
-                                        <div class="col-12">
-                                            <div class="nk-block-head d-flex justify-content-between align-items-center">
-                                                <div class="nk-block-head-content">
-                                                    <h5 class="nk-block-title title">
-                                                        {% trans "Statuses" %}
-                                                        {% if object.status_label == 'approved' %}
-                                                            <span class="text-success p-1">
-                                                                (<span>{% trans "Approved" %}</span>
-                                                                <em class="icon ni ni-check-circle"></em>)
-                                                            </span>
-                                                        {% elif object.status_label == 'rejected' %}
-                                                            <span class="text-danger p-1">
-                                                                (<span>{% trans "Rejected" %}</span>
-                                                                <em class="icon ni ni-cross-circle"></em>)
-                                                            </span>
-                                                        {% elif object.status_label == 'no_approval_needed' %}
-                                                            <span class="text-info p-1">
-                                                                (<span>{% trans "No Approval Needed" %}</span>
-                                                                <em class="icon ni ni-info"></em>)
-                                                            </span>
-                                                        {% else %}
-                                                            <span class="text-warning p-1">
-                                                                (<span>{% trans "Pending" %}</span>
-                                                                <em class="icon ni ni-clock"></em>)
-                                                            </span>
-                                                        {% endif %}
-                                                    </h5>
-                                                </div>
-                                                {% if can_create_status %}
-                                                    <button class="btn btn-outline-success" data-bs-toggle="modal"
-                                                            data-bs-target="#modal-create-status">
-                                                        <span>{% trans "Create Status" %}</span>
-                                                        <em class="icon ni ni-check-round-cut"></em>
-                                                    </button>
-                                                {% endif %}
-                                            </div>
-                                            <div class="nk-block">
-                                                <div class="card card-stretch">
-                                                    <div class="card-inner-group">
-                                                        <div class="card-inner p-4">
-                                                            <div class="nk-tb-list nk-tb-tnx">
-                                                                <div class="nk-tb-item nk-tb-head text-center">
-                                                                    <div class="nk-tb-col">
-                                                                        <span>{% trans "Approver" %}</span></div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span>{% trans "Status" %}</span></div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span>{% trans "Note" %}</span></div>
-                                                                    <div class="nk-tb-col">
-                                                                        <span>{% trans "Created At" %}</span></div>
-                                                                </div>
-                                                                {% for status in object.statuses %}
-                                                                    <div class="nk-tb-item text-center">
-                                                                        <div class="nk-tb-col">
-                                                                            <a href="{{ status.created_by.get_absolute_url }}">
-                                                                                {{ status.created_by.get_full_name|default:status.created_by.username }}
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="nk-tb-col">
-                                                                            {% if status.status == 'approved' %}
-                                                                                <span class="badge badge-dim bg-success">{% trans "Approved" %}</span>
-                                                                            {% elif status.status == 'rejected' %}
-                                                                                <span class="badge badge-dim bg-danger">{% trans "Rejected" %}</span>
-                                                                            {% else %}
-                                                                                <span class="badge badge-dim bg-warning">{% trans "Pending" %}</span>
-                                                                            {% endif %}
-                                                                        </div>
-                                                                        <div class="nk-tb-col"
-                                                                             data-bs-toggle="tooltip"
-                                                                             data-bs-placement="bottom"
-                                                                             data-bs-original-title="{{ status.note|default:"—" }}">
-                                                                            {{ status.note|truncatechars:20|default:"-" }}
-                                                                        </div>
-                                                                        <div class="nk-tb-col">
-                                                                            <span class="datetime-convert font-80">
-                                                                                {{ status.get_created_at }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                {% empty %}
-                                                                    <div class="nk-tb-item text-center">
-                                                                        <div class="nk-tb-col">{% trans "No status recorded yet." %}</div>
-                                                                    </div>
-                                                                {% endfor %}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -398,10 +731,62 @@
         </div>
     </div>
     {% if object.type == 'folder' %}
-        {% include 'comm/components/modals/upload-file.html' with users=object.shared_with.all %}
+        {% include 'comm/components/modals/upload-file.html' with users=object.shared_with.all parent_folder=object %}
         {% include 'comm/components/modals/folder-create.html' with users=object.shared_with.all parent_folder=object %}
     {% endif %}
+
+    <div class="modal fade" tabindex="-1" id="folder-delete" aria-modal="true" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-folder bg-danger"></em>
+                        <h4 class="nk-modal-title">{% trans 'Delete Folder' %}</h4>
+                        <div class="nk-modal-text">
+                            <p class="bg-outline-danger">
+                                {% trans "Are you sure you want to delete this folder? All files inside it will be permanently removed." %}
+                            </p>
+                        </div>
+                        <div class="nk-modal-action mt-5">
+                            <a class="btn btn-lg btn-mw btn-light m-1"
+                               data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
+                            <a href="{% url 'communication:resource__delete' pk=object.id %}"
+                               class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete' %}</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-body -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="file-delete" aria-modal="true" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-file bg-danger"></em>
+                        <h4 class="nk-modal-title">{% trans 'Delete File' %}</h4>
+                        <div class="nk-modal-text">
+                            <p class="bg-outline-danger">
+                                {% trans "Are you sure you want to delete this file? All related files it will be permanently removed." %}
+                            </p>
+                        </div>
+                        <div class="nk-modal-action mt-5">
+                            <a class="btn btn-lg btn-mw btn-light m-1"
+                               data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
+                            <a href="{% url 'communication:resource__delete' pk=object.id %}"
+                               class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete' %}</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- .modal-body -->
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
+
 
 
 {% block Script %}

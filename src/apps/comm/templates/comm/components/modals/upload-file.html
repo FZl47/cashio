@@ -4,6 +4,9 @@
         <div class="modal-content">
             <form action="{% url 'communication:resource__file__create' %}" method="post">
                 {% csrf_token %}
+                {% if parent_folder %}
+                    <input type="hidden" name="parent" value="{{ parent_folder.id }}">
+                {% endif %}
                 <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
                 <div class="modal-body modal-body-md">
                     <div class="nk-upload-form">

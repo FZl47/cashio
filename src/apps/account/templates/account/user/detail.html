@@ -259,10 +259,11 @@
                             <h4 class="nk-modal-title">{% trans 'Delete User' %}</h4>
                             <div class="nk-modal-text">
                                 <p class="bg-outline-danger">
-                                    Are you sure you want to delete the user
-                                    <b>{{ object.get_full_name }}</b>
-                                    ? By deleting the user, all related items will be removed, and there will be no
-                                    possibility of recovery.
+                                    {% blocktrans with full_name=object.get_full_name %}
+                                        Are you sure you want to delete the user <b>{{ full_name }}</b>? By deleting the
+                                        user, all related items will be removed, and there will be no possibility of
+                                        recovery.
+                                    {% endblocktrans %}
                                 </p>
                             </div>
                             <div class="nk-modal-action mt-5">

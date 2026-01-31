@@ -21,6 +21,7 @@ class FileRawUploadForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['extension'].required = False
+        self.fields['size'].required = False
 
     class Meta:
         model = models.FileRaw
@@ -33,4 +34,5 @@ class FileRawUploadForm(forms.ModelForm):
             _, ext = os.path.splitext(file.name)
             extension = ext.lstrip('.')
             cleaned_data['extension'] = extension
+            cleaned_data['size'] = round((file.size / 1024), 2)  # Convert bytes to kilobytes
         return cleaned_data
