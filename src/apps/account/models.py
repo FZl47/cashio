@@ -109,7 +109,10 @@ class User(BaseModel, AbstractUser, PermissionsMixin):
                     ).values('user')
                 )
             )
-        )
+        ).order_by('-id')
+
+    def get_document_approval_process_group(self):
+        return self.documentapprovalprocessgroup_set.last()
 
 
 class UserLoginActivity(BaseModel):

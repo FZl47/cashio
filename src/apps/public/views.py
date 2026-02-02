@@ -169,8 +169,11 @@ class Settings(SuperUserRequiredMixin, TemplateView):
     template_name = 'public/settings.html'
 
     def get_context_data(self, **kwargs):
+        users = User.objects.filter(is_active=True)
         return {
-            'approval_process_groups': DocumentApprovalProcessGroup.objects.all()
+            'approval_process_groups': DocumentApprovalProcessGroup.objects.all(),
+            'users_approval_process_groups': users.filter(documentapprovalprocessgroup__isnull=True),
+            'users': users,
         }
 
 

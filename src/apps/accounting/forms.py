@@ -111,3 +111,25 @@ class PettyCashFundUpdateForm(forms.ModelForm):
     class Meta:
         model = models.PettyCashFund
         fields = '__all__'
+
+
+class DocumentApprovalProcessGroupCreateForm(forms.ModelForm):
+    class Meta:
+        model = models.DocumentApprovalProcessGroup
+        fields = '__all__'
+
+    def save(self, commit=True):
+        with transaction.atomic():
+            group = super().save(commit=commit)
+            approvers = self.data.getlist('approvers')
+            priorities = self.data.getlist('priority')
+
+            if approvers and priorities:
+                for i, approver in enumerate(approvers):
+                    models.DocumentApprovalProcessGroupUser.objects.create(
+                        group=group,
+                        user_id=approver,
+                        priority=priorities[i],
+                    )
+
+            return group

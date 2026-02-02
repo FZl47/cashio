@@ -46,4 +46,13 @@ urlpatterns = [
 
     path('document/status/create', views.DocumentStatusCreate.as_view(),
          name='document_status__create'),
+
+
+    path('document/approval-process-group/<int:pk>/delete', views.DocumentApprovalProcessGroupDelete.as_view(),
+         name='document__approval_process_group__delete'),
+
+    path('document/approval-process-group/create', views.DocumentApprovalProcessGroupCreate.as_view(),
+         name='document__approval_process_group__create'),
+
+
 ]

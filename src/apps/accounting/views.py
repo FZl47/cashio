@@ -1,13 +1,16 @@
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View
 from django.db.models import Q, OuterRef, Subquery, Sum
 from django.db.models.functions import ExtractMonth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
-from apps.core.views import CreateViewMixin, ListViewMixin, DetailViewMixin, UpdateViewMixin
+from apps.core.views import CreateViewMixin, ListViewMixin, DetailViewMixin, UpdateViewMixin, DeleteViewMixin
 from apps.core.auth.permissions.mixins import PermissionMixin
+from apps.core.forms.utils import form_validate_err
 
 from . import forms, models
 
@@ -354,9 +357,18 @@ class DocumentCreate(PermissionMixin, CreateViewMixin, TemplateView):
         return context
 
     def additional_data(self):
-        return {
+        ad = {
             'uploaded_by': self.request.user
         }
+        user = self.request.user
+        approval_process_group = user.get_document_approval_process_group()
+
+        if approval_process_group:
+            approver_users = approval_process_group.get_approver_users()
+            self.data.setlist('approvers', list(approver_users.values_list('user', flat=True)))
+            self.data.setlist('priority', list(approver_users.values_list('priority', flat=True)))
+
+        return ad
 
     def post(self, request):
         return self.create(request)
@@ -446,6 +458,23 @@ class DocumentStatusCreate(PermissionMixin, CreateViewMixin, View):
         return {
             'created_by': self.request.user
         }
+
+    def post(self, request):
+        return self.create(request)
+
+
+class DocumentApprovalProcessGroupDelete(PermissionMixin, DeleteViewMixin, View):
+    permissions = ('accounting.delete_documentapprovalprocessgroup',)
+    redirect_url = reverse_lazy('public:settings')
+
+    def get_instance(self, pk):
+        return get_object_or_404(models.DocumentApprovalProcessGroup, id=pk)
+
+
+class DocumentApprovalProcessGroupCreate(PermissionMixin, CreateViewMixin, View):
+    permissions = ('accounting.add_documentapprovalprocessgroup',)
+    redirect_url = reverse_lazy('public:settings')
+    form = forms.DocumentApprovalProcessGroupCreateForm
 
     def post(self, request):
         return self.create(request)

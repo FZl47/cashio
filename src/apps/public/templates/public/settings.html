@@ -7,6 +7,32 @@
     {% trans 'Settings' %}
 {% endblock %}
 
+{% block Style %}
+    <style>
+        .user-approver {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .dark-mode .user-approver {
+            border-bottom: 1px solid #203247;
+        }
+
+        .user-approver:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .select-approvers > div {
+            margin: 10px auto;
+        }
+
+    </style>
+{% endblock %}
+
 {% block BodyClass %}
     has-rtl nk-body bg-white npc-default has-aside
 {% endblock %}
@@ -144,26 +170,27 @@
                                                             <div class="col-12 col-lg-6 col-xl-12 mb-4">
                                                                 <button class="h-100 w-100 bg-white border border-dashed round-xl p-4 d-flex align-items-center justify-content-center"
                                                                         data-bs-toggle="modal"
-                                                                        data-bs-target="#journal-status-config-create">
+                                                                        data-bs-target="#approval-process-group-create">
                                                                 <span class="text-soft">
-                                                                    {% trans 'Create Group' %}
+                                                                    {% trans 'Create Approval Process Group' %}
                                                                 </span>
                                                                 </button>
                                                             </div>
                                                             <!-- .col -->
                                                             {% for approval_process_group in approval_process_groups %}
-                                                                <div class="col-12 col-lg-6 col-xl-12" dir="ltr">
+                                                                <div class="col-12 col-lg-6 col-xl-12 text-center my-1"
+                                                                     dir="ltr">
                                                                     <div class="card">
                                                                         <div class="card-inner">
                                                                             <div class="d-flex align-items-center justify-content-between">
                                                                                 <div class="d-flex align-items-center">
                                                                                     <div class="ms-3">
-                                                                                        <h6
-                                                                                            data-bs-toggle="tooltip"
-                                                                                            data-bs-placement="bottom"
-                                                                                            title="{{ approval_process_group.title }}">
+                                                                                        <h5
+                                                                                                data-bs-toggle="tooltip"
+                                                                                                data-bs-placement="bottom"
+                                                                                                title="{{ approval_process_group.title }}">
                                                                                             <b>{{ approval_process_group.title|truncatechars:'15' }}</b>
-                                                                                        </h6>
+                                                                                        </h5>
                                                                                         <span class="sub-text">
                                                                                             {{ approval_process_group.description|truncatechars:'20' }}
                                                                                         </span>
@@ -178,22 +205,47 @@
                                                                                         </a>
                                                                                         <a class="btn btn-icon"
                                                                                            style="cursor: default">
-                                                                                            <em class="icon ni ni-check-c"></em>
+                                                                                            <em class="icon ni ni-user-check"></em>
                                                                                             <b class="fs-17px">{{ approval_process_group.get_approver_users.count }}</b>
                                                                                         </a>
                                                                                     </li>
-
                                                                                     <li>
-                                                                                        <a href="#"
-                                                                                           class="btn btn-trigger btn-icon"><em
-                                                                                                class="icon ni ni-eye"></em></a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="#"
+                                                                                        <a data-bs-toggle="modal"
+                                                                                           href="#approval-group-{{ approval_process_group.id }}-delete"
                                                                                            class="btn btn-trigger btn-icon"><em
                                                                                                 class="icon ni ni-trash text-danger"></em></a>
                                                                                     </li>
                                                                                 </ul>
+                                                                            </div>
+                                                                            <div class="text-start mt-2">
+                                                                                {% for user in approval_process_group.users.all %}
+                                                                                    <a href="{{ user.get_absolute_url }}"
+                                                                                       class="badge badge-dim bg-success">
+                                                                                        {{ user.get_full_name }}
+                                                                                    </a>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                            <div class="mt-1">
+                                                                                <span class="text-start d-block p-2 title">{% trans 'Approvers' %}</span>
+                                                                                <div class="card">
+
+                                                                                    <div class="card-header row col-12 mx-auto">
+                                                                                        <span class="col-7">{% trans 'User' %}</span>
+                                                                                        <span class="col-5">{% trans 'Priority' %}</span>
+                                                                                    </div>
+                                                                                    <div class="card-body">
+                                                                                        {% for user_approver in approval_process_group.get_approver_users %}
+                                                                                            <div class="row user-approver">
+                                                                                            <span class="col-7">
+                                                                                                <a href="{{ user_approver.user.get_absolute_url }}">{{ user_approver.user.get_full_name }}</a>
+                                                                                            </span>
+                                                                                                <div class="col-5">
+                                                                                                    <span class="badge badge-sm badge-dim bg-info">{{ user_approver.priority }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        {% endfor %}
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -319,7 +371,7 @@
                                                                     <div class="dropdown-menu dropdown-menu-end">
                                                                         <ul class="link-list-opt no-bdr">
                                                                             <li>
-                                                                                <a href="#"><em
+                                                                                <a href="{% url 'account:user_profile' %}"><em
                                                                                         class="icon ni ni-edit-fill"></em><span>
                                                                                 {% trans 'Edit Profile' %}
                                                                             </span></a>
@@ -519,48 +571,117 @@
             <!-- .modal-dialog -->
         </div>
 
-        <div class="modal fade" role="dialog" id="journal-status-config-create">
+        <div class="modal fade" role="dialog" id="approval-process-group-create">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
-                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
-                    <div class="modal-body ">
-                        <h5 class="title">{% trans 'Create Journal Status Confirmation Config' %}</h5>
-                        <!-- .nav-tabs -->
+                    <a href="#" class="close" data-bs-dismiss="modal">
+                        <em class="icon ni ni-cross-sm"></em>
+                    </a>
+                    <div class="modal-body">
+                        <h5 class="title">{% trans 'Create Approval Process Group' %}</h5>
 
-                        <form action="#" method="post"
+                        <form action="{% url 'accounting:document__approval_process_group__create' %}" method="post"
                               class="form-validate is-alter">
                             {% csrf_token %}
-                            <input type="hidden" name="is_default" value="true">
+
                             <div class="row gy-4 mt-4">
+
+                                <!-- Title -->
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label"
-                                               for="number_of_step">{% trans 'Number of Step' %}</label>
-                                        <input type="text" class="form-control" id="number_of_step"
-                                               name="number_of_step"
-                                               placeholder="{% trans 'Number of Step' %}"/>
+                                        <label class="form-label" for="title">
+                                            {% trans 'Title' %}
+                                        </label>
+                                        <input type="text" class="form-control" id="title"
+                                               name="title"
+                                               placeholder="{% trans 'Enter Group Title' %}" required>
                                     </div>
                                 </div>
 
+                                <!-- Description -->
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">{% trans 'Permissions' %}</label>
-                                        <div class="form-control-wrap">
-                                            <select class="form-select js-select2" multiple name="permissions">
-                                                {% for permission in permissions %}
-                                                    <option value="{{ permission.id }}">
-                                                        {{ permission.name }}
-                                                    </option>
-                                                {% endfor %}
-                                            </select>
+                                        <label class="form-label" for="description">
+                                            {% trans 'Description' %}
+                                        </label>
+                                        <textarea class="form-control" id="description"
+                                                  name="description" rows="3"
+                                                  placeholder="{% trans 'Enter Description' %}"></textarea>
+                                    </div>
+                                </div>
+                                <!-- Users -->
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="mb-1 d-flex align-center justify-content-lg-between">
+                                            <label class="form-label">
+                                                {% trans 'Users' %}(<small
+                                                    class="form-text text-muted">{% trans 'Users who follow this group process.' %}<b class="text-warning">{% trans 'The selected user is unique. It cannot be used in other groups.' %}</b></small>)
+                                            </label>
+                                        </div>
+                                        <div class="select-users">
+                                            <div>
+                                                <div class="form-control-wrap">
+                                                    <select name="users" multiple
+                                                            class="form-control form-select js-select2 d-inline-block"
+                                                            data-search="on">
+                                                        <option value="">{% trans 'Select Users' %}</option>
+                                                        {% for user in users_approval_process_groups %}
+                                                            <option value="{{ user.id }}">{{ user.get_full_name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                <!-- Approvers -->
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="mb-1 d-flex align-center justify-content-lg-between">
+                                            <label class="form-label">
+                                                {% trans 'Required Approvers' %}(<small
+                                                    class="form-text text-muted">{% trans 'Select users who must approve this document. Leave empty for no approval required.' %}</small>)
+                                            </label>
+                                            <button type="button" id="btn-add-approver"
+                                                    class="btn btn-outline-success">
+                                                <em class="icon ni ni-plus"></em>
+                                                <span class="d-none d-md-block">{% trans 'Add Approver' %}</span>
+                                            </button>
+                                        </div>
+                                        <div class="select-approvers">
+                                            <div>
+                                                <div class="form-control-wrap">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend col-2">
+                                                            <input type="text"
+                                                                   class="form-control text-center"
+                                                                   name="priority"
+                                                                   placeholder="{% trans 'Priority' %}"
+                                                                   value="1">
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <select name="approvers"
+                                                                    class="form-control form-select js-select2 d-inline-block"
+                                                                    data-search="on">
+                                                                <option value="">{% trans 'Select Approver' %}</option>
+                                                                {% for user in users %}
+                                                                    <option value="{{ user.id }}">{{ user.get_full_name }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
                                 <div class="col-12 mt-5">
                                     <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                                         <li>
-                                            <button data-bs-dismiss="modal" class="btn btn-lg btn-primary">
+                                            <button type="submit" class="btn btn-lg btn-primary">
                                                 {% trans 'Create' %}
                                             </button>
                                         </li>
@@ -570,92 +691,53 @@
                                         </li>
                                     </ul>
                                 </div>
+
                             </div>
                         </form>
 
-                        <!-- .tab-content -->
                     </div>
-                    <!-- .modal-body -->
                 </div>
-                <!-- .modal-content -->
             </div>
-            <!-- .modal-dialog -->
         </div>
 
-        <div class="modal fade" role="dialog" id="currency-exchange-rate-manual-create">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
-                    <div class="modal-body ">
-                        <h5 class="title">{% trans 'Create Manual Exchange Rate' %}</h5>
-                        <!-- .nav-tabs -->
 
-                        <form action="#" method="post"
-                              class="form-validate is-alter">
-                            {% csrf_token %}
-                            <span class="sub-text fs-13px mb-1 text-decoration-underline text-warning">{% trans 'Please note that by manually activating the currency rate, the automatic currency rate will be disabled until it is deactivated.' %}</span>
-                            <div class="badge badge-dim bg-info fs-17px p-2 d-flex justify-content-between align-items-center mt-4">
-                                                    <span>
-                                                        {% trans 'Base Currency Code' %}
-                                                    </span>
-                                <span class="badge bg-info fs-15px p-1">
-                                                        {{ base_currency_code }}
-                                                        (<span
-                                        class="currency-convert-label">{{ base_currency_code }}</span>)
-                                                    </span>
-                            </div>
-                            <div class="row gy-4 mt-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-label">{% trans 'Default Currency Code' %}</label>
-                                        <div class="form-control-wrap">
-                                            <select class="form-select js-select2" name="default_currency_code"
-                                                    required>
-                                                {% for currency in currencies %}
-                                                    <option value="{{ currency.code }}">
-                                                        {{ currency.name }}
-                                                    </option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-label"
-                                               for="rate">{% trans 'Rate' %}</label>
-                                        <input type="text" class="form-control" id="rate" required
-                                               name="rate"
-                                               placeholder="{% trans 'Rate' %}"/>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 mt-5">
-                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                                        <li>
-                                            <button data-bs-dismiss="modal" class="btn btn-lg btn-primary">
-                                                {% trans 'Create' %}
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <a href="#" data-bs-dismiss="modal"
-                                               class="link link-light">{% trans 'Cancel' %}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </form>
-
-                        <!-- .tab-content -->
-                    </div>
-                    <!-- .modal-body -->
-                </div>
-                <!-- .modal-content -->
-            </div>
-            <!-- .modal-dialog -->
-        </div>
     </div>
+
+    {% if perms.accounting.delete_documentapprovalprocessgroup %}
+
+        {% for approval_process_group in approval_process_groups %}
+            <div class="modal fade" tabindex="-1" id="approval-group-{{ approval_process_group.id }}-delete"
+                 aria-modal="true" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body modal-body-lg text-center">
+                            <div class="nk-modal">
+                                <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-file bg-danger"></em>
+                                <h4 class="nk-modal-title">{% trans 'Delete Approval Process Group' %}</h4>
+                                <div class="nk-modal-text">
+                                    <p class="bg-outline-danger">
+                                        {% blocktrans with title=approval_process_group.title %}
+                                            Are you sure you want to delete {{ title }}? It will be permanently removed.
+                                        {% endblocktrans %}
+                                    </p>
+                                </div>
+                                <div class="nk-modal-action mt-5">
+                                    <a class="btn btn-lg btn-mw btn-light m-1"
+                                       data-bs-dismiss="modal">{% trans 'Cancel' %}</a>
+                                    <a href="{% url 'accounting:document__approval_process_group__delete' pk=approval_process_group.id %}"
+                                       class="btn btn-lg btn-mw btn-danger m-1">{% trans 'Yes, Delete' %}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .modal-body -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+
 
 {% endblock %}
 
@@ -681,6 +763,80 @@
                 saveActiveSettingsTab(this.getAttribute('href'))
             })
         })
+
+    </script>
+    <script>
+        document.getElementById('btn-add-approver').addEventListener('click', function (el) {
+
+
+            let cnt = document.querySelector('.select-approvers')
+            let selector = document.createElement('div')
+            selector.className = 'd-flex justify-content-between align-center text-center'
+
+            function get_options() {
+
+                let options = document.querySelector('select[name="approvers"]').querySelectorAll('option')
+
+                let node = ``
+
+                options.forEach(function (el) {
+
+                    let value = el.value
+                    let name = el.innerText
+
+                    node += `
+                        <option value="${value}">${name}</option>
+                    `
+
+                })
+                return node
+
+            }
+
+            selector.innerHTML = `
+                <div class="form-control-wrap col-10 col-md-11">
+                    <div class="input-group">
+                        <div class="input-group-prepend col-2">
+                            <input type="text" required
+                                   class="form-control text-center"
+                                   name="priority"
+                                   placeholder="${translate('Priority')}">
+                        </div>
+                        <div class="col-10">
+                            <select name="approvers" required
+                                    class="form-control form-select js-select2 d-inline-block"
+                                    data-search="on">
+                                <option value="">${translate('Select Approver')}</option>
+                                ${get_options()}
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 col-md-1 text-center">
+                    <button class="btn btn-outline-danger btn-delete-approver-select" type="button">
+                        <em class="icon ni ni-trash"></em>
+                    </button>
+                </div>
+            `
+
+            cnt.appendChild(selector)
+            setSelectorCustom(selector)
+            setEventDeleteOnApproverSelect()
+        })
+
+        function setEventDeleteOnApproverSelect() {
+            document.querySelectorAll('.btn-delete-approver-select').forEach(function (el) {
+                el.addEventListener('click', function (el) {
+                    this.parentElement.parentElement.remove()
+                })
+            })
+        }
+
+        function setSelectorCustom(selector) {
+            selector = selector.querySelector('select[name="approvers"]')
+            NioApp.Select2(selector);
+        }
 
     </script>
 {% endblock %}

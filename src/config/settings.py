@@ -4,9 +4,14 @@
 
 import os
 from pathlib import Path
+
 from django.urls import reverse_lazy
 
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = 'django-insecure-f%sub1b=g%_va^il@7&y4!r^otok#^((k3s4kk)so0@osm2!*@'
 
@@ -137,8 +142,8 @@ NOTIFICATION_CONFIG = {
     ]
 }
 
-SMS_CONFIG = {
-    'API_KEY': os.environ.get('SMS_API_KEY'),
+IPPANEL_SMS_CONFIG = {
+    'API_KEY': os.environ.get('IPPANEL_SMS_API_KEY'),
     'API_URL': 'http://rest.ippanel.com/v1/messages/patterns/send',
     'ORIGINATOR': '983000505'
 }

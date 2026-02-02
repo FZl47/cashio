@@ -270,17 +270,17 @@ class Document(NotificationModelMixin, BaseModel):
                                     'user')).exists():
             return False
 
-        if self.statuses.filter(created_by=user).exists():
+        if self.statuses.filter(created_by=user, status='accepted').exists():
             return False
 
         pending_approvers = self.required_approvers.exclude(
-            user__in=self.statuses.values_list('created_by', flat=True)).order_by('priority')
+            user__in=self.statuses.filter(status='accepted').values_list('created_by', flat=True)).order_by('priority')
 
         if not pending_approvers.exists():
             return False
-
-        if pending_approvers.first().user != user:
-            return False
+        #
+        # if pending_approvers.first().user != user:
+        #     return False
 
         return True
 
@@ -324,9 +324,8 @@ class DocumentApprovalProcessGroup(BaseModel):
     def get_users(self):
         return self.users.all()
 
-
     def get_approver_users(self):
-        return self.documentapprovalprocessgroupuser_set.all()
+        return self.documentapprovalprocessgroupuser_set.all().order_by('priority')
 
 
 class DocumentApprovalProcessGroupUser(BaseModel):

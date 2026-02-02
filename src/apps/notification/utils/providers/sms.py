@@ -20,7 +20,7 @@ class SmsProvider(BaseProvider):
     """
 
     #: SMS provider configuration loaded from Django settings
-    config = settings.SMS_CONFIG
+    config = settings.IPPANEL_SMS_CONFIG
 
     def _send(self, notification: NotificationUser) -> None:
         """

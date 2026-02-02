@@ -133,6 +133,9 @@ function removeLoading(element) {
 
 
 let all_datetime_convert = document.querySelectorAll('.datetime-convert')
+if (LANGUAGE_CODE == 'en'){
+    all_datetime_convert = []
+}
 for (let dt_el of all_datetime_convert) {
     let dt = dt_el.innerHTML || dt_el.value
     dt_el.setAttribute('datetime', dt)
