@@ -103,7 +103,7 @@ class ResourceFileCreate(PermissionMixin, CreateViewMixin, View):
 
 
 class ResourceDetail(PermissionMixin, DetailViewMixin, TemplateView):
-    permissions = ('comm.view_resource',)
+    permissions = ('comm.view_resourcebase',)
     template_name = 'comm/resource/detail.html'
 
     def get_instance(self):
