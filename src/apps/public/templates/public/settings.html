@@ -167,7 +167,7 @@
                                                     <div class="nk-data data-list">
                                                         <div class="row">
                                                             <!-- .col -->
-                                                            <div class="col-12 col-lg-6 col-xl-12 mb-4">
+                                                            <div class="col-12 mb-4">
                                                                 <button class="h-100 w-100 bg-white border border-dashed round-xl p-4 d-flex align-items-center justify-content-center"
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#approval-process-group-create">
@@ -178,7 +178,7 @@
                                                             </div>
                                                             <!-- .col -->
                                                             {% for approval_process_group in approval_process_groups %}
-                                                                <div class="col-12 col-lg-6 col-xl-12 text-center my-1"
+                                                                <div class="col-12 text-center my-1"
                                                                      dir="ltr">
                                                                     <div class="card">
                                                                         <div class="card-inner">
@@ -269,9 +269,26 @@
                                                             </h4>
                                                             <div class="nk-block-des">
                                                                 <p>
-                                                                    {% trans 'You can manage approval process groups' %}
+                                                                    {% trans 'Here, you can manage the settings related to the Yarmali application.' %}
                                                                 </p>
                                                             </div>
+                                                            {% if not yarmalli_sdk_has_enabled %}
+                                                                <p class="badge badge-dim bg-danger badge-md d-block"
+                                                                   style="white-space: normal">
+                                                                    {% blocktrans %}
+                                                                        Please note that the YarMalli SDK is not
+                                                                        installed.
+                                                                        To use and connect to the YarMalli application,
+                                                                        you must install the YarMalli SDK.
+                                                                    {% endblocktrans %}
+                                                                </p>
+                                                                <div class="badge badge-dim bg-danger p-1 badge-md d-block text-decoration-underline">
+                                                                    <p>{% trans 'Run bellow command in terminal to install sdk' %}</p>
+                                                                    <pre class=" text-start m-0 p-0" style="white-space: normal">
+                                                                         pip install yarmalli_sdk
+                                                                    </pre>
+                                                                </div>
+                                                            {% endif %}
                                                         </div>
                                                         <div class="nk-block-head-content align-self-start d-lg-none">
                                                             <a href="#" class="toggle btn btn-icon btn-trigger mt-n1"
@@ -282,59 +299,54 @@
                                                 </div>
                                                 <!-- .nk-block-head -->
                                                 <div class="nk-block">
+                                                    <div class="nk-data data-list">
+                                                        <div class="data-head">
+                                                            <h6>{% trans 'API Settings' %}</h6>
+                                                        </div>
+                                                        <div class="data-item" data-bs-toggle="modal"
+                                                             data-bs-target="#yarmalli-api-key-edit">
+                                                            <div class="data-col">
+                                                                <span class="data-label">{% trans 'API KEY' %}</span>
+                                                                {% if yarmalli_settings.api_key %}
+                                                                    <span class="data-value badge badge-dim bg-secondary">
+                                                                        {{ yarmalli_settings.api_key|truncatechars:'20' }}
+                                                                    </span>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="data-col data-col-end">
+                                                                {% if yarmalli_settings.api_key %}
+                                                                    <span class="data-more"><em
+                                                                            class="icon ni ni-forward-ios"></em></span>
+                                                                {% else %}
+                                                                    <a href="#" class="link">{% trans 'SET' %}</a>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <!-- data-item -->
+                                                    </div>
                                                     <!-- data-list -->
                                                     <div class="nk-data data-list">
-                                                        <div class="row">
-                                                            <!-- .col -->
-                                                            <div class="col-12 col-lg-6 col-xl-12">
-                                                                <button class="h-100 w-100 bg-white border border-dashed round-xl p-4 d-flex align-items-center justify-content-center"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#journal-status-config-create">
-                                                            <span class="text-soft">
-                                                                {% trans 'Create Group' %}
-                                                            </span>
-                                                                </button>
+                                                        <div class="data-head">
+                                                            <h6>{% trans 'Journal Author' %}</h6>
+                                                        </div>
+                                                        <div class="data-item" data-bs-toggle="modal"
+                                                             data-bs-target="#yarmalli-journal-author-edit">
+                                                            <div class="data-col">
+                                                                <span class="data-label">{% trans 'User' %}</span>
+                                                                {% if yarmalli_settings.journal_author %}
+                                                                    <span class="data-value badge badge-dim bg-secondary">
+                                                                        {{ yarmalli_settings.get_journal_author_name|truncatechars:'20' }}
+                                                                    </span>
+                                                                {% endif %}
                                                             </div>
-                                                            <!-- .col -->
-                                                            {% for approval_process_group in approval_process_groups %}
-                                                                <div class="col-12 col-lg-6 col-xl-12">
-                                                                    <div class="card">
-                                                                        <div class="card-inner">
-                                                                            <div class="d-flex align-items-center justify-content-between">
-                                                                                <div class="d-flex align-items-center">
-                                                                                    <div class="ms-3">
-                                                                                        <h6 class="text-warning fs-15px">
-                                                                                            <span>{% trans 'Step' %} </span>
-                                                                                            <b>{{ journal_status_config.number_of_step }}</b>
-                                                                                        </h6>
-                                                                                        <span class="sub-text">
-                                                                                    {% for permission in journal_status_config.permissions.all %}
-                                                                                        <span class="badge badge-dim bg-info m-1">
-                                                                                            {{ permission.name }}
-                                                                                        </span>
-                                                                                    {% endfor %}
-                                                                                </span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <ul class="btn-toolbar justify-center gx-1 me-n1 flex-nowrap">
-                                                                                    <li>
-                                                                                        <a href="#"
-                                                                                           style="opacity: .5;cursor:not-allowed;"
-                                                                                           class="btn btn-trigger btn-icon"><em
-                                                                                                class="icon ni ni-eye"></em></a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="#"
-                                                                                           style="opacity: .5;cursor:not-allowed;"
-                                                                                           class="btn btn-trigger btn-icon"><em
-                                                                                                class="icon ni ni-edit"></em></a>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            {% endfor %}
+                                                            <div class="data-col data-col-end">
+                                                                {% if yarmalli_settings.api_key %}
+                                                                    <span class="data-more"><em
+                                                                            class="icon ni ni-forward-ios"></em></span>
+                                                                {% else %}
+                                                                    <a href="#" class="link">{% trans 'SET' %}</a>
+                                                                {% endif %}
+                                                            </div>
                                                         </div>
                                                         <!-- data-item -->
                                                     </div>
@@ -451,35 +463,24 @@
             <!-- wrap @e -->
         </div>
         <!-- main @e -->
-        <div class="modal fade" role="dialog" id="company-edit">
+        <div class="modal fade" role="dialog" id="yarmalli-api-key-edit">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
                     <div class="modal-body ">
-                        <h5 class="title">{% trans 'Edit Company' %}</h5>
+                        <h5 class="title">{% trans 'API Settings' %}</h5>
                         <!-- .nav-tabs -->
 
-                        <form action="#" method="post" class="form-validate is-alter">
+                        <form action="{% url 'public:yarmalli_settings__api_key__manage' %}" method="post"
+                              class="form-validate is-alter">
                             {% csrf_token %}
                             <div class="row gy-4 mt-4">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label" for="full-name">{% trans 'Name' %}</label>
-                                        <input type="text" class="form-control" id="full-name" name="name"
-                                               value="{{ company.name }}" placeholder="{% trans 'Name' %}"/>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="form-label" for="scale">{% trans 'Scale' %}</label>
-                                        <select name="scale" id="scale"
-                                                class="form-control form-select js-select2 select-by-value"
-                                                value="{{ company.scale }}">
-                                            {% for scale in company.SCALE_TYPES %}
-                                                <option value="{{ scale.0 }}">{{ scale.1 }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label class="form-label" for="api_key">{% trans 'API KEY' %}</label>
+                                        <input type="text" class="form-control" id="api_key" name="api_key"
+                                               value="{{ yarmalli_settings.api_key }}"
+                                               placeholder="{% trans 'API KEY' %}"/>
                                     </div>
                                 </div>
                                 <div class="col-12 mt-5">
@@ -615,7 +616,8 @@
                                         <div class="mb-1 d-flex align-center justify-content-lg-between">
                                             <label class="form-label">
                                                 {% trans 'Users' %}(<small
-                                                    class="form-text text-muted">{% trans 'Users who follow this group process.' %}<b class="text-warning">{% trans 'The selected user is unique. It cannot be used in other groups.' %}</b></small>)
+                                                    class="form-text text-muted">{% trans 'Users who follow this group process.' %}<b
+                                                    class="text-warning">{% trans 'The selected user is unique. It cannot be used in other groups.' %}</b></small>)
                                             </label>
                                         </div>
                                         <div class="select-users">
@@ -699,8 +701,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     {% if perms.accounting.delete_documentapprovalprocessgroup %}
@@ -736,8 +736,6 @@
         {% endfor %}
 
     {% endif %}
-
-
 
 {% endblock %}
 

@@ -11,11 +11,11 @@ from django.contrib import messages
 from django.conf import settings
 
 from apps.core.auth.permissions import PermissionMixin, SuperUserRequiredMixin
-from apps.core.views import UpdateViewMixin
+from apps.core.views import UpdateViewMixin, CreateOrUpdateViewMixin
 
 from apps.accounting.models import (PettyCashTransaction, PettyCashFund, Document, DocumentApprovalProcessGroup)
 
-from . import forms
+from . import forms, models
 
 User = get_user_model()
 
@@ -168,12 +168,26 @@ class SetLang(View):
 class Settings(SuperUserRequiredMixin, TemplateView):
     template_name = 'public/settings.html'
 
+    YARMALLI_SDK_ENABLED = None
+
+    def check_yarmalli_sdk_enabled(self):
+        if self.YARMALLI_SDK_ENABLED:
+            return self.YARMALLI_SDK_ENABLED
+        try:
+            import yarmalli_sdk
+            self.YARMALLI_SDK_ENABLED = True
+        except ImportError:
+            self.YARMALLI_SDK_ENABLED = False
+        return self.YARMALLI_SDK_ENABLED
+
     def get_context_data(self, **kwargs):
         users = User.objects.filter(is_active=True)
         return {
             'approval_process_groups': DocumentApprovalProcessGroup.objects.all(),
             'users_approval_process_groups': users.filter(documentapprovalprocessgroup__isnull=True),
             'users': users,
+            'yarmalli_sdk_has_enabled': self.check_yarmalli_sdk_enabled(),
+            'yarmalli_settings': models.YarMalliSettings.objects.first()
         }
 
 
@@ -184,3 +198,17 @@ class CompanyUpdate(PermissionMixin, UpdateViewMixin, View):
 
     def post(self, request):
         return self.update(request)
+
+
+class YarMalliSettingsAPIKeyManage(PermissionMixin, CreateOrUpdateViewMixin, View):
+    permissions = ('public.change_yarmallisettings',)
+    form = forms.YarMalliSettingsAPIKeyManageForm
+    redirect_url = reverse_lazy('public:settings')
+
+    def post(self, request):
+        if self.get_instance():
+            return self.update(request)
+        return self.create(request)
+
+    def get_instance(self):
+        return models.YarMalliSettings.objects.first()

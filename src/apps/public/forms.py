@@ -2,6 +2,9 @@ from django import forms
 
 from apps.accounting.models import Company
 
+from . import models
+
+
 class CompanySetupForm(forms.ModelForm):
     company_name = forms.CharField(max_length=256)
     company_scale = forms.CharField(max_length=20)
@@ -20,8 +23,14 @@ class CompanySetupForm(forms.ModelForm):
         cleaned_data['scale'] = cleaned_data['company_scale']
         return cleaned_data
 
+
 class CompanyUpdateForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = '__all__'
 
+
+class YarMalliSettingsAPIKeyManageForm(forms.ModelForm):
+    class Meta:
+        model = models.YarMalliSettings
+        fields = 'api_key',
